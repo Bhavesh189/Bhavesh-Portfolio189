@@ -169,7 +169,7 @@ li:hover {
 
 .whole {
   display: flex;
-  background: linear-gradient(135deg, #0f172a, #1e1b4b, #3b0764);
+  animation : back 20s infinite ease-in-out;
   margin: 10vh auto;
   width: 95vw;
   padding: 30px;
@@ -177,6 +177,38 @@ li:hover {
   min-height: 88vh;
   width: 100vw;
   color: white;
+  /* background: linear-gradient(135deg, #0f172a, #1e1b4b, #3b0764); */
+}
+
+@keyframes back {
+  0% {
+    background: linear-gradient(135deg, #141b2a, #130f49, #240a37);
+    background-position: 0% 50%;
+  }
+  
+  25% {
+    /* Rich Dark Teal-Indigo Tone */
+    background: linear-gradient(135deg, #051622, #0b1b3d, #1a0b2e);
+    background-position: 50% 100%;
+  }
+  
+  50% {
+    /* Tera second custom gradient */
+    background: linear-gradient(135deg, #070c18, #0b0e43, #280671);
+    background-position: 100% 50%;
+  }
+  
+  75% {
+    /* Deep Galactic Charcoal & Royal Violet Tone */
+    background: linear-gradient(135deg, #020617, #1e1b4b, #4c0519);
+    background-position: 50% 0%;
+  }
+  
+  100% {
+    /* Smooth transition back to first gradient without any snap */
+    background: linear-gradient(135deg, #141b2a, #130f49, #240a37);
+    background-position: 0% 50%;
+  }
 }
 
 .f {
