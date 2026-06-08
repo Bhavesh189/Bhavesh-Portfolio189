@@ -5,20 +5,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faXmark } from '@fortawesome/free-solid-svg-icons'
 import pdff from '../assets/BhaveshResume189.pdf'
 import { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
 const Navbar = () => {
 
   const navigate = useNavigate();
   const [bars, setBars] = useState(true);
+  const location = useLocation();
 
   function handlleClick() {
     if(bars)
     ulRef.current.style.right = "0";
-  else ulRef.current.style.right = "-40%";
+  else ulRef.current.style.right = "-70%";
     setBars(prev => !prev);
   }
 
   let ulRef = useRef();
+
+  const activeStyle = {
+    borderBottom : "2px solid red",
+    paddingBottom : '5px'
+  };
 
   return (
     <div>
@@ -35,17 +42,20 @@ const Navbar = () => {
 
 
         <ul ref={ulRef}>
-            <li onClick={()=> {
-              navigate('/about');
-            }}>About</li>
-            <li onClick={()=> {
-              navigate('/exp');
+            <li style={location.pathname == '/' ? activeStyle : {}} onClick={()=> {
+              navigate('/'); 
+            }}>Home</li>
+            <li style={location.pathname == '/skills' ? activeStyle : {}} onClick={()=> {
+              navigate('/skills'); 
+            }}>Skills</li>
+            <li style={location.pathname == '/exp' ? activeStyle : {}} onClick={()=> {
+              navigate('/exp'); 
             }}>Experience</li>
-            <li onClick={()=> {
-              navigate('/projects');
+            <li style={location.pathname == '/projects' ? activeStyle : {}} onClick={()=> {
+              navigate('/projects'); 
             }}>Projects</li>
-            <li onClick={()=> {
-              navigate('/contact');
+            <li style={location.pathname == '/contact' ? activeStyle : {}} onClick={()=> {
+              navigate('/contact'); 
             }}>Contact</li>
             <a href={pdff} target="_blank" rel="noopener noreferrer">
               <li>Resume</li>

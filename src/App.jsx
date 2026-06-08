@@ -17,7 +17,7 @@ function App() {
         },
 
         {
-            path : '/about',
+            path : '/skills',
             element : <About />
         },
 
