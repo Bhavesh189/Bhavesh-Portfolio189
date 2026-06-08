@@ -30,7 +30,7 @@ const Navbar = () => {
   return (
     <div>
       <nav>
-        <div className="c">
+        <div className="c" onClick={() => {navigate('/');}}>
         <img src={Logo1} alt="Logo" className='logo'/>
         </div>
 

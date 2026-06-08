@@ -26,6 +26,7 @@ nav {
   margin-left: 8px;
   object-fit: cover;
   transform: scale(1.5);
+  cursor: pointer;
 }
 
 .c {
@@ -253,6 +254,38 @@ li:hover {
 
   50% {
     opacity: 0;
+  }
+}
+
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #3650c3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.logo22 {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  animation: logoAni 1s 1 ease-out;
+}
+
+@keyframes logoAni {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 1;
   }
 }
 

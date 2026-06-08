@@ -8,18 +8,36 @@ import { faLinkedin, faGithub, faInstagram } from '@fortawesome/free-brands-svg-
 import { faCode } from '@fortawesome/free-solid-svg-icons'
 import { useState, useEffect } from 'react'
 import Typewriter from 'typewriter-effect';
+import Preloader from './Preloader'
 
 const Home = () => {
+    const [load, setLoad] = useState(true);
 
     const ImgStyle = {
       height : "200px",
       width : "200px",
     };
 
+    useEffect(()=> {
+
+      const stop = setTimeout(()=> {
+      setLoad(false);
+    }, 1100);
+
+    return ()=> {
+      clearInterval(stop);
+    }
+
+    }, [])
+
 
   return (
 
     <div>
+      {
+        load  &&
+      <Preloader />
+      }
         <Background>
       <Navbar />
       <div className="links">
