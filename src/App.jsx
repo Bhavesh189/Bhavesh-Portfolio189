@@ -7,6 +7,7 @@ import Contact from './component/Contact.jsx'
 import Exp from './component/Exp.jsx'
 import Projects from './component/Projects.jsx'
 import Home from './component/Home.jsx'
+import Notfound from './component/Notfound.jsx'
 
 function App() {
   
@@ -34,6 +35,10 @@ function App() {
         {
             path : '/projects',
             element : <Projects />
+        },
+        {
+            path : '*',
+            element : <Notfound />
         }
     ]);
 

@@ -312,9 +312,9 @@ li:hover {
   padding : 12vh;
   width: 100%;
   max-width: 420px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(130, 21, 21, 0.05);
   backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(1600px);
   border: 1px rgba(255, 255, 255, 0.1) solid;
   border-radius: 20px;
   padding: 40px 30px;
