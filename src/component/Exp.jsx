@@ -5,6 +5,7 @@ import Project from './ProjectSection/Project'
 import GUVI from '../assets/GUVI.png'
 import Squarcell from '../assets/Squarcell.png'
 import REACT from '../assets/REACT.png'
+import NodeC from '../assets/NodeC.png'
 
 const Exp = () => {
 
@@ -34,6 +35,15 @@ const Exp = () => {
     hook: "Actively participated in a high-impact, premium industrial technical workshop centered on 'The Future of Full Stack Development Key Skills Needed in 2026'. This advanced engagement verified my strategic understanding of upcoming full-stack trends, cloud-native deployments, algorithmic optimization protocols, and modern development standards required to scale complex software products globally.",
     para: "I was recognized for my active participation and technical competence in the premium joint industrial workshop hosted by GUVI Geek Networks and HCL on May 9th, 2026. The technical summit, titled 'The Future of Full Stack Development Key Skills Needed in 2026', focused on evaluating and breaking down the next-generation architectural shifts occurring in modern software engineering frameworks. During this workshop, industry leaders and engineering executives mapped out critical technological advancements, including real-time bi-directional data flow designs, serverless computing modules, and edge-side rendering techniques that are becoming standard in global software production. I engaged deeply with case studies detailing how large-scale enterprise systems handle concurrent user traffic using technologies like Socket.io for low-latency communication, alongside advanced database clustering and aggregation methodologies in MongoDB. The workshop highlighted the importance of picking up advanced cross-functional skills, combining flexible MERN stack engineering with performance-centric data structure practices in C++ and Java to optimize algorithmic runtime and computational pipelines. We analyzed how full-stack systems integrate artificial intelligence engines and orchestration workflows to handle modern analytical challenges, much like the patterns I applied in my independent projects. This technical seminar greatly expanded my perspective on software system design, responsive layout scaling, and robust development methodologies. It confirmed my engineering direction, ensuring my current practices align perfectly with commercial benchmarks, clean code strategies, and high-performance product deployments tailored for the tech landscape.",
     img: GUVI,
+    link: 0
+  },
+  {
+    id: 3,
+    name : "Node js Certification from SCALER",
+    type: "Certification",
+    hook: "Successfully completed the Node.js Certification from SCALER, demonstrating proficiency in server-side development, asynchronous programming, and building scalable web applications using Node.js.",
+    para: "I earned my Node.js Certification from SCALER, which provided me with a deep understanding of server-side development using Node.js. The course covered essential topics such as event-driven architecture, non-blocking I/O, and building RESTful APIs. I gained hands-on experience in creating scalable web applications, managing databases, and implementing authentication and authorization mechanisms. This certification has enhanced my ability to develop efficient backend solutions and has prepared me for real-world challenges in full-stack development.",
+    img: NodeC,
     link: 0
   }
 ];
