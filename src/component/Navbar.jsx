@@ -3,7 +3,7 @@ import Logo1 from '../assets/Logo2.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faXmark } from '@fortawesome/free-solid-svg-icons'
-import pdff from '../assets/BhaveshResume189.pdf'
+import pdff from '../assets/Bhavesh.pdf'
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
