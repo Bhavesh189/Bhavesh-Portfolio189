@@ -7,6 +7,7 @@ import Taskwave from '../assets/Taskwave.png'
 import Notes from '../assets/Notes.png'
 import Enternet from '../assets/Enternet.png'
 import Leetcode from '../assets/Leetcode.png'
+import S from '../assets/SB.png'
 import ProjectList from './ProjectSection/ProjectList'
 import { useRef } from 'react'
 
@@ -51,6 +52,11 @@ const Projects = () => {
     id: 4,
     number: 5,
     name: "Leetcode Metrix app"
+  },
+  {
+    id: 5,
+    number: 6,
+    name: "Study Top"
   }
 ];
 
@@ -95,6 +101,14 @@ const details = [
     para: "Leetcode Metrix App is a comprehensive analytical tracker engineered for competitive programmers who want to optimize their technical interview preparation through raw data. By establishing secure connections with competitive coding data streams, this application pulls real-time user statistics, problem-solving distributions, and consistency metrics, presenting them through beautifully rendered, interactive data visualizations. Users can deep-dive into their daily coding speed, difficulty ratios, and global rankings through customized charts and progress algorithms. Built using highly optimized data-handling techniques on the frontend, Leetcode Metrix transforms flat, uninspiring numbers into an immersive dashboard, serving as the ultimate strategic tool for mastering DSA and engineering interview success.",
     img: Leetcode,
     link: "https://bhavesh189.github.io/LeetCodeProfile/"
+  },
+  {
+    id: 5,
+    name: "Study Top",
+    hook: "In a world where knowledge is power, Study Top acts as your personal academic strategist, transforming scattered study materials into a cohesive, high-yield learning ecosystem that maximizes retention and performance.",
+    para: "Study Top is a revolutionary academic management platform designed to streamline the learning process for students and educators alike. By integrating seamlessly with existing educational resources, this application provides a centralized hub for organizing notes, tracking progress, and accessing personalized study plans. With its intuitive interface and powerful analytics, Study Top empowers users to optimize their study habits and achieve superior academic results.",
+    img: S,
+    link: "https://study-top.vercel.app/login"
   }
 ];
 
