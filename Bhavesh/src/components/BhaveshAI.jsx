@@ -202,10 +202,10 @@ export default function BhaveshAI() {
                 </div>
               </div>
               <div className="ai-header-actions">
-                <button className="ai-action-btn" onClick={() => setIsOpen(false)}>
+                <button className="ai-action-btn" onClick={() => setIsOpen(false)} aria-label="Minimize Chat Window">
                   <FiMinimize2 size={16} />
                 </button>
-                <button className="ai-action-btn" onClick={() => setIsOpen(false)}>
+                <button className="ai-action-btn" onClick={() => setIsOpen(false)} aria-label="Close Chat Window">
                   <FiX size={16} />
                 </button>
               </div>

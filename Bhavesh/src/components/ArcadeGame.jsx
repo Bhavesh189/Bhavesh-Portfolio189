@@ -337,7 +337,7 @@ export default function ArcadeGame() {
                   <span className="dot green" />
                 </div>
                 <span className="bar-title">👾 BHAVESH-OS ARCADE v1.0.0</span>
-                <button className="bar-close" onClick={closeArcade}>
+                <button className="bar-close" onClick={closeArcade} aria-label="Close Arcade game">
                   <FiX size={16} />
                 </button>
               </div>

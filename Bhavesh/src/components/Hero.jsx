@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiArrowDownRight, FiGithub, FiLinkedin, FiCode, FiGlobe } from 'react-icons/fi';
 import { profile, socials } from '../data/content';
 import { scrollToSection } from '../hooks/useSmoothScroll';
-import InfinityScene from './InfinityScene';
 import Magnetic from './Magnetic';
 import './Hero.css';
+
+const InfinityScene = lazy(() => import('./InfinityScene'));
 
 const ICONS = { github: FiGithub, linkedin: FiLinkedin, code: FiCode, globe: FiGlobe };
 
@@ -41,14 +42,18 @@ function RotatingRole({ roles }) {
   );
 }
 
-export default function Hero({ reducedMotion = false }) {
+export default function Hero({ reducedMotion = false, isMobile = false }) {
   const words = profile.heroLine.split(' ');
   const head = words.slice(0, -2).join(' ');
   const tail = words.slice(-2).join(' ');
 
   return (
     <section id="top" className="hero">
-      <InfinityScene reducedMotion={reducedMotion} />
+      {!isMobile && (
+        <Suspense fallback={null}>
+          <InfinityScene reducedMotion={reducedMotion} />
+        </Suspense>
+      )}
       <div className="hero-veil" />
 
       <div className="container hero-inner">

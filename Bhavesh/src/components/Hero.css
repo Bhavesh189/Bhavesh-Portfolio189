@@ -171,3 +171,10 @@
     display: none;
   }
 }
+
+@media (max-width: 768px) {
+  .hero {
+    background: radial-gradient(circle at 80% 20%, rgba(124, 92, 255, 0.14) 0%, transparent 60%),
+                radial-gradient(circle at 20% 80%, rgba(41, 211, 238, 0.1) 0%, transparent 60%);
+  }
+}

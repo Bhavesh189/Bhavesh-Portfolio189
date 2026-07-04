@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import useReducedMotion from './hooks/useReducedMotion';
 import useSmoothScroll from './hooks/useSmoothScroll';
 import Preloader from './components/Preloader';
-import Cursor from './components/Cursor';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -13,19 +12,37 @@ import Projects from './components/Projects';
 import Certifications from './components/Certifications';
 import Contact from './components/Contact';
 import { ToastProvider } from './components/Toast';
-import DevModsPanel from './components/DevModsPanel';
-import ArcadeGame from './components/ArcadeGame';
-import BhaveshAI from './components/BhaveshAI';
-import LiquidCursor from './components/LiquidCursor';
-import BookingSystem from './components/BookingSystem';
+import Cursor from './components/Cursor';
+
+// Lazy load non-critical and heavy components
+const DevModsPanel = lazy(() => import('./components/DevModsPanel'));
+const ArcadeGame = lazy(() => import('./components/ArcadeGame'));
+const BhaveshAI = lazy(() => import('./components/BhaveshAI'));
+const LiquidCursor = lazy(() => import('./components/LiquidCursor'));
+const BookingSystem = lazy(() => import('./components/BookingSystem'));
 
 export default function App() {
   const reducedMotion = useReducedMotion();
   const [loading, setLoading] = useState(true);
-
+  const [isMobile, setIsMobile] = useState(true); // Default to true on initial render for fast paint
 
   useSmoothScroll(!loading && !reducedMotion);
 
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(
+        window.innerWidth < 768 ||
+        (window.matchMedia && window.matchMedia('(max-width: 768px)').matches) ||
+        ('ontouchstart' in window) ||
+        (navigator.maxTouchPoints > 0)
+      );
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = loading ? 'hidden' : '';
@@ -33,7 +50,6 @@ export default function App() {
       document.body.style.overflow = '';
     };
   }, [loading]);
-
 
   useEffect(() => {
     if (reducedMotion) setLoading(false);
@@ -50,22 +66,32 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      <DevModsPanel />
-      <ArcadeGame />
-      <BhaveshAI />
+      <Suspense fallback={null}>
+        <DevModsPanel />
+        <ArcadeGame />
+        <BhaveshAI />
+      </Suspense>
 
-      <LiquidCursor />
-      <Cursor />
+      {!isMobile && (
+        <>
+          <Suspense fallback={null}>
+            <LiquidCursor />
+          </Suspense>
+          <Cursor />
+        </>
+      )}
       <Navbar />
 
       <main>
-        <Hero reducedMotion={reducedMotion} />
+        <Hero reducedMotion={reducedMotion} isMobile={isMobile} />
         <About />
-        <Skills />
+        <Skills isMobile={isMobile} />
         <Journey />
         <Projects />
         <Certifications />
-        <BookingSystem />
+        <Suspense fallback={null}>
+          <BookingSystem isMobile={isMobile} />
+        </Suspense>
         <Contact />
       </main>
     </ToastProvider>
