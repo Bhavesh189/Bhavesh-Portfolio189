@@ -51,7 +51,7 @@ export default function Navbar() {
                     key={item.id}
                     href={resumeUrl}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="nav-link"
                     data-cursor
                   >
@@ -103,7 +103,7 @@ export default function Navbar() {
                     key={item.id}
                     href={resumeUrl}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="nav-mobile-link"
                     onClick={() => setOpen(false)}
                     initial={{ opacity: 0, y: 24 }}

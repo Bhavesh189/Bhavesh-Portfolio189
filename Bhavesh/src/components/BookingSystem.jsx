@@ -291,7 +291,7 @@ He seems like a highly qualified candidate for our software engineering / full-s
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <button className="glass-back-btn" onClick={() => setSelectedSlot(null)}>
+                  <button className="glass-back-btn" onClick={() => setSelectedSlot(null)} aria-label="Back to slots">
                     <FiArrowLeft className="icon" /> Back to slots
                   </button>
                   
@@ -308,6 +308,7 @@ He seems like a highly qualified candidate for our software engineering / full-s
                       onChange={(e) => setName(e.target.value)}
                       required
                       className="glass-input"
+                      aria-label="Your Name"
                     />
                     <input
                       type="text"
@@ -315,6 +316,7 @@ He seems like a highly qualified candidate for our software engineering / full-s
                       value={company}
                       onChange={(e) => setCompany(e.target.value)}
                       className="glass-input"
+                      aria-label="Company or Organization"
                     />
                     <input
                       type="email"
@@ -323,6 +325,7 @@ He seems like a highly qualified candidate for our software engineering / full-s
                       onChange={(e) => setEmail(e.target.value)}
                       required
                       className="glass-input"
+                      aria-label="Your Work Email"
                     />
                     <button
                       type="submit"

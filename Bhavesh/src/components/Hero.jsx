@@ -93,7 +93,7 @@ export default function Hero({ reducedMotion = false }) {
               const Icon = ICONS[s.icon] || FiGlobe;
               return (
                 <li key={s.label}>
-                  <a href={s.href} target="_blank" rel="noreferrer" data-cursor>
+                  <a href={s.href} target="_blank" rel="noopener noreferrer" data-cursor>
                     <Icon />
                     <span>{s.label}</span>
                   </a>

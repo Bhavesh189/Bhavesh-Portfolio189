@@ -204,7 +204,7 @@ export default function Contact() {
                     key={s.label}
                     href={s.href}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="contact-social"
                     data-cursor
                   >

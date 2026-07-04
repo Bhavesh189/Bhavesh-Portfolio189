@@ -37,7 +37,7 @@ export default function Resume() {
             <a
               href={resumeUrl}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="resume-preview-link"
               data-cursor
             >
@@ -80,7 +80,7 @@ export default function Resume() {
                   <FiDownload /> Download CV
                 </a>
               </Magnetic>
-              <a className="btn btn-ghost" href={resumeUrl} target="_blank" rel="noreferrer">
+              <a className="btn btn-ghost" href={resumeUrl} target="_blank" rel="noopener noreferrer">
                 <FiExternalLink /> Open in new tab
               </a>
             </div>

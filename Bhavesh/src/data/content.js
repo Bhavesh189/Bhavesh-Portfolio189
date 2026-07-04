@@ -6,7 +6,6 @@ export const profile = {
   roles: [
     'MERN Stack Developer',
     'Software Developer',
-    'Rajasthan Hacker',
     'Bug Bounty Expert',
     'Distributed Systems',
     'Competitive Programmer',
@@ -36,9 +35,9 @@ export const stats = [
 
 export const about = {
   paragraphs: [
-    'I am a Computer Science undergraduate at Bikaner Technical University with a current CGPA of 9.20, active as a premium MERN Stack Developer, Software Developer, and Rajasthan Hacker / Bug Bounty Expert.',
+    'I am a Computer Science undergraduate at Bikaner Technical University with a current CGPA of 9.20, active as a premium MERN Stack Developer, Software Developer, and Bug Bounty Expert.',
     'My comfort zone spans the full stack — crafting responsive React interfaces on the front, engineering clean Node.js and Express REST APIs on the back, and modelling data in MongoDB. Alongside product work, I sharpen fundamentals daily through 350+ solved problems on LeetCode.',
-    'As a bug bounty expert and Rajasthan Hacker, I apply a defensive security mindset to software design. Right now I am drawn to distributed systems and performance — the parts of engineering where an idea has to hold up under real load. I am looking for software / full-stack roles where I can keep learning at the edge.',
+    'As a bug bounty expert, I apply a defensive security mindset to software design. Right now I am drawn to distributed systems and performance — the parts of engineering where an idea has to hold up under real load. I am looking for software / full-stack roles where I can keep learning at the edge.',
   ],
 };
 

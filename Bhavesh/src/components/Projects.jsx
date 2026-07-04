@@ -41,7 +41,7 @@ function ProjectCard({ project, index }) {
         className={`proj-card glass accent-${project.accent}`}
         href={project.live}
         target="_blank"
-        rel="noreferrer"
+        rel="noopener noreferrer"
         onMouseMove={handleMove}
         onMouseLeave={reset}
         style={{ rotateX, rotateY, transformPerspective: 1000 }}
@@ -119,6 +119,7 @@ export default function Projects() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="proj-search-input glass"
+              aria-label="Search projects by technology or name"
             />
           </div>
         </div>
