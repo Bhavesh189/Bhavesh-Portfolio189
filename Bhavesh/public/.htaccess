@@ -1,0 +1,132 @@
+# ==============================================================================
+# Production-Ready Apache Configuration (.htaccess)
+# Designed for React SPAs (Vite/React Router) hosted on Hostinger Shared Hosting
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. SECURITY & DIRECTORY SETTINGS
+# ------------------------------------------------------------------------------
+
+# Disable directory browsing for security
+Options -Indexes
+
+# ------------------------------------------------------------------------------
+# 2. CLIENT-SIDE ROUTING (React Router fallback)
+# ------------------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Prevent rewrite loops if the request is already for index.html
+  RewriteRule ^index\.html$ - [L]
+
+  # Do not rewrite requests for existing files, links or directories
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Rewrite all other virtual URL paths to index.html for React Router to resolve
+  # QSA preserves any incoming URL query string parameters
+  RewriteRule ^ index.html [L,QSA]
+</IfModule>
+
+# ------------------------------------------------------------------------------
+# 3. GZIP COMPRESSION
+# ------------------------------------------------------------------------------
+<IfModule mod_deflate.c>
+  <IfModule mod_filter.c>
+    # Compress standard text files, style sheets, scripts, json, XML, and fonts
+    AddOutputFilterByType DEFLATE text/html \
+                                  text/plain \
+                                  text/xml \
+                                  text/css \
+                                  text/javascript \
+                                  application/javascript \
+                                  application/x-javascript \
+                                  application/json \
+                                  application/xml \
+                                  application/rss+xml \
+                                  application/atom+xml \
+                                  image/svg+xml \
+                                  font/otf \
+                                  font/ttf \
+                                  font/woff \
+                                  font/woff2 \
+                                  application/x-font-ttf \
+                                  application/vnd.ms-fontobject
+  </IfModule>
+</IfModule>
+
+# ------------------------------------------------------------------------------
+# 4. CACHING HEADERS (Optimal caching for Vite builds)
+# ------------------------------------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 month"
+
+  # HTML files - Do not cache (forces browser to always check for latest JS/CSS hashes)
+  ExpiresByType text/html "access plus 0 seconds"
+
+  # Dynamic metadata files
+  ExpiresByType application/json "access plus 0 seconds"
+  ExpiresByType application/xml "access plus 0 seconds"
+  ExpiresByType text/xml "access plus 0 seconds"
+
+  # Static assets containing unique Vite build hashes (cache forever: 1 year)
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
+  ExpiresByType application/x-javascript "access plus 1 year"
+  ExpiresByType application/manifest+json "access plus 1 year"
+
+  # Media assets (cache forever: 1 year)
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType image/icon "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType video/mp4 "access plus 1 year"
+
+  # Font files (cache forever: 1 year)
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType font/otf "access plus 1 year"
+  ExpiresByType font/ttf "access plus 1 year"
+</IfModule>
+
+# Custom cache control definitions to ensure strict browser overrides
+<IfModule mod_headers.c>
+  # 1 Year Cache-Control for hashed assets (safe because updates result in new hash names)
+  <FilesMatch "\.(css|js|woff|woff2|otf|ttf|png|jpg|jpeg|gif|svg|webp|mp4)$">
+    Header set Cache-Control "max-age=31536000, public, immutable"
+  </FilesMatch>
+
+  # Prevent caching of router entrypoint html or configuration data
+  <FilesMatch "\.(html|json|xml)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
+  </FilesMatch>
+</IfModule>
+
+# ------------------------------------------------------------------------------
+# 5. SECURITY HEADERS
+# ------------------------------------------------------------------------------
+<IfModule mod_headers.c>
+  # Prevent browsers from MIME-sniffing the response away from the declared content-type
+  Header set X-Content-Type-Options "nosniff"
+
+  # Prevent clickjacking by disallowing iframe embedding except from the same origin
+  Header set X-Frame-Options "SAMEORIGIN"
+
+  # Enable reflective XSS filter blocks in older web browsers
+  Header set X-XSS-Protection "1; mode=block"
+
+  # Ensure the referrer header only passes referrer path data to secure destinations
+  Header set Referrer-Policy "no-referrer-when-downgrade"
+
+  # Restrict browser APIs and hardware features (Camera, Location, Mic)
+  Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+</IfModule>
