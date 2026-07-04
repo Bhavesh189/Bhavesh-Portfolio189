@@ -1,0 +1,46 @@
+
+
+.holo-card-wrapper {
+  position: relative;
+  border-radius: 16px;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: box-shadow 0.3s ease;
+  overflow: visible; 
+}
+
+.holo-card-wrapper.hovered {
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4),
+              0 0 30px rgba(124, 92, 255, 0.15);
+}
+
+.holo-card-inner {
+  transform: translateZ(0px);
+  border-radius: 16px;
+  overflow: hidden;
+  height: 100%;
+}
+
+
+.holo-card-sheen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  border-radius: 16px;
+  pointer-events: none;
+  mix-blend-mode: color-dodge;
+  opacity: 0.85;
+  transition: opacity 0.3s ease;
+}
+
+
+.holo-card-wrapper.hovered h3 {
+  transform: translateZ(24px);
+  transition: transform 0.2s ease;
+}
+.holo-card-wrapper h3 {
+  transform: translateZ(0);
+}

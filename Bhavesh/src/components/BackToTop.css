@@ -1,0 +1,48 @@
+.backtotop {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 850;
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--text);
+  background: rgba(15, 15, 34, 0.9);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+  transition: color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.backtotop:hover {
+  color: var(--cyan);
+  transform: translateY(-3px);
+}
+.backtotop svg.backtotop-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+.backtotop-track {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 3;
+}
+.backtotop-fill {
+  fill: none;
+  stroke: url(#btt-grad);
+  stroke: var(--violet-2);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+@media (max-width: 520px) {
+  .backtotop {
+    right: 1rem;
+    bottom: 5.2rem;
+    width: 48px;
+    height: 48px;
+  }
+}

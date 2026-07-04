@@ -1,0 +1,58 @@
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background: var(--bg);
+}
+.preloader-inner {
+  width: min(360px, 74vw);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+}
+.preloader-mark {
+  width: 132px;
+  height: auto;
+  filter: drop-shadow(0 0 22px rgba(124, 92, 255, 0.5));
+}
+.preloader-row {
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+}
+.preloader-label {
+  font-size: 0.76rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.preloader-count {
+  font-size: 1.5rem;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.preloader-count::after {
+  content: '%';
+  font-size: 0.68em;
+  color: var(--violet-2);
+  margin-left: 2px;
+}
+.preloader-bar {
+  width: 100%;
+  height: 2px;
+  background: var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.preloader-bar span {
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform-origin: left center;
+  background: var(--grad);
+}

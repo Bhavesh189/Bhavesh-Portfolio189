@@ -1,0 +1,16 @@
+{
+  "name": "Bhavesh Sharma — Portfolio",
+  "short_name": "Bhavesh ∞",
+  "description": "MERN Stack Developer & Software Engineer. Portfolio built with React & Three.js.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#06060f",
+  "theme_color": "#06060f",
+  "icons": [
+    {
+      "src": "/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png"
+    }
+  ]
+}

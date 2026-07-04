@@ -1,0 +1,111 @@
+.timeline {
+  position: relative;
+  padding-left: 2.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+.timeline-line {
+  position: absolute;
+  left: 9px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.timeline-fill {
+  position: absolute;
+  inset: 0;
+  transform-origin: top center;
+  transform: scaleY(0);
+  background: linear-gradient(var(--violet), var(--cyan));
+}
+.tl-item {
+  position: relative;
+}
+.tl-node {
+  position: absolute;
+  left: -2.6rem;
+  top: 6px;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+}
+.tl-node span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--violet-2);
+  box-shadow: 0 0 0 4px rgba(124, 92, 255, 0.12);
+}
+.tl-card {
+  padding: 1.6rem 1.8rem;
+  border-radius: var(--radius);
+  transition: border-color 0.4s var(--ease), transform 0.4s var(--ease);
+}
+.tl-card:hover {
+  border-color: rgba(41, 211, 238, 0.35);
+  transform: translateX(4px);
+}
+.tl-kind {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  margin-bottom: 0.9rem;
+}
+.tl-kind-work {
+  color: var(--cyan);
+  background: rgba(41, 211, 238, 0.1);
+}
+.tl-kind-education {
+  color: var(--violet-2);
+  background: rgba(124, 92, 255, 0.12);
+}
+.tl-role {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+.tl-org {
+  margin-top: 0.2rem;
+  color: var(--text);
+  font-weight: 500;
+}
+.tl-meta {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--faint);
+  margin-top: 0.3rem;
+}
+.tl-points {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.tl-points li {
+  position: relative;
+  padding-left: 1.3rem;
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+.tl-points li::before {
+  content: '▹';
+  position: absolute;
+  left: 0;
+  color: var(--violet-2);
+}
+.tl-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.2rem;
+}

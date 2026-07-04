@@ -1,0 +1,321 @@
+
+
+
+.arcade-launcher {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 9999;
+  font-family: 'Outfit', 'Inter', sans-serif;
+}
+
+.arcade-launch-btn {
+  background: rgba(12, 12, 18, 0.78);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.05);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.arcade-launch-btn:hover {
+  transform: scale(1.08) translateY(-2px);
+  border-color: var(--cyan, #29d3ee);
+  box-shadow: 0 12px 40px rgba(41, 211, 238, 0.3);
+}
+
+.arcade-badge {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  background: var(--violet, #7c5cff);
+  color: #fff;
+  font-size: 8px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 10px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(124, 92, 255, 0.4);
+}
+
+
+.arcade-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(5, 5, 10, 0.85);
+  backdrop-filter: blur(18px);
+  z-index: 10002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.arcade-window {
+  background: rgba(10, 11, 18, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  width: 90%;
+  max-width: 620px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8),
+              inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  font-family: 'Outfit', 'Inter', sans-serif;
+}
+
+
+.arcade-title-bar {
+  background: rgba(15, 16, 25, 0.9);
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.bar-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.bar-dots .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.bar-dots .dot.red { background: #ff5c9c; cursor: pointer; }
+.bar-dots .dot.yellow { background: #ffcf5c; }
+.bar-dots .dot.green { background: #29d3ee; }
+
+.bar-title {
+  color: #718096;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.bar-close {
+  background: transparent;
+  border: none;
+  color: #718096;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.bar-close:hover {
+  color: #fff;
+}
+
+
+.arcade-body {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  background: #06060c;
+  position: relative;
+}
+
+
+.crt::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 20;
+  background-size: 100% 3px, 3px 100%;
+  pointer-events: none;
+  opacity: 0.15;
+}
+
+
+.arcade-info {
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 10;
+}
+
+.info-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-stat span {
+  font-size: 9px;
+  color: #718096;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+}
+
+.info-stat h3 {
+  font-size: 24px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.neon-cyan {
+  color: var(--cyan, #29d3ee);
+  text-shadow: 0 0 10px rgba(41, 211, 238, 0.35);
+}
+
+.neon-violet {
+  color: var(--violet-2, #9d7bff);
+  text-shadow: 0 0 10px rgba(157, 123, 255, 0.35);
+}
+
+.info-lives-row {
+  display: flex;
+  gap: 4px;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.heart {
+  filter: grayscale(1);
+  opacity: 0.3;
+  transition: all 0.3s ease;
+}
+
+.heart.active {
+  filter: grayscale(0);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.info-instructions {
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 14px;
+}
+
+.info-instructions h4 {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 6px 0;
+}
+
+.info-instructions p {
+  font-size: 9.5px;
+  color: #718096;
+  line-height: 1.4;
+  margin: 0;
+}
+
+
+.arcade-canvas-wrap {
+  position: relative;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.arcade-canvas-wrap canvas {
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  max-width: 100%;
+  aspect-ratio: 1/1;
+  background: #0b0f19;
+  cursor: none; 
+}
+
+
+.canvas-overlay {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  background: rgba(6, 6, 12, 0.94);
+  backdrop-filter: blur(8px);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  border-radius: 4px;
+  border: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+.canvas-overlay h2 {
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 1px;
+  margin: 0 0 8px 0;
+}
+
+.canvas-overlay p {
+  font-size: 12px;
+  color: #718096;
+  margin: 0 0 20px 0;
+  max-width: 250px;
+}
+
+
+.error-state h2 {
+  color: #ff5c9d;
+  text-shadow: 0 0 10px rgba(255, 92, 157, 0.35);
+}
+
+
+.success-state h2 {
+  color: #29d3ee;
+  text-shadow: 0 0 10px rgba(41, 211, 238, 0.35);
+}
+
+.win-badge {
+  font-size: 44px;
+  color: #ffcf5c;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 0 8px rgba(255, 207, 92, 0.4));
+}
+
+.final-score {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 18px 0;
+}
+
+
+@media (max-width: 580px) {
+  .arcade-body {
+    grid-template-columns: 1fr;
+  }
+  .arcade-info {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 14px;
+  }
+  .info-instructions {
+    display: none;
+  }
+  .info-stat {
+    align-items: center;
+  }
+}

@@ -1,0 +1,114 @@
+.resume-grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1fr;
+  gap: 2.4rem;
+  align-items: center;
+}
+
+.resume-preview-wrap {
+  perspective: 1200px;
+}
+.resume-preview-link {
+  position: relative;
+  display: block;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+  transform: rotateY(6deg) rotateX(2deg);
+}
+.resume-preview-link:hover {
+  transform: rotateY(0deg) rotateX(0deg) translateY(-6px);
+  box-shadow: 0 40px 90px -30px rgba(124, 92, 255, 0.55);
+}
+.resume-preview-link img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.resume-preview-badge {
+  position: absolute;
+  left: 50%;
+  bottom: 1rem;
+  transform: translateX(-50%) translateY(10px);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5ch;
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: #0a0a14;
+  background: var(--grad);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+}
+.resume-preview-link:hover .resume-preview-badge {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.resume-card {
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+}
+.resume-icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  font-size: 1.4rem;
+  color: var(--cyan);
+  background: var(--grad-soft);
+  border: 1px solid var(--line);
+}
+.resume-card-title {
+  margin-top: 1.3rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.resume-card-meta {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--faint);
+  margin-top: 0.4rem;
+}
+.resume-facts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin: 1.6rem 0;
+}
+.resume-facts li {
+  display: flex;
+  align-items: center;
+  gap: 0.7ch;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.resume-facts svg {
+  color: var(--cyan);
+  flex-shrink: 0;
+}
+.resume-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 0.4rem;
+}
+
+@media (max-width: 820px) {
+  .resume-grid {
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+  }
+  .resume-preview-wrap {
+    max-width: 420px;
+    margin-inline: auto;
+  }
+  .resume-preview-link {
+    transform: none;
+  }
+}
