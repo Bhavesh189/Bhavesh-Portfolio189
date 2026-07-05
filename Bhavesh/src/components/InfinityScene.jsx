@@ -20,6 +20,19 @@ function makeGlowSprite() {
 
 
 
+const getThemeColors = () => {
+  const style = getComputedStyle(document.documentElement);
+  const parseColor = (varName, defaultHex) => {
+    const raw = style.getPropertyValue(varName).trim();
+    return new THREE.Color(raw || defaultHex);
+  };
+  return {
+    violet: parseColor('--violet', '#dfa95c'),
+    cyan: parseColor('--cyan', '#c5a880'),
+    pink: parseColor('--pink', '#e2c08d'),
+  };
+};
+
 export default function InfinityScene({ reducedMotion = false }) {
   const mountRef = useRef(null);
   const initialPositions = useRef(null);
@@ -54,9 +67,6 @@ export default function InfinityScene({ reducedMotion = false }) {
     const COUNT = 2600;
     const positions = new Float32Array(COUNT * 3);
     const colors = new Float32Array(COUNT * 3);
-    const violet = new THREE.Color('#7c5cff');
-    const cyan = new THREE.Color('#29d3ee');
-    const pink = new THREE.Color('#ff5c9d');
     const A = 3.7;
     const B = 2.15;
 
@@ -73,21 +83,34 @@ export default function InfinityScene({ reducedMotion = false }) {
       positions[i * 3] = x + ox;
       positions[i * 3 + 1] = y + oy;
       positions[i * 3 + 2] = oz;
-
-      const mix = (Math.sin(t) + 1) / 2;
-      const col = violet.clone().lerp(cyan, mix);
-      if (Math.random() < 0.06) col.lerp(pink, 0.65);
-      colors[i * 3] = col.r;
-      colors[i * 3 + 1] = col.g;
-      colors[i * 3 + 2] = col.b;
     }
-
 
     initialPositions.current = new Float32Array(positions);
 
     const geo = new THREE.BufferGeometry();
     geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    
+    const colorAttr = new THREE.BufferAttribute(colors, 3);
+    geo.setAttribute('color', colorAttr);
+
+    const updateColors = () => {
+      const themeColors = getThemeColors();
+      const colorsArr = colorAttr.array;
+      for (let i = 0; i < COUNT; i++) {
+        const t = (i / COUNT) * Math.PI * 2;
+        const mix = (Math.sin(t) + 1) / 2;
+        const col = themeColors.violet.clone().lerp(themeColors.cyan, mix);
+        if (i % 14 === 0) col.lerp(themeColors.pink, 0.65);
+        colorsArr[i * 3] = col.r;
+        colorsArr[i * 3 + 1] = col.g;
+        colorsArr[i * 3 + 2] = col.b;
+      }
+      colorAttr.needsUpdate = true;
+    };
+    updateColors();
+
+    const observer = new MutationObserver(updateColors);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['style'] });
     const mat = new THREE.PointsMaterial({
       size: 0.08,
       map: sprite,
@@ -190,9 +213,20 @@ export default function InfinityScene({ reducedMotion = false }) {
       raf = requestAnimationFrame(loop);
     };
 
+    let isIntersecting = true;
+    const viewObserver = new IntersectionObserver(([entry]) => {
+      isIntersecting = entry.isIntersecting;
+      cancelAnimationFrame(raf);
+      if (isIntersecting && !document.hidden && !reducedMotion) {
+        clock.getDelta(); // reset clock delta to prevent jump
+        loop();
+      }
+    }, { threshold: 0.01 });
+    viewObserver.observe(mount);
+
     if (reducedMotion) {
       renderFrame();
-    } else {
+    } else if (isIntersecting) {
       loop();
     }
 
@@ -207,11 +241,13 @@ export default function InfinityScene({ reducedMotion = false }) {
 
     const onVisibility = () => {
       cancelAnimationFrame(raf);
-      if (!document.hidden && !reducedMotion) loop();
+      if (isIntersecting && !document.hidden && !reducedMotion) loop();
     };
     document.addEventListener('visibilitychange', onVisibility);
 
     return () => {
+      observer.disconnect();
+      viewObserver.disconnect();
       cancelAnimationFrame(raf);
       window.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('resize', onResize);

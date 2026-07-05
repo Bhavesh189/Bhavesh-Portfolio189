@@ -2,28 +2,28 @@
 
 :root {
   
-  --bg: #06060f;
-  --bg-1: #0a0a18;
-  --bg-2: #0f0f22;
-  --bg-3: #17173010;
-  --panel: rgba(255, 255, 255, 0.028);
-  --panel-strong: rgba(255, 255, 255, 0.05);
-  --line: rgba(255, 255, 255, 0.09);
-  --line-soft: rgba(255, 255, 255, 0.06);
+  --bg: #030303;
+  --bg-1: #09090b;
+  --bg-2: #141416;
+  --bg-3: rgba(255, 255, 255, 0.015);
+  --panel: rgba(255, 255, 255, 0.02);
+  --panel-strong: rgba(255, 255, 255, 0.04);
+  --line: rgba(255, 255, 255, 0.06);
+  --line-soft: rgba(255, 255, 255, 0.04);
 
-  --text: #ececf5;
-  --muted: #a4a4c2;
-  --faint: #6d6d8c;
+  --text: #f4f4f5;
+  --muted: #a1a1aa;
+  --faint: #52525b;
 
-  --violet: #7c5cff;
-  --violet-2: #9d7bff;
-  --cyan: #29d3ee;
-  --pink: #ff5c9d;
+  --violet: #dfa95c;
+  --violet-2: #f3d098;
+  --cyan: #c5a880;
+  --pink: #e2c08d;
 
   --grad: linear-gradient(120deg, var(--violet) 0%, var(--cyan) 100%);
-  --grad-soft: linear-gradient(120deg, rgba(124, 92, 255, 0.16), rgba(41, 211, 238, 0.16));
-  --glow-violet: 0 0 60px rgba(124, 92, 255, 0.35);
-  --glow-cyan: 0 0 60px rgba(41, 211, 238, 0.28);
+  --grad-soft: linear-gradient(120deg, color-mix(in srgb, var(--violet) 10%, transparent), color-mix(in srgb, var(--cyan) 10%, transparent));
+  --glow-violet: 0 0 50px color-mix(in srgb, var(--violet) 15%, transparent);
+  --glow-cyan: 0 0 50px color-mix(in srgb, var(--cyan) 12%, transparent);
 
   
   --font-display: 'Space Grotesk', system-ui, sans-serif;
@@ -69,6 +69,7 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
+  transition: background 0.5s var(--ease), color 0.5s var(--ease);
 }
 img,
 svg,
@@ -144,9 +145,9 @@ html.lenis body {
   overflow: hidden;
   pointer-events: none;
   background:
-    radial-gradient(1100px 700px at 78% -8%, rgba(124, 92, 255, 0.18), transparent 60%),
-    radial-gradient(900px 640px at 12% 8%, rgba(41, 211, 238, 0.13), transparent 60%),
-    radial-gradient(760px 620px at 60% 108%, rgba(255, 92, 157, 0.1), transparent 60%),
+    radial-gradient(1100px 700px at 78% -8%, color-mix(in srgb, var(--violet) 7%, transparent), transparent 60%),
+    radial-gradient(900px 640px at 12% 8%, color-mix(in srgb, var(--cyan) 6%, transparent), transparent 60%),
+    radial-gradient(760px 620px at 60% 108%, color-mix(in srgb, var(--violet) 3%, transparent), transparent 60%),
     var(--bg);
 }
 .atmosphere::before {
@@ -154,8 +155,8 @@ html.lenis body {
   position: absolute;
   inset: -2px;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.024) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.024) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
   background-size: 64px 64px;
   mask-image: radial-gradient(circle at 50% 30%, #000 0%, transparent 78%);
 }
@@ -167,8 +168,8 @@ html.lenis body {
   height: 60vw;
   top: 30%;
   left: 55%;
-  background: radial-gradient(circle, rgba(124, 92, 255, 0.14), transparent 62%);
-  filter: blur(30px);
+  background: radial-gradient(circle, color-mix(in srgb, var(--violet) 4%, transparent), transparent 62%);
+  filter: blur(40px);
   animation: drift 26s var(--ease) infinite alternate;
 }
 @keyframes drift {
@@ -252,15 +253,15 @@ html.lenis body {
   font-weight: 500;
   letter-spacing: 0.04em;
   border-radius: 999px;
-  color: #0a0a14;
+  color: #030303;
   background: var(--grad);
-  box-shadow: 0 10px 40px rgba(124, 92, 255, 0.32);
+  box-shadow: 0 10px 30px color-mix(in srgb, var(--violet) 22%, transparent);
   transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
   will-change: transform;
 }
 .btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 16px 54px rgba(41, 211, 238, 0.4);
+  box-shadow: 0 16px 45px color-mix(in srgb, var(--cyan) 30%, transparent);
 }
 .btn-ghost {
   color: var(--text);
@@ -270,8 +271,8 @@ html.lenis body {
   backdrop-filter: blur(8px);
 }
 .btn-ghost:hover {
-  border-color: rgba(124, 92, 255, 0.5);
-  box-shadow: var(--glow-violet);
+  border-color: color-mix(in srgb, var(--violet) 40%, transparent);
+  box-shadow: 0 0 35px color-mix(in srgb, var(--violet) 15%, transparent);
 }
 
 
@@ -280,6 +281,11 @@ html.lenis body {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   backdrop-filter: blur(10px);
+  transition: border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+.glass:hover {
+  border-color: color-mix(in srgb, var(--violet) 22%, transparent);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), 0 0 20px color-mix(in srgb, var(--violet) 5%, transparent);
 }
 
 

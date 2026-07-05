@@ -37,8 +37,8 @@ export default function Preloader({ onComplete }) {
         <svg className="preloader-mark" viewBox="0 0 200 100" fill="none">
           <defs>
             <linearGradient id="pg" x1="0" y1="0" x2="200" y2="0" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#7c5cff" />
-              <stop offset="1" stopColor="#29d3ee" />
+              <stop stopColor="var(--violet)" />
+              <stop offset="1" stopColor="var(--cyan)" />
             </linearGradient>
           </defs>
           <motion.path

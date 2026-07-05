@@ -11,6 +11,10 @@ const glassVertexShader = `
 
 const glassFragmentShader = `
   uniform float time;
+  uniform vec3 colorBg;
+  uniform vec3 colorGlow1;
+  uniform vec3 colorGlow2;
+  uniform vec3 colorGlow3;
   varying vec2 vUv;
   void main() {
     vec2 uv = vUv;
@@ -27,14 +31,24 @@ const glassFragmentShader = `
     float glow2 = smoothstep(0.38, 0.0, dist2) * 0.35;
     float glow3 = smoothstep(0.40, 0.0, dist3) * 0.30;
 
-    vec3 col1 = vec3(0.48, 0.36, 1.0);
-    vec3 col2 = vec3(0.16, 0.82, 0.93);
-    vec3 col3 = vec3(1.0, 0.36, 0.61);
-
-    vec3 finalColor = vec3(0.02, 0.02, 0.06) + col1 * glow1 + col2 * glow2 + col3 * glow3;
+    vec3 finalColor = colorBg + colorGlow1 * glow1 + colorGlow2 * glow2 + colorGlow3 * glow3;
     gl_FragColor = vec4(finalColor, 0.55);
   }
 `;
+
+const getThemeColors = () => {
+  const style = getComputedStyle(document.documentElement);
+  const parseColor = (varName, defaultHex) => {
+    const raw = style.getPropertyValue(varName).trim();
+    return new THREE.Color(raw || defaultHex);
+  };
+  return {
+    colorBg: parseColor('--bg-1', '#09090b'),
+    colorGlow1: parseColor('--violet', '#dfa95c'),
+    colorGlow2: parseColor('--cyan', '#c5a880'),
+    colorGlow3: parseColor('--pink', '#e2c08d'),
+  };
+};
 
 export default function BookingWebGLBg() {
   const mountRef = useRef(null);
@@ -55,7 +69,25 @@ export default function BookingWebGLBg() {
     mount.appendChild(renderer.domElement);
 
     const geometry = new THREE.PlaneGeometry(2, 2);
-    const uniforms = { time: { value: 0 } };
+    
+    const colors = getThemeColors();
+    const uniforms = {
+      time: { value: 0 },
+      colorBg: { value: colors.colorBg },
+      colorGlow1: { value: colors.colorGlow1 },
+      colorGlow2: { value: colors.colorGlow2 },
+      colorGlow3: { value: colors.colorGlow3 },
+    };
+
+    const observer = new MutationObserver(() => {
+      const updated = getThemeColors();
+      uniforms.colorBg.value.copy(updated.colorBg);
+      uniforms.colorGlow1.value.copy(updated.colorGlow1);
+      uniforms.colorGlow2.value.copy(updated.colorGlow2);
+      uniforms.colorGlow3.value.copy(updated.colorGlow3);
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['style'] });
+
     const material = new THREE.ShaderMaterial({
       vertexShader: glassVertexShader,
       fragmentShader: glassFragmentShader,
@@ -67,12 +99,27 @@ export default function BookingWebGLBg() {
 
     let raf;
     const clock = new THREE.Clock();
+
+    let isIntersecting = true;
+    const viewObserver = new IntersectionObserver(([entry]) => {
+      isIntersecting = entry.isIntersecting;
+      cancelAnimationFrame(raf);
+      if (isIntersecting) {
+        clock.getDelta(); // reset clock
+        loop();
+      }
+    }, { threshold: 0.01 });
+    viewObserver.observe(mount);
+
     const loop = () => {
       uniforms.time.value = clock.getElapsedTime();
       renderer.render(scene, camera);
       raf = requestAnimationFrame(loop);
     };
-    loop();
+    
+    if (isIntersecting) {
+      loop();
+    }
 
     const onResize = () => {
       if (!mountRef.current) return;
@@ -83,6 +130,8 @@ export default function BookingWebGLBg() {
     window.addEventListener('resize', onResize);
 
     return () => {
+      observer.disconnect();
+      viewObserver.disconnect();
       cancelAnimationFrame(raf);
       window.removeEventListener('resize', onResize);
       geometry.dispose();

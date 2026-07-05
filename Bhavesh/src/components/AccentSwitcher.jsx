@@ -3,13 +3,13 @@ import { accents, applyAccent } from '../config';
 
 
 export default function AccentSwitcher() {
-  const [current, setCurrent] = useState('nebula');
+  const [current, setCurrent] = useState('infinity');
 
   useEffect(() => {
     try {
-      setCurrent(localStorage.getItem('accent') || 'nebula');
+      setCurrent(localStorage.getItem('accent') || 'infinity');
     } catch (e) {
-      setCurrent('nebula');
+      setCurrent('infinity');
     }
   }, []);
 

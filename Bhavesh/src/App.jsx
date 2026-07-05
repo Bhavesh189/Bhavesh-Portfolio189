@@ -2,17 +2,20 @@ import { useEffect, useState, lazy, Suspense } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import useReducedMotion from './hooks/useReducedMotion';
 import useSmoothScroll from './hooks/useSmoothScroll';
+import useKeyboardShortcuts from './hooks/useKeyboardShortcuts';
 import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import About from './components/About';
-import Skills from './components/Skills';
-import Journey from './components/Journey';
-import Projects from './components/Projects';
-import Certifications from './components/Certifications';
-import Contact from './components/Contact';
 import { ToastProvider } from './components/Toast';
 import Cursor from './components/Cursor';
+
+// Lazy load below-the-fold sections for extreme mobile performance (90+ Lighthouse score)
+const About = lazy(() => import('./components/About'));
+const Skills = lazy(() => import('./components/Skills'));
+const Journey = lazy(() => import('./components/Journey'));
+const Projects = lazy(() => import('./components/Projects'));
+const Certifications = lazy(() => import('./components/Certifications'));
+const Contact = lazy(() => import('./components/Contact'));
 
 // Lazy load non-critical and heavy components
 const DevModsPanel = lazy(() => import('./components/DevModsPanel'));
@@ -26,7 +29,8 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(true); // Default to true on initial render for fast paint
 
-  useSmoothScroll(!loading && !reducedMotion);
+  useSmoothScroll(!loading && !reducedMotion && !isMobile);
+  useKeyboardShortcuts();
 
   useEffect(() => {
     const checkMobile = () => {
@@ -84,15 +88,15 @@ export default function App() {
 
       <main>
         <Hero reducedMotion={reducedMotion} isMobile={isMobile} />
-        <About />
-        <Skills isMobile={isMobile} />
-        <Journey />
-        <Projects />
-        <Certifications />
         <Suspense fallback={null}>
+          <About />
+          <Skills isMobile={isMobile} />
+          <Journey />
+          <Projects />
+          <Certifications />
           <BookingSystem isMobile={isMobile} />
+          <Contact />
         </Suspense>
-        <Contact />
       </main>
     </ToastProvider>
   );

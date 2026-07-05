@@ -28,7 +28,7 @@ export const socials = [
 
 export const stats = [
   { value: '9.20', label: 'CGPA / 10', suffix: '' },
-  { value: '350', label: 'DSA problems solved', suffix: '+' },
+  { value: '346', label: 'DSA problems solved', suffix: '+' },
   { value: '5', label: 'Projects shipped', suffix: '' },
   { value: '3', label: 'Certifications', suffix: '' },
 ];

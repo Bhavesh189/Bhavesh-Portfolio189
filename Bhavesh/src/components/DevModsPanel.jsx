@@ -270,6 +270,18 @@ export default function DevModsPanel() {
                   <div className="item-toggle-ui"><div className="toggle-slider" /></div>
                 </div>
               </div>
+
+              <div className="mods-shortcuts-guide">
+                <h4>⌨️ QUICK HOTKEYS</h4>
+                <div className="shortcuts-keys-grid">
+                  <div><span>A</span> About</div>
+                  <div><span>S</span> Skills</div>
+                  <div><span>J</span> Journey</div>
+                  <div><span>P</span> Projects</div>
+                  <div><span>C</span> Contact</div>
+                  <div><span>T</span> Top</div>
+                </div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

@@ -10,9 +10,9 @@
   position: relative;
   width: 100%;
   height: 520px;
-  background: rgba(8, 8, 18, 0.45);
+  background: rgba(9, 9, 11, 0.45);
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--line);
   overflow: hidden;
   box-shadow: 0 35px 90px rgba(0, 0, 0, 0.7);
   margin-top: 2rem;
@@ -108,8 +108,8 @@
   top: 0;
   bottom: 0;
   width: 3px;
-  background: linear-gradient(to bottom, var(--violet, #7c5cff), var(--cyan, #29d3ee));
-  box-shadow: 0 0 10px rgba(41, 211, 238, 0.5);
+  background: var(--grad);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--cyan) 50%, transparent);
   border-radius: 99px;
 }
 
@@ -130,9 +130,9 @@
   font-family: var(--font-mono);
   font-size: 0.7rem;
   letter-spacing: 0.12em;
-  color: var(--cyan, #29d3ee);
+  color: var(--cyan);
   margin-bottom: 0.8rem;
-  text-shadow: 0 0 8px rgba(41, 211, 238, 0.3);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--cyan) 25%, transparent);
 }
 
 .matrix-detail-title {
@@ -186,7 +186,7 @@
   padding-block: 1.8rem;
   border-top: 1px solid var(--line-soft);
   border-bottom: 1px solid var(--line-soft);
-  background: rgba(6, 6, 12, 0.3);
+  background: rgba(3, 3, 3, 0.35);
 }
 
 @media (max-width: 780px) {

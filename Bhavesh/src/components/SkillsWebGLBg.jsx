@@ -13,6 +13,10 @@ const glassFragmentShader = `
   uniform float time;
   uniform vec2 mouse;
   uniform float shatterProgress;
+  uniform vec3 colorBg1;
+  uniform vec3 colorBg2;
+  uniform vec3 colorGlow1;
+  uniform vec3 colorGlow2;
   varying vec2 vUv;
 
   float noise(vec2 p) {
@@ -30,8 +34,8 @@ const glassFragmentShader = `
 
     float glow = exp(-dist * 4.0) * (0.8 + shatterProgress * 0.4);
     
-    vec3 bgColor = mix(vec3(0.01, 0.01, 0.04), vec3(0.04, 0.03, 0.08), uv.y);
-    vec3 glowColor = mix(vec3(0.48, 0.36, 1.0), vec3(0.16, 0.82, 0.93), uv.x);
+    vec3 bgColor = mix(colorBg1, colorBg2, uv.y);
+    vec3 glowColor = mix(colorGlow1, colorGlow2, uv.x);
     vec3 highlight = glowColor * glow;
 
     float grid = step(0.99, fract(uv.x * 18.0)) + step(0.99, fract(uv.y * 18.0));
@@ -46,6 +50,20 @@ const glassFragmentShader = `
     gl_FragColor = vec4(finalColor, 1.0);
   }
 `;
+
+const getThemeColors = () => {
+  const style = getComputedStyle(document.documentElement);
+  const parseColor = (varName, defaultHex) => {
+    const raw = style.getPropertyValue(varName).trim();
+    return new THREE.Color(raw || defaultHex);
+  };
+  return {
+    colorBg1: parseColor('--bg', '#030303'),
+    colorBg2: parseColor('--bg-1', '#09090b'),
+    colorGlow1: parseColor('--violet', '#dfa95c'),
+    colorGlow2: parseColor('--cyan', '#c5a880'),
+  };
+};
 
 export default function SkillsWebGLBg({ onTiltChange, containerRef }) {
   const mountRef = useRef(null);
@@ -72,11 +90,26 @@ export default function SkillsWebGLBg({ onTiltChange, containerRef }) {
     mount.appendChild(renderer.domElement);
 
     const geometry = new THREE.PlaneGeometry(2, 2);
+    
+    const colors = getThemeColors();
     const uniforms = {
       time: { value: 0 },
       mouse: { value: new THREE.Vector2(0.5, 0.5) },
       shatterProgress: { value: 0.0 },
+      colorBg1: { value: colors.colorBg1 },
+      colorBg2: { value: colors.colorBg2 },
+      colorGlow1: { value: colors.colorGlow1 },
+      colorGlow2: { value: colors.colorGlow2 },
     };
+
+    const observer = new MutationObserver(() => {
+      const updated = getThemeColors();
+      uniforms.colorBg1.value.copy(updated.colorBg1);
+      uniforms.colorBg2.value.copy(updated.colorBg2);
+      uniforms.colorGlow1.value.copy(updated.colorGlow1);
+      uniforms.colorGlow2.value.copy(updated.colorGlow2);
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['style'] });
     
     const material = new THREE.ShaderMaterial({
       vertexShader: glassVertexShader,
@@ -130,6 +163,17 @@ export default function SkillsWebGLBg({ onTiltChange, containerRef }) {
     const clock = new THREE.Clock();
     let raf;
 
+    let isIntersecting = true;
+    const viewObserver = new IntersectionObserver(([entry]) => {
+      isIntersecting = entry.isIntersecting;
+      cancelAnimationFrame(raf);
+      if (isIntersecting) {
+        clock.getDelta(); // reset clock delta to prevent jump
+        loop();
+      }
+    }, { threshold: 0.01 });
+    viewObserver.observe(mount);
+
     const loop = () => {
       uniforms.time.value = clock.getElapsedTime() * 0.45;
 
@@ -139,7 +183,10 @@ export default function SkillsWebGLBg({ onTiltChange, containerRef }) {
       renderer.render(scene, camera);
       raf = requestAnimationFrame(loop);
     };
-    loop();
+    
+    if (isIntersecting) {
+      loop();
+    }
 
     const onResize = () => {
       if (!mountRef.current) return;
@@ -150,6 +197,8 @@ export default function SkillsWebGLBg({ onTiltChange, containerRef }) {
     window.addEventListener('resize', onResize);
 
     return () => {
+      observer.disconnect();
+      viewObserver.disconnect();
       cancelAnimationFrame(raf);
       container.removeEventListener('pointermove', onPointerMove);
       container.removeEventListener('pointerdown', onPointerDown);

@@ -146,6 +146,65 @@ function ContactForm() {
   );
 }
 
+function PortScanner() {
+  const [logs, setLogs] = useState([]);
+  const [scanning, setScanning] = useState(false);
+
+  const startScan = () => {
+    if (scanning) return;
+    setScanning(true);
+    setLogs(['[+] Initializing Port Scanner...', '[+] Targeting: localhost (Bhavesh-Portfolio)']);
+
+    const steps = [
+      { delay: 600, log: '[+] Port 80 (HTTP) ........ [ OPEN ] - React Client' },
+      { delay: 1200, log: '[+] Port 443 (HTTPS) ...... [ OPEN ] - SSL Secured' },
+      { delay: 1800, log: '[+] Port 3000 (Backend) ... [ OPEN ] - API Node' },
+      { delay: 2400, log: '[+] Port 27017 (MongoDB) .. [ SECURED ] - Firewall Active' },
+      { delay: 3000, log: '[+] Port 22 (SSH) ......... [ CLOSED ] - Root Blocked' },
+      { delay: 3600, log: '[*] Scan Complete. Host is SECURE (0 Critical Leaks).' },
+    ];
+
+    steps.forEach((step) => {
+      setTimeout(() => {
+        setLogs((prev) => [...prev, step.log]);
+        if (step.log.startsWith('[*]')) {
+          setScanning(false);
+        }
+      }, step.delay);
+    });
+  };
+
+  return (
+    <div className="port-scanner glass">
+      <div className="scanner-head">
+        <span className="scanner-dot"></span>
+        <span className="scanner-title">Security Console (Simulation)</span>
+      </div>
+      <div className="scanner-display">
+        {logs.length === 0 ? (
+          <div className="scanner-placeholder">Click button to scan host security ports...</div>
+        ) : (
+          <div className="scanner-logs">
+            {logs.map((log, index) => (
+              <div key={index} className={`scanner-log-line ${log.startsWith('[*]') ? 'complete' : ''}`}>
+                {log}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      <button
+        type="button"
+        className="btn btn-ghost scanner-btn"
+        onClick={startScan}
+        disabled={scanning}
+      >
+        {scanning ? 'Scanning Ports...' : 'Scan Host Ports'}
+      </button>
+    </div>
+  );
+}
+
 export default function Contact() {
   const toast = useToast();
 
@@ -215,6 +274,8 @@ export default function Contact() {
                 );
               })}
             </div>
+
+            <PortScanner />
           </Reveal>
         </div>
       </div>

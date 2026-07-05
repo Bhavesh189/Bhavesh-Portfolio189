@@ -18,8 +18,8 @@ function ProjectCard({ project, index }) {
 
   const shineBg = useTransform(
     [mx, my],
-    ([xVal, yVal]) => `radial-gradient(circle at ${xVal * 100}% ${yVal * 100}%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 50%),
-                       linear-gradient(${135 + xVal * 20}deg, rgba(255, 0, 128, 0.12) 0%, rgba(0, 255, 230, 0.12) 40%, rgba(255, 230, 0, 0.12) 80%)`
+    ([xVal, yVal]) => `radial-gradient(circle at ${xVal * 100}% ${yVal * 100}%, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 50%),
+                       linear-gradient(${135 + xVal * 20}deg, color-mix(in srgb, var(--violet) 8%, transparent) 0%, color-mix(in srgb, var(--cyan) 8%, transparent) 50%, color-mix(in srgb, var(--pink) 8%, transparent) 100%)`
   );
 
   const handleMove = (e) => {
