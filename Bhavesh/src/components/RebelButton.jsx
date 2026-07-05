@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useToast } from './Toast';
 
-export default function RebelButton({ children = 'Reject offer ✖' }) {
+export default function RebelButton({ children = 'Reject offer ' }) {
   const btnRef = useRef(null);
   const toast = useToast();
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -49,7 +49,7 @@ export default function RebelButton({ children = 'Reject offer ✖' }) {
 
   const handleClick = (e) => {
     e.preventDefault();
-    toast('Nice try, but rejection is not an option! 😉', 'error');
+    toast('Nice try, but rejection is not an option! ', 'error');
   };
 
   return (

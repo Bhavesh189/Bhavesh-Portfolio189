@@ -30,14 +30,14 @@ function ContactForm() {
     setStatus('sending');
 
     const lines = [
-      '🌐 New message from your portfolio',
+      ' New message from your portfolio',
       '',
-      `👤 Name: ${form.name}`,
-      `✉️ Email: ${form.email}`,
-      form.date ? `📅 Preferred date: ${form.date}` : null,
-      `💬 Message: ${form.message}`,
+      ` Name: ${form.name}`,
+      `️ Email: ${form.email}`,
+      form.date ? ` Preferred date: ${form.date}` : null,
+      ` Message: ${form.message}`,
       '',
-      `🕓 ${new Date().toLocaleString()}`,
+      ` ${new Date().toLocaleString()}`,
     ].filter(Boolean);
 
     try {
@@ -211,7 +211,7 @@ export default function Contact() {
   const copyEmail = async () => {
     try {
       await navigator.clipboard.writeText(profile.email);
-      toast('Email copied! Ready to build something infinite 🚀', 'success');
+      toast('Email copied! Ready to build something infinite ', 'success');
       window.dispatchEvent(
         new CustomEvent('portfolio-xp', {
           detail: { amount: 30, id: 'copy-email', text: 'Serious Recruiter (Copied Email Address)' },

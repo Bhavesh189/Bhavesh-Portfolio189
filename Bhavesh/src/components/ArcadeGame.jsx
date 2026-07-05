@@ -57,8 +57,8 @@ function playSynthSound(type) {
 
 const BUG_LABELS = ['SQL-BUG', 'leak()', 'NullPtr', 'NaN', 'Overflow', 'syntax', '404', 'segfault'];
 
-export default function ArcadeGame() {
-  const [isOpen, setIsOpen] = useState(false);
+export default function ArcadeGame({ autoOpen = false }) {
+  const [isOpen, setIsOpen] = useState(autoOpen);
   const [gameState, setGameState] = useState('idle');
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
@@ -76,6 +76,13 @@ export default function ArcadeGame() {
 
     }
   }, []);
+
+  useEffect(() => {
+    if (autoOpen) {
+      setIsOpen(true);
+      initGame();
+    }
+  }, [autoOpen]);
 
 
   const game = useRef({
@@ -336,7 +343,7 @@ export default function ArcadeGame() {
                   <span className="dot yellow" />
                   <span className="dot green" />
                 </div>
-                <span className="bar-title">👾 BHAVESH-OS ARCADE v1.0.0</span>
+                <span className="bar-title"> BHAVESH-OS ARCADE v1.0.0</span>
                 <button className="bar-close" onClick={closeArcade} aria-label="Close Arcade game">
                   <FiX size={16} />
                 </button>
@@ -359,14 +366,14 @@ export default function ArcadeGame() {
                     <div className="info-lives-row">
                       {Array.from({ length: 3 }).map((_, i) => (
                         <span key={i} className={`heart ${i < lives ? 'active' : ''}`}>
-                          👾
+                          
                         </span>
                       ))}
                     </div>
                   </div>
 
                   <div className="info-instructions">
-                    <h4>🕹️ BUG BREAKER</h4>
+                    <h4>️ BUG BREAKER</h4>
                     <p>Move your mouse left/right to position the paddle. Break all the red bugs before you run out of lives!</p>
                   </div>
                 </div>

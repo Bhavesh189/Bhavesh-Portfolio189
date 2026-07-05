@@ -43,13 +43,32 @@ function RotatingRole({ roles }) {
 }
 
 export default function Hero({ reducedMotion = false, isMobile = false }) {
+  const [showScene, setShowScene] = useState(false);
   const words = profile.heroLine.split(' ');
   const head = words.slice(0, -2).join(' ');
   const tail = words.slice(-2).join(' ');
 
+  useEffect(() => {
+    if (isMobile || reducedMotion || showScene) return undefined;
+
+    const reveal = () => setShowScene(true);
+    const timeout = window.setTimeout(reveal, 9000);
+
+    window.addEventListener('pointermove', reveal, { once: true, passive: true });
+    window.addEventListener('scroll', reveal, { once: true, passive: true });
+    window.addEventListener('keydown', reveal, { once: true });
+
+    return () => {
+      window.clearTimeout(timeout);
+      window.removeEventListener('pointermove', reveal);
+      window.removeEventListener('scroll', reveal);
+      window.removeEventListener('keydown', reveal);
+    };
+  }, [isMobile, reducedMotion, showScene]);
+
   return (
     <section id="top" className="hero">
-      {!isMobile && (
+      {showScene && (
         <Suspense fallback={null}>
           <InfinityScene reducedMotion={reducedMotion} />
         </Suspense>

@@ -1,17 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const env = import.meta.env || {};
 
 export const telegram = {
@@ -19,12 +5,10 @@ export const telegram = {
   chatId: env.VITE_TELEGRAM_CHAT_ID || '7411383108',
 };
 
-
 export const accents = [
   { id: 'infinity', label: 'Infinity Gold', violet: '#dfa95c', violet2: '#f3d098', cyan: '#c5a880' },
-  { id: 'sapphire', label: 'Royal Sapphire', violet: '#3b82f6', violet2: '#60a5fa', cyan: '#06b6d4' },
-  { id: 'platinum', label: 'Titanium Platinum', violet: '#e2e8f0', violet2: '#ffffff', cyan: '#94a3b8' },
   { id: 'emerald', label: 'Forest Emerald', violet: '#10b981', violet2: '#34d399', cyan: '#059669' },
+  { id: 'ruby', label: 'Cyber Crimson', violet: '#ef4444', violet2: '#f87171', cyan: '#b91c1c' }
 ];
 
 export function applyAccent(id) {
@@ -36,18 +20,19 @@ export function applyAccent(id) {
   try {
     localStorage.setItem('accent', a.id);
   } catch (e) {
-    
   }
   return a.id;
 }
 
 export function initAccent() {
+  const r = Math.random();
   let id = 'infinity';
-  try {
-    id = localStorage.getItem('accent') || 'infinity';
-  } catch (e) {
+  if (r < 0.50) {
     id = 'infinity';
+  } else if (r < 0.75) {
+    id = 'emerald';
+  } else {
+    id = 'ruby';
   }
   return applyAccent(id);
 }
-

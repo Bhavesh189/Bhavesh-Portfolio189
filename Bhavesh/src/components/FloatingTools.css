@@ -1,0 +1,82 @@
+.floating-tool {
+  position: fixed;
+  z-index: 9999;
+  font-family: var(--font-mono);
+}
+
+.floating-tool-arcade {
+  bottom: 24px;
+  left: 24px;
+}
+
+.floating-tool-ai {
+  right: 90px;
+  bottom: 24px;
+}
+
+.floating-tool-btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(9, 9, 11, 0.82);
+  color: var(--text);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.42), inset 0 2px 4px rgba(255, 255, 255, 0.03);
+  transition: transform 0.25s var(--ease), border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+
+.floating-tool-btn:hover {
+  transform: translateY(-2px) scale(1.04);
+  border-color: var(--violet);
+  box-shadow: 0 12px 36px color-mix(in srgb, var(--violet) 20%, transparent);
+}
+
+.floating-tool-icon {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.floating-tool-badge {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  background: var(--violet);
+  color: #030303;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.floating-tool-pulse {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--violet);
+  box-shadow: 0 0 8px var(--violet);
+}
+
+@media (max-width: 640px) {
+  .floating-tool-btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .floating-tool-arcade {
+    left: 12px;
+    bottom: 14px;
+  }
+
+  .floating-tool-ai {
+    right: 72px;
+    bottom: 14px;
+  }
+}

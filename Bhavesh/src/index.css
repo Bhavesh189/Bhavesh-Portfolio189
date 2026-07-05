@@ -200,6 +200,7 @@ html.lenis body {
 .section {
   position: relative;
   padding-block: clamp(6rem, 12vh, 9rem);
+  scroll-margin-top: 85px;
 }
 .section-head {
   display: flex;
@@ -317,7 +318,7 @@ html.lenis body {
 
 }
 
-/* Screen-reader-only utility for technical SEO & accessibility */
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -328,5 +329,43 @@ html.lenis body {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+body.glitch-active::before {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+              linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
+  z-index: 10000;
+  background-size: 100% 4px, 6px 100%;
+  pointer-events: none;
+  opacity: 0.35;
+  animation: scanline-jitter 0.15s infinite;
+}
+
+@keyframes scanline-jitter {
+  0% { opacity: 0.32; }
+  50% { opacity: 0.38; }
+  100% { opacity: 0.32; }
+}
+
+body.glitch-active h1,
+body.glitch-active h2,
+body.glitch-active h3 {
+  animation: txt-glitch 1s infinite alternate;
+}
+
+@keyframes txt-glitch {
+  0% {
+    text-shadow: 2px -1px 0 rgba(255,0,80,0.5), -2px 1px 0 rgba(0,255,230,0.5);
+  }
+  100% {
+    text-shadow: -1px 2px 0 rgba(255,0,80,0.5), 2px -2px 0 rgba(0,255,230,0.5);
+  }
 }
 

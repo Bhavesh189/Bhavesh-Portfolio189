@@ -7,27 +7,25 @@ import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import { ToastProvider } from './components/Toast';
-import Cursor from './components/Cursor';
+import LazySection from './components/LazySection';
+import FloatingTools from './components/FloatingTools';
 
-// Lazy load below-the-fold sections for extreme mobile performance (90+ Lighthouse score)
 const About = lazy(() => import('./components/About'));
 const Skills = lazy(() => import('./components/Skills'));
 const Journey = lazy(() => import('./components/Journey'));
 const Projects = lazy(() => import('./components/Projects'));
 const Certifications = lazy(() => import('./components/Certifications'));
+const Resume = lazy(() => import('./components/Resume'));
 const Contact = lazy(() => import('./components/Contact'));
-
-// Lazy load non-critical and heavy components
-const DevModsPanel = lazy(() => import('./components/DevModsPanel'));
-const ArcadeGame = lazy(() => import('./components/ArcadeGame'));
-const BhaveshAI = lazy(() => import('./components/BhaveshAI'));
 const LiquidCursor = lazy(() => import('./components/LiquidCursor'));
 const BookingSystem = lazy(() => import('./components/BookingSystem'));
+const Cursor = lazy(() => import('./components/Cursor'));
 
 export default function App() {
   const reducedMotion = useReducedMotion();
   const [loading, setLoading] = useState(true);
-  const [isMobile, setIsMobile] = useState(true); // Default to true on initial render for fast paint
+  const [isMobile, setIsMobile] = useState(true);
+  const [interactiveVisuals, setInteractiveVisuals] = useState(false);
 
   useSmoothScroll(!loading && !reducedMotion && !isMobile);
   useKeyboardShortcuts();
@@ -59,6 +57,24 @@ export default function App() {
     if (reducedMotion) setLoading(false);
   }, [reducedMotion]);
 
+  useEffect(() => {
+    if (isMobile || reducedMotion || interactiveVisuals) return undefined;
+
+    const enable = () => setInteractiveVisuals(true);
+    const timeout = window.setTimeout(enable, 9000);
+
+    window.addEventListener('pointermove', enable, { once: true, passive: true });
+    window.addEventListener('scroll', enable, { once: true, passive: true });
+    window.addEventListener('keydown', enable, { once: true });
+
+    return () => {
+      window.clearTimeout(timeout);
+      window.removeEventListener('pointermove', enable);
+      window.removeEventListener('scroll', enable);
+      window.removeEventListener('keydown', enable);
+    };
+  }, [interactiveVisuals, isMobile, reducedMotion]);
+
   return (
     <ToastProvider>
       <div className="atmosphere" aria-hidden="true" />
@@ -70,33 +86,44 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      <Suspense fallback={null}>
-        <DevModsPanel />
-        <ArcadeGame />
-        <BhaveshAI />
-      </Suspense>
+      <FloatingTools />
 
-      {!isMobile && (
+      {!isMobile && interactiveVisuals && (
         <>
           <Suspense fallback={null}>
             <LiquidCursor />
+            <Cursor />
           </Suspense>
-          <Cursor />
         </>
       )}
       <Navbar />
 
       <main>
         <Hero reducedMotion={reducedMotion} isMobile={isMobile} />
-        <Suspense fallback={null}>
+        <LazySection id="about">
           <About />
+        </LazySection>
+        <LazySection id="skills">
           <Skills isMobile={isMobile} />
+        </LazySection>
+        <LazySection id="journey">
           <Journey />
+        </LazySection>
+        <LazySection id="work">
           <Projects />
+        </LazySection>
+        <LazySection id="certifications">
           <Certifications />
+        </LazySection>
+        <LazySection id="booking">
           <BookingSystem isMobile={isMobile} />
+        </LazySection>
+        <LazySection id="resume">
+          <Resume />
+        </LazySection>
+        <LazySection id="contact">
           <Contact />
-        </Suspense>
+        </LazySection>
       </main>
     </ToastProvider>
   );

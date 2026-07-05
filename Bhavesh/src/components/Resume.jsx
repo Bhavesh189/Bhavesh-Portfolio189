@@ -9,9 +9,10 @@ import './Resume.css';
 const updated = new Date().toLocaleString('en-US', { month: 'short', year: 'numeric' });
 
 const facts = [
-  'ATS-friendly, single page',
-  'Selectable text & live links',
-  'Looks sharp on every device',
+  'System Design & Architecture',
+  'Distributed Systems & Microservices',
+  'MERN Stack Development',
+  'Bug Bounty Expert'
 ];
 
 export default function Resume() {
@@ -28,7 +29,7 @@ export default function Resume() {
             </h2>
           </div>
           <p className="section-lead muted">
-            One page, always current. Preview it inline or take the PDF with you.
+            My résumé is a concise summary of my professional journey, highlighting my skills, experiences, and achievements.
           </p>
         </div>
 

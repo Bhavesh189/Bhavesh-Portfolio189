@@ -64,14 +64,14 @@ export default function BookingSystem({ isMobile = false }) {
     setBookingStatus('booking');
 
     const lines = [
-      '📅 New Interview Scheduled!',
+      ' New Interview Scheduled!',
       '',
-      `👤 Name: ${name}`,
-      `✉️ Email: ${email}`,
-      `🏢 Company: ${company || 'N/A'}`,
-      `⏰ Selected Slot: ${selectedSlot.day} at ${selectedSlot.time}`,
+      ` Name: ${name}`,
+      `️ Email: ${email}`,
+      ` Company: ${company || 'N/A'}`,
+      ` Selected Slot: ${selectedSlot.day} at ${selectedSlot.time}`,
       '',
-      `🕓 ${new Date().toLocaleString()}`,
+      ` ${new Date().toLocaleString()}`,
     ];
 
     try {

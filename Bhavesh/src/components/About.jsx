@@ -7,10 +7,14 @@ import './About.css';
 function StatCounter({ value, suffix, label }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-15%' });
-  const [display, setDisplay] = useState(value.includes('.') ? '0.00' : '0');
+  const [display, setDisplay] = useState(label.toLowerCase().includes('cgpa') ? value : (value.includes('.') ? '0.00' : '0'));
 
   useEffect(() => {
     if (!inView) return undefined;
+    if (label.toLowerCase().includes('cgpa')) {
+      setDisplay(value);
+      return undefined;
+    }
     const numeric = parseFloat(value);
     const isFloat = value.includes('.');
     let raf;
@@ -25,7 +29,7 @@ function StatCounter({ value, suffix, label }) {
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [inView, value]);
+  }, [inView, value, label]);
 
   return (
     <div className="stat" ref={ref}>
@@ -99,7 +103,7 @@ export default function About() {
           }
         }
       } catch (err) {
-        // Fallback silently handles it
+
       }
     };
     fetchLeetCode();

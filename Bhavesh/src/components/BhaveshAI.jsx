@@ -6,47 +6,47 @@ import './BhaveshAI.css';
 
 const RESUME_DATA = {
   education: {
-    title: "🎓 Education / B.Tech Degree",
+    title: " Education / B.Tech Degree",
     content: "I am pursuing my B.Tech in Computer Science & Engineering at Bikaner Technical University (BTU), Bikaner (Rajasthan). Batch: 2025 – 2029. Current CGPA: 9.20 / 10. Core coursework includes: Data Structures & Algorithms (DSA), Operating Systems (OS), DBMS, Computer Networks, and Object-Oriented Programming (OOP)."
   },
   experience: {
-    title: "💼 Experience / Internship",
+    title: " Experience / Internship",
     content: "I worked as a Web Developer Intern at Squarecell Resource India Pvt. Ltd. (Remote, Jan 2026 – Feb 2026). During this internship, I:\n• Built a coding-practice platform on a React.js, Node.js, and Express.js stack, cutting page load time by 35%.\n• Optimized MongoDB pipelines and state sync, reducing data retrieval latency by 40%.\n• Worked in Agile sprints using Git/GitHub and CI/CD workflows."
   },
   skills: {
-    title: "🛠️ Technical Skills",
+    title: "️ Technical Skills",
     content: "Here is my exact developer toolkit from my resume:\n• Languages: C, C++, Python, JavaScript (ES6+), Go, SQL\n• Frontend: HTML5, CSS3, React.js\n• Backend: Node.js, Express.js, REST APIs\n• Databases: MongoDB, NoSQL, SQL, JSONPowerDB\n• Tools/DevOps: Git, GitHub, Docker, Kubernetes, Postman\n• Core CS: Data Structures & Algorithms (DSA), OOP, NumPy, Pandas"
   },
   leetcode: {
-    title: "🏆 LeetCode & Competitive Programming",
+    title: " LeetCode & Competitive Programming",
     content: "I have solved over 350+ data structures and algorithms (DSA) problems on LeetCode. I actively participate in competitive programming to keep my problem-solving skills sharp."
   },
   contact: {
-    title: "📬 Contact Details",
+    title: " Contact Details",
     content: "Here are my contact details from my resume:\n• Email: bhaveshyt.infinity@gmail.com\n• Phone: +91 63764 11796\n• Location: Jaipur, Rajasthan, India\n• Socials: GitHub (github.com/Bhavesh189), LinkedIn (in/bhaveshsharmainfinity)"
   },
   certifications: {
-    title: "🏅 Certifications",
+    title: " Certifications",
     content: "I hold 3 active certifications:\n1. Scala Full Stack Development: Key Skills for 2026 (GUVI Geek Networks × HCL)\n2. ReactJS Foundations (ScholarHat / Dot Net Tricks, 2026)\n3. Node.js Certification (Scaler, 2026)"
   },
   project_studytop: {
-    title: "📚 Project: StudyTop",
+    title: " Project: StudyTop",
     content: "StudyTop (2025) is a full-stack MERN e-learning platform with REST APIs and progress tracking. It achieved a 98% Lighthouse performance score and boosted student engagement by 25% through optimized content delivery. Live: https://study-top.vercel.app/"
   },
   project_docana: {
-    title: "🔍 Project: DocAna AI",
+    title: " Project: DocAna AI",
     content: "DocAna AI (2025) is an AI healthcare document assistant. It integrates the Google Gemini API to parse clinical documents, reducing manual review time by 60%. Hardened with Jest tests to 85% coverage. Live: https://bhavesh189.github.io/DocAna/"
   },
   project_enternet: {
-    title: "🎬 Project: EnterNet",
+    title: " Project: EnterNet",
     content: "EnterNet (2024) is a Netflix-style streaming experience with a modular React architecture. It reduced video buffering by 30% and was containerized using Docker for consistent cross-device environments. Live: https://bhavesh189.github.io/EnterNet/home.html"
   },
   project_notes: {
-    title: "📝 Project: Notes Web + App",
+    title: " Project: Notes Web + App",
     content: "Notes Web & App (2024) is a cross-platform note-taking workspace. It utilizes a minimalist UI and optimized state sync, cutting task management time by 20% for 100+ active users. Live: https://bhavesh189.github.io/CollageNotes"
   },
   project_metrix: {
-    title: "📊 Project: LeetCode Metrix",
+    title: " Project: LeetCode Metrix",
     content: "LeetCode Metrix (2025) is a competitive-programming analytics dashboard. It visualizes 50+ DSA problem-solving metrics via REST APIs to map strengths and momentum over time. Live: https://bhavesh189.github.io/LeetCodeProfile/"
   }
 };
@@ -92,12 +92,12 @@ function queryResume(query) {
     return `${RESUME_DATA.certifications.title}\n${RESUME_DATA.certifications.content}`;
   }
   if (clean.includes('project') || clean.includes('build') || clean.includes('ship')) {
-    return `Bhavesh has built 5 major projects documented in his resume:\n1. **StudyTop** (MERN platform)\n2. **DocAna AI** (AI clinical assistant)\n3. **EnterNet** (Netflix clone)\n4. **Notes Web + App** (Productivity note taker)\n5. **LeetCode Metrix** (DSA dashboard)\nAsk me about any specific project name for exact metrics! 💻`;
+    return `Bhavesh has built 5 major projects documented in his resume:\n1. **StudyTop** (MERN platform)\n2. **DocAna AI** (AI clinical assistant)\n3. **EnterNet** (Netflix clone)\n4. **Notes Web + App** (Productivity note taker)\n5. **LeetCode Metrix** (DSA dashboard)\nAsk me about any specific project name for exact metrics! `;
   }
 
 
   if (clean.includes('hi') || clean.includes('hello') || clean.includes('hey') || clean.includes('sup') || clean.includes('greet')) {
-    return "Hi! I am Bhavesh's AI Assistant. Ask me anything directly from his resume — including skills, education at BTU, intern work at Squarecell, certifications, or projects! 👾";
+    return "Hi! I am Bhavesh's AI Assistant. Ask me anything directly from his resume — including skills, education at BTU, intern work at Squarecell, certifications, or projects! ";
   }
 
 
@@ -111,8 +111,8 @@ function queryResume(query) {
 • **Certifications** (Scaler, GUVI, ScholarHat)`;
 }
 
-export default function BhaveshAI() {
-  const [isOpen, setIsOpen] = useState(false);
+export default function BhaveshAI({ autoOpen = false }) {
+  const [isOpen, setIsOpen] = useState(autoOpen);
   const [messages, setMessages] = useState([
     {
       sender: 'bot',
@@ -137,6 +137,10 @@ export default function BhaveshAI() {
     window.addEventListener('open-bhavesh-ai', handleOpen);
     return () => window.removeEventListener('open-bhavesh-ai', handleOpen);
   }, []);
+
+  useEffect(() => {
+    if (autoOpen) setIsOpen(true);
+  }, [autoOpen]);
 
   const handleSend = (e) => {
     e.preventDefault();

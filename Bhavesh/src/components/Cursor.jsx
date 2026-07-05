@@ -11,7 +11,7 @@ export default function Cursor() {
   const sparks = useRef([]);
   const charIndex = useRef(0);
   
-  // Coordinates tracking
+
   const mousePos = useRef({ x: 0, y: 0 });
   const lastMousePos = useRef({ x: 0, y: 0 });
   
@@ -24,7 +24,7 @@ export default function Cursor() {
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    // Add class to body to hide default cursor
+
     document.body.classList.add('has-custom-cursor');
 
     const checkTrail = () => {
@@ -36,7 +36,7 @@ export default function Cursor() {
     const onMouseMove = (e) => {
       mousePos.current = { x: e.clientX, y: e.clientY };
 
-      // Typing trail logic
+
       if (document.body.classList.contains('typingtrail-active')) {
         const dx = e.clientX - lastMousePos.current.x;
         const dy = e.clientY - lastMousePos.current.y;
@@ -60,7 +60,7 @@ export default function Cursor() {
         }
       }
 
-      // Hover element checks
+
       const target = e.target;
       const isClickable = target && (
         target.tagName === 'A' ||
@@ -105,7 +105,7 @@ export default function Cursor() {
     };
   }, []);
 
-  // Animation Frame Loop
+
   useEffect(() => {
     let animId;
     const canvas = canvasRef.current;
@@ -120,17 +120,17 @@ export default function Cursor() {
     window.addEventListener('resize', resizeCanvas);
 
     const updateCursor = () => {
-      // 1. Move inner dot instantly
+
       if (dotRef.current) {
         dotRef.current.style.transform = `translate3d(${mousePos.current.x}px, ${mousePos.current.y}px, 0)`;
       }
 
-      // 2. Interpolate ring with physics lag
+
       const speedCoeff = isHovered ? 0.3 : 0.15;
       ringPos.current.x += (mousePos.current.x - ringPos.current.x) * speedCoeff;
       ringPos.current.y += (mousePos.current.y - ringPos.current.y) * speedCoeff;
 
-      // Calculate direction and speed of motion for stretching capsule effect
+
       const dx = mousePos.current.x - ringPos.current.x;
       const dy = mousePos.current.y - ringPos.current.y;
       const distance = Math.sqrt(dx * dx + dy * dy);
@@ -148,12 +148,12 @@ export default function Cursor() {
         ringRotation.current = 0;
       }
 
-      // Update ring styles
+
       if (ringRef.current) {
         ringRef.current.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0) scale(${stretchX}, ${stretchY}) rotate(${ringRotation.current}rad)`;
       }
 
-      // 3. Render canvas trails
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const activeColor = getComputedStyle(document.documentElement).getPropertyValue('--violet').trim() || '#7c5cff';
 

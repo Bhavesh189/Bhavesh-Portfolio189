@@ -1,15 +1,9 @@
-/* ================================================================
-   UNIVERSAL RESPONSIVE STYLESHEET
-   Clean, polished mobile-first design system
-   ================================================================ */
 
-/* ============================================================
-   MOBILE-FIRST POLISH (max-width: 767px)
-   Covers all phones — portrait & landscape
-   ============================================================ */
+
+
 @media (max-width: 767px) {
 
-  /* -- GLOBAL TYPOGRAPHY & SPACING -- */
+  
   :root {
     --step-hero: clamp(2rem, 10vw, 3rem);
     --step-title: clamp(1.4rem, 6vw, 2rem);
@@ -47,7 +41,7 @@
     font-size: 0.7rem;
   }
 
-  /* -- BUTTONS: clean, full-width stacking -- */
+  
   .btn {
     --pad: 0.8rem 1.4rem;
     font-size: 0.78rem;
@@ -64,7 +58,7 @@
     justify-content: center;
   }
 
-  /* -- GLASS PANELS: tighter padding -- */
+  
   .glass {
     border-radius: var(--radius);
     backdrop-filter: blur(8px);
@@ -75,7 +69,7 @@
     padding: 0.25rem 0.55rem;
   }
 
-  /* ---- HERO SECTION ---- */
+  
   .hero {
     padding-top: 60px;
     min-height: auto;
@@ -139,7 +133,7 @@
     display: none;
   }
 
-  /* ---- ABOUT SECTION ---- */
+  
   .about-grid {
     grid-template-columns: 1fr;
     gap: 1.4rem;
@@ -172,7 +166,7 @@
     margin-top: 0.3rem;
   }
 
-  /* ---- SKILLS MATRIX ---- */
+  
   .matrix-grid-content {
     grid-template-columns: 1fr;
     padding: 1rem;
@@ -233,7 +227,7 @@
     padding-block: 1.2rem;
   }
 
-  /* ---- PROJECTS SECTION ---- */
+  
   .section-head-split {
     flex-direction: column;
     align-items: flex-start;
@@ -292,7 +286,7 @@
     padding: 2.5rem 1rem;
   }
 
-  /* Remove 3D hover effects on mobile */
+  
   .proj-card:hover .proj-name,
   .proj-card:hover .proj-blurb,
   .proj-card:hover .proj-detail,
@@ -300,7 +294,7 @@
     transform: none;
   }
 
-  /* ---- JOURNEY/TIMELINE ---- */
+  
   .timeline {
     padding-left: 1.8rem;
     gap: 1.2rem;
@@ -346,19 +340,19 @@
     margin-top: 0.8rem;
   }
 
-  /* ---- CERTIFICATIONS ---- */
+  
   .cert-grid {
     grid-template-columns: 1fr;
     gap: 0.8rem;
   }
 
-  /* ---- RESUME SECTION ---- */
+  
   .resume-grid {
     grid-template-columns: 1fr;
     gap: 1.2rem;
   }
 
-  /* ---- CONTACT SECTION ---- */
+  
   .contact-grid {
     grid-template-columns: 1fr;
     gap: 1.2rem;
@@ -381,7 +375,7 @@
     text-align: left;
   }
 
-  /* ---- BOOKING / SCHEDULER ---- */
+  
   .booking .section-head {
     text-align: left;
   }
@@ -454,7 +448,7 @@
     font-size: 0.72rem !important;
   }
 
-  /* ---- BHAVESH AI CHATBOT ---- */
+  
   .ai-chat-window {
     right: 8px;
     left: 8px;
@@ -497,7 +491,7 @@
     bottom: 20px;
   }
 
-  /* ---- GAME SYSTEM & XP BAR ---- */
+  
   .xp-bar-meta {
     padding: 3px 12px;
     font-size: 8px;
@@ -518,7 +512,7 @@
     padding: 1.2rem;
   }
 
-  /* ---- COMMAND PALETTE ---- */
+  
   .cmd-palette-inner {
     width: calc(100vw - 1.5rem);
     max-width: 100%;
@@ -526,12 +520,12 @@
     border-radius: 14px;
   }
 
-  /* ---- PRELOADER ---- */
+  
   .preloader-inner .preloader-count {
     font-size: 3rem;
   }
 
-  /* ---- BACK TO TOP ---- */
+  
   .back-to-top {
     width: 40px;
     height: 40px;
@@ -540,17 +534,17 @@
     font-size: 0.9rem;
   }
 
-  /* ---- ACCENT SWITCHER ---- */
+  
   .accent-switcher {
     gap: 0.4rem;
   }
 
-  /* ---- HOLOGRAPHIC CARD ---- */
+  
   .holo-card {
     border-radius: 14px;
   }
 
-  /* ---- ATMOSPHERE / BACKGROUND -- reduce visual noise on mobile */
+  
   .atmosphere::before {
     opacity: 0.4;
     background-size: 48px 48px;
@@ -567,23 +561,23 @@
     opacity: 0.025;
   }
 
-  /* ---- INFINITY SCENE -- shrink WebGL canvas on mobile */
+  
   .infinity-scene {
     height: 300px;
   }
 
-  /* ---- LIQUID CURSOR -- hide on touch devices */
+  
   .liquid-cursor-overlay {
     display: none;
   }
 
-  /* ---- CURSOR -- hide custom cursor on mobile */
+  
   .cursor-dot,
   .cursor-ring {
     display: none !important;
   }
 
-  /* ---- NAVBAR ---- */
+  
   .nav-inner {
     height: 56px;
     gap: 0.8rem;
@@ -614,21 +608,18 @@
     font-size: 0.75rem;
   }
 
-  /* ---- KINETIC HEADER -- reduce on mobile */
+  
   .kinetic-header canvas {
     height: 120px !important;
   }
 
-  /* ---- LOCAL CLOCK ---- */
+  
   .local-clock {
     font-size: 0.7rem;
   }
 }
 
-/* ============================================================
-   EXTRA-SMALL PHONES ONLY (max-width: 374px)
-   iPhone SE, Galaxy A series, etc.
-   ============================================================ */
+
 @media (max-width: 374px) {
   .container {
     width: calc(100% - 1.2rem);
@@ -657,9 +648,7 @@
   }
 }
 
-/* ============================================================
-   TABLETS / iPAD (768px - 1023px)
-   ============================================================ */
+
 @media (min-width: 768px) and (max-width: 1023px) {
   :root {
     --step-hero: clamp(2.6rem, 7vw, 4.5rem);
@@ -722,9 +711,7 @@
   }
 }
 
-/* ============================================================
-   SMALL LAPTOPS (1024px - 1279px)
-   ============================================================ */
+
 @media (min-width: 1024px) and (max-width: 1279px) {
   :root {
     --container: 960px;
@@ -735,9 +722,7 @@
   }
 }
 
-/* ============================================================
-   LARGE MONITORS (1536px+)
-   ============================================================ */
+
 @media (min-width: 1536px) {
   :root {
     --container: 1340px;
@@ -758,9 +743,7 @@
   }
 }
 
-/* ============================================================
-   4K / ULTRA-WIDE TVs (2560px+)
-   ============================================================ */
+
 @media (min-width: 2560px) {
   :root {
     --container: 1800px;
@@ -800,9 +783,7 @@
   }
 }
 
-/* ============================================================
-   TOUCH DEVICE ADJUSTMENTS
-   ============================================================ */
+
 @media (hover: none) and (pointer: coarse) {
   .btn:hover {
     transform: none;
@@ -842,9 +823,7 @@
   }
 }
 
-/* ============================================================
-   LANDSCAPE PHONE ORIENTATION
-   ============================================================ */
+
 @media (max-height: 500px) and (orientation: landscape) {
   .hero {
     min-height: auto;
@@ -864,9 +843,7 @@
   }
 }
 
-/* ============================================================
-   PRINT STYLES
-   ============================================================ */
+
 @media print {
   .atmosphere,
   .grain,

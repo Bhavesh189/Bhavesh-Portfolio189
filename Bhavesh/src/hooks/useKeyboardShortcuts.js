@@ -7,7 +7,7 @@ export default function useKeyboardShortcuts() {
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      // Ignore if user is typing in form inputs/textarea
+
       const tag = e.target.tagName.toLowerCase();
       if (tag === 'input' || tag === 'textarea' || e.target.isContentEditable) {
         return;
@@ -32,7 +32,7 @@ export default function useKeyboardShortcuts() {
       }
 
       if (e.key === 'Escape') {
-        // Trigger command palette close or AI chat close if needed
+
         window.dispatchEvent(new CustomEvent('close-all-panels'));
       }
     };

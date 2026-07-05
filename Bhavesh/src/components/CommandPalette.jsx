@@ -55,12 +55,6 @@ export default function CommandPalette() {
           toast(`Theme set to ${a.label}`, 'success');
         },
       })),
-      { id: 'cmd-flashlight', label: 'Mod · Toggle Flashlight Spotlight Overlay', group: 'Developer Mods', icon: 'droplet', action: () => window.dispatchEvent(new CustomEvent('palette-command', { detail: { cmd: 'flashlight' } })) },
-      { id: 'cmd-typingtrail', label: 'Mod · Toggle Typing Code Cursor Trail', group: 'Developer Mods', icon: 'droplet', action: () => window.dispatchEvent(new CustomEvent('palette-command', { detail: { cmd: 'typingtrail' } })) },
-      { id: 'cmd-asmr', label: 'Mod · Toggle Keyboard ASMR clicking', group: 'Developer Mods', icon: 'droplet', action: () => window.dispatchEvent(new CustomEvent('palette-command', { detail: { cmd: 'keyboardasmr' } })) },
-      { id: 'cmd-seismic', label: 'Mod · Toggle Seismic click shaking', group: 'Developer Mods', icon: 'droplet', action: () => window.dispatchEvent(new CustomEvent('palette-command', { detail: { cmd: 'seismic' } })) },
-      { id: 'cmd-glitch', label: 'Mod · Toggle Chromatic Glitch theme', group: 'Developer Mods', icon: 'droplet', action: () => window.dispatchEvent(new CustomEvent('palette-command', { detail: { cmd: 'glitch' } })) },
-      { id: 'cmd-reset', label: 'Mod · Reset All Dev Mods to off', group: 'Developer Mods', icon: 'droplet', action: () => window.dispatchEvent(new CustomEvent('palette-command', { detail: { cmd: 'reset' } })) },
     ];
   }, [toast]);
 

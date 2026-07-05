@@ -4,11 +4,11 @@ import { useToast } from './Toast';
 import './GameSystem.css';
 
 const LEVELS = [
-  { name: 'Script Kiddie 💻', minXp: 0, maxXp: 100 },
-  { name: 'Tech Enthusiast 🔍', minXp: 100, maxXp: 220 },
-  { name: 'Stack Overflow Senior 📚', minXp: 220, maxXp: 360 },
-  { name: 'MERN Apprentice 🌐', minXp: 360, maxXp: 520 },
-  { name: 'Matrix Architect 👑', minXp: 520, maxXp: 99999 },
+  { name: 'Script Kiddie ', minXp: 0, maxXp: 100 },
+  { name: 'Tech Enthusiast ', minXp: 100, maxXp: 220 },
+  { name: 'Stack Overflow Senior ', minXp: 220, maxXp: 360 },
+  { name: 'MERN Apprentice ', minXp: 360, maxXp: 520 },
+  { name: 'Matrix Architect ', minXp: 520, maxXp: 99999 },
 ];
 
 export default function GameSystem() {
@@ -46,7 +46,7 @@ export default function GameSystem() {
       setLevelIdx(nextIdx);
       if (nextIdx > levelIdx) {
         setShowLevelUp(true);
-        toast(`🎉 Level Up! You are now a ${LEVELS[nextIdx].name}`, 'success');
+        toast(` Level Up! You are now a ${LEVELS[nextIdx].name}`, 'success');
         setTimeout(() => setShowLevelUp(false), 4500);
       }
     }
@@ -70,7 +70,7 @@ export default function GameSystem() {
     triggered.current.add(achievementId);
     setXp((prev) => prev + amount);
     if (achievementText) {
-      toast(`🏆 Achievement: ${achievementText} (+${amount} XP)`, 'info');
+      toast(` Achievement: ${achievementText} (+${amount} XP)`, 'info');
     }
   };
 
@@ -163,7 +163,7 @@ export default function GameSystem() {
           >
             <div className="lvl-up-card">
               <span className="glitch-text" data-text="LEVEL UP">LEVEL UP</span>
-              <div className="lvl-stars">⭐⭐⭐⭐⭐</div>
+              <div className="lvl-stars"></div>
               <h2>You have promoted to:</h2>
               <h3>{LEVELS[levelIdx].name}</h3>
               <p>Keep exploring to reveal hidden easter eggs!</p>

@@ -136,9 +136,11 @@ export const projects = [
 ];
 
 export const certifications = [
-  { name: 'ReactJS Foundations', issuer: 'ScholarHat (Dot Net Tricks)', year: '2026' },
-  { name: 'Node.js Certification', issuer: 'Scaler', year: '2026' },
-  { name: 'Full Stack Development: Key Skills for 2026', issuer: 'GUVI Geek Networks × HCL', year: '2026' },
+  { id: 'react', name: 'ReactJS Foundations', issuer: 'ScholarHat (Dot Net Tricks)', year: '2026' },
+  { id: 'node', name: 'Node.js Certification', issuer: 'Scaler', year: '2026' },
+  { id: 'fullstack', name: 'Full Stack Development: Key Skills for 2026', issuer: 'GUVI Geek Networks × HCL', year: '2026' },
+  { id: 'internship', name: 'Web Developer Internship Certificate', issuer: 'Squarecell Resource India Pvt. Ltd.', year: '2026' },
+  { id: 'lor', name: 'Letter of Recommendation (LOR)', issuer: 'Squarecell Resource India Pvt. Ltd.', year: '2026' },
 ];
 
 export const nav = [

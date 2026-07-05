@@ -7,7 +7,7 @@ import './responsive.css';
 
 initAccent();
 
-// Display dynamic ASCII banner in developer console
+
 console.log(
   `%c  ___        __ _       _ _           ____  _                                
  |_ _|_ __  / _(_)_ __ (_) |_ _   _  / ___|| |__   __ _ _ __ _ __ ___   __ _ 
@@ -16,11 +16,11 @@ console.log(
  |___|_| |_|_| |_|_| |_|_|\\__|\\__, | |____/|_| |_|\\__,_|_|  |_| |_| |_|\\__,_|
                               |___/                                          
 =========================================================================
-🧑‍💻 Bhavesh Sharma | MERN Stack Developer & Bug Bounty Expert
-🌐 Live: thebhavesh.online
-🎓 BTU Undergrad (CGPA 9.20) | Solved 350+ LeetCode DSA Problems
+‍ Bhavesh Sharma | MERN Stack Developer & Bug Bounty Expert
+ Live: thebhavesh.online
+ BTU Undergrad (CGPA 9.20) | Solved 350+ LeetCode DSA Problems
 =========================================================================
-⌨️ KEYBOARD SHORTCUTS NAVIGATION:
+️ KEYBOARD SHORTCUTS NAVIGATION:
 [A] -> About      [S] -> Skills      [J] -> Journey
 [P] -> Projects   [C] -> Contact     [T]/[H] -> Top
 [Esc] -> Close Active Mod/AI Panels

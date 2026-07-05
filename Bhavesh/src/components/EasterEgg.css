@@ -1,0 +1,23 @@
+.egg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 99999;
+  overflow: hidden;
+}
+
+.egg-inf {
+  position: absolute;
+  bottom: -50px;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 8px rgba(223, 169, 92, 0.45);
+  pointer-events: none;
+  will-change: transform;
+  display: inline-block;
+}
