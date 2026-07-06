@@ -48,6 +48,19 @@ export default function InfinityScene({ reducedMotion = false }) {
     const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 100);
     camera.position.set(0, 0, 8.4);
 
+    const adjustCamera = () => {
+      camera.aspect = width / height;
+      const fovRad = (camera.fov * Math.PI) / 180;
+      const fitHeight = 3.2; // vertical bounds of infinity loop
+      const fitWidth = 8.0;  // horizontal bounds of infinity loop
+      const zByHeight = fitHeight / (2 * Math.tan(fovRad / 2));
+      const zByWidth = fitWidth / (2 * Math.tan(fovRad / 2) * camera.aspect);
+      camera.position.z = Math.max(8.4, zByHeight, zByWidth);
+      camera.updateProjectionMatrix();
+    };
+
+    adjustCamera();
+
     let renderer;
     try {
       renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
@@ -233,8 +246,7 @@ export default function InfinityScene({ reducedMotion = false }) {
     const onResize = () => {
       width = mount.clientWidth;
       height = mount.clientHeight;
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
+      adjustCamera();
       renderer.setSize(width, height);
     };
     window.addEventListener('resize', onResize);

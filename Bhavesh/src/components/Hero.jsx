@@ -67,20 +67,22 @@ export default function Hero({ reducedMotion = false, isMobile = false }) {
   }, [mx, my, reducedMotion, isMobile]);
 
   useEffect(() => {
-    if (isMobile || reducedMotion || showScene) return undefined;
+    if (reducedMotion || showScene) return undefined;
 
     const reveal = () => setShowScene(true);
-    const timeout = window.setTimeout(reveal, 9000);
+    const timeout = window.setTimeout(reveal, 200);
 
     window.addEventListener('pointermove', reveal, { once: true, passive: true });
     window.addEventListener('scroll', reveal, { once: true, passive: true });
     window.addEventListener('keydown', reveal, { once: true });
+    window.addEventListener('touchstart', reveal, { once: true, passive: true });
 
     return () => {
       window.clearTimeout(timeout);
       window.removeEventListener('pointermove', reveal);
       window.removeEventListener('scroll', reveal);
       window.removeEventListener('keydown', reveal);
+      window.removeEventListener('touchstart', reveal);
     };
   }, [isMobile, reducedMotion, showScene]);
 
