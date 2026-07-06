@@ -11,7 +11,7 @@
 
 .holo-card-wrapper.hovered {
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4),
-              0 0 30px rgba(124, 92, 255, 0.15);
+              0 0 30px color-mix(in srgb, var(--violet) 15%, transparent);
 }
 
 .holo-card-inner {

@@ -9,6 +9,7 @@ import Hero from './components/Hero';
 import { ToastProvider } from './components/Toast';
 import LazySection from './components/LazySection';
 import FloatingTools from './components/FloatingTools';
+import { accents, applyAccent } from './config';
 
 const About = lazy(() => import('./components/About'));
 const Skills = lazy(() => import('./components/Skills'));
@@ -29,6 +30,40 @@ export default function App() {
 
   useSmoothScroll(!loading && !reducedMotion && !isMobile);
   useKeyboardShortcuts();
+
+  useEffect(() => {
+    let timerId = null;
+
+    const startTimer = () => {
+      if (timerId) clearInterval(timerId);
+      timerId = setInterval(() => {
+        try {
+          const currentAccent = localStorage.getItem('accent') || 'infinity';
+          const availableAccents = accents.filter((a) => a.id !== currentAccent);
+          const randomAccent = availableAccents[Math.floor(Math.random() * availableAccents.length)];
+          if (randomAccent) {
+            applyAccent(randomAccent.id);
+          }
+        } catch (e) {
+          const randomAccent = accents[Math.floor(Math.random() * accents.length)];
+          applyAccent(randomAccent.id);
+        }
+      }, 30000); // 30 seconds
+    };
+
+    startTimer();
+
+    // Reset 30s timer when user manually changes theme
+    const handleManualChange = () => {
+      startTimer();
+    };
+
+    window.addEventListener('theme-accent-changed', handleManualChange);
+    return () => {
+      if (timerId) clearInterval(timerId);
+      window.removeEventListener('theme-accent-changed', handleManualChange);
+    };
+  }, []);
 
   useEffect(() => {
     const checkMobile = () => {

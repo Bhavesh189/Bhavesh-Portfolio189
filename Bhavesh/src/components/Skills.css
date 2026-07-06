@@ -166,6 +166,12 @@
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
+.matrix-node-chip:hover {
+  border-color: var(--cyan);
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px color-mix(in srgb, var(--cyan) 10%, transparent);
+}
 
 .chip-indicator {
   width: 6px;

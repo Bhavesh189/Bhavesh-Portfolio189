@@ -15,9 +15,12 @@ export default function FloatingTools() {
 
   useEffect(() => {
     const openAI = () => loadTool('ai');
+    const openArcade = () => loadTool('arcade');
     window.addEventListener('open-bhavesh-ai', openAI);
+    window.addEventListener('open-bhavesh-arcade', openArcade);
     return () => {
       window.removeEventListener('open-bhavesh-ai', openAI);
+      window.removeEventListener('open-bhavesh-arcade', openArcade);
     };
   }, [loadTool]);
 

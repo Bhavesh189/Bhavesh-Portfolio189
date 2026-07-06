@@ -11,6 +11,15 @@ export default function AccentSwitcher() {
     } catch (e) {
       setCurrent('infinity');
     }
+
+    const handleThemeChange = (e) => {
+      setCurrent(e.detail);
+    };
+
+    window.addEventListener('theme-accent-changed', handleThemeChange);
+    return () => {
+      window.removeEventListener('theme-accent-changed', handleThemeChange);
+    };
   }, []);
 
   const choose = (id) => {

@@ -142,7 +142,10 @@ export default function ArcadeGame({ autoOpen = false }) {
     ctx.fillStyle = '#0b0f19';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.strokeStyle = 'rgba(124, 92, 255, 0.05)';
+    const rootStyle = getComputedStyle(document.documentElement);
+    const themeViolet = rootStyle.getPropertyValue('--violet').trim() || '#dfa95c';
+    const themeCyan = rootStyle.getPropertyValue('--cyan').trim() || '#c5a880';
+    ctx.strokeStyle = themeViolet + '0d'; // ~0.05 opacity in hex (0d)
     ctx.lineWidth = 1;
     for (let i = 0; i < canvas.width; i += 20) {
       ctx.beginPath();
@@ -263,11 +266,9 @@ export default function ArcadeGame({ autoOpen = false }) {
     });
 
 
-    ctx.fillStyle = 'linear-gradient(90deg, #7c5cff, #29d3ee)';
-
     const gradient = ctx.createLinearGradient(paddle.x, paddle.y, paddle.x + paddle.width, paddle.y);
-    gradient.addColorStop(0, '#7c5cff');
-    gradient.addColorStop(1, '#29d3ee');
+    gradient.addColorStop(0, themeViolet);
+    gradient.addColorStop(1, themeCyan);
     ctx.fillStyle = gradient;
     ctx.beginPath();
     ctx.roundRect(paddle.x, paddle.y, paddle.width, paddle.height, 4);
@@ -276,8 +277,8 @@ export default function ArcadeGame({ autoOpen = false }) {
 
     ctx.beginPath();
     ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-    ctx.fillStyle = '#29d3ee';
-    ctx.shadowColor = '#29d3ee';
+    ctx.fillStyle = themeCyan;
+    ctx.shadowColor = themeCyan;
     ctx.shadowBlur = 10;
     ctx.fill();
     ctx.shadowBlur = 0;

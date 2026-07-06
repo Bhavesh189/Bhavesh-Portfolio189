@@ -369,3 +369,13 @@ body.glitch-active h3 {
   }
 }
 
+/* Active tactile press physics */
+.btn:active,
+.proj-filter-btn:active,
+.cert-row:active,
+.accent-dot:active,
+.floating-tool-btn:active,
+.mobile-bottom-tab:active {
+  transform: scale(0.96) !important;
+}
+

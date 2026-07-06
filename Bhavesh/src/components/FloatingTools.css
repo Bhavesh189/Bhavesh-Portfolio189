@@ -64,19 +64,8 @@
   box-shadow: 0 0 8px var(--violet);
 }
 
-@media (max-width: 640px) {
-  .floating-tool-btn {
-    width: 48px;
-    height: 48px;
-  }
-
-  .floating-tool-arcade {
-    left: 12px;
-    bottom: 14px;
-  }
-
-  .floating-tool-ai {
-    right: 72px;
-    bottom: 14px;
+@media (max-width: 860px) {
+  .floating-tool {
+    display: none !important;
   }
 }

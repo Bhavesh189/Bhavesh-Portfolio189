@@ -40,7 +40,7 @@
   border-radius: 50%;
   background: var(--bg);
   border: 2px solid var(--violet-2);
-  box-shadow: 0 0 0 4px rgba(124, 92, 255, 0.12);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--violet) 12%, transparent);
 }
 .tl-card {
   padding: 1.6rem 1.8rem;
@@ -48,7 +48,7 @@
   transition: border-color 0.4s var(--ease), transform 0.4s var(--ease);
 }
 .tl-card:hover {
-  border-color: rgba(41, 211, 238, 0.35);
+  border-color: color-mix(in srgb, var(--cyan) 35%, transparent);
   transform: translateX(4px);
 }
 .tl-kind {
@@ -63,11 +63,11 @@
 }
 .tl-kind-work {
   color: var(--cyan);
-  background: rgba(41, 211, 238, 0.1);
+  background: color-mix(in srgb, var(--cyan) 10%, transparent);
 }
 .tl-kind-education {
   color: var(--violet-2);
-  background: rgba(124, 92, 255, 0.12);
+  background: color-mix(in srgb, var(--violet) 12%, transparent);
 }
 .tl-role {
   font-size: 1.3rem;

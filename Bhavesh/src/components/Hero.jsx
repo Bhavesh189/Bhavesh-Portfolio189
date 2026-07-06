@@ -1,5 +1,5 @@
 import { useEffect, useState, lazy, Suspense } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { FiArrowDownRight, FiGithub, FiLinkedin, FiCode, FiGlobe } from 'react-icons/fi';
 import { profile, socials } from '../data/content';
 import { scrollToSection } from '../hooks/useSmoothScroll';
@@ -48,6 +48,24 @@ export default function Hero({ reducedMotion = false, isMobile = false }) {
   const head = words.slice(0, -2).join(' ');
   const tail = words.slice(-2).join(' ');
 
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const springX = useSpring(mx, { stiffness: 100, damping: 25 });
+  const springY = useSpring(my, { stiffness: 100, damping: 25 });
+
+  const parallaxX = reducedMotion ? 0 : useTransform(springX, [-0.5, 0.5], [-12, 12]);
+  const parallaxY = reducedMotion ? 0 : useTransform(springY, [-0.5, 0.5], [-12, 12]);
+
+  useEffect(() => {
+    if (reducedMotion || isMobile) return undefined;
+    const handleMove = (e) => {
+      mx.set((e.clientX / window.innerWidth) - 0.5);
+      my.set((e.clientY / window.innerHeight) - 0.5);
+    };
+    window.addEventListener('pointermove', handleMove, { passive: true });
+    return () => window.removeEventListener('pointermove', handleMove);
+  }, [mx, my, reducedMotion, isMobile]);
+
   useEffect(() => {
     if (isMobile || reducedMotion || showScene) return undefined;
 
@@ -76,7 +94,13 @@ export default function Hero({ reducedMotion = false, isMobile = false }) {
       <div className="hero-veil" />
 
       <div className="container hero-inner">
-        <motion.div variants={container} initial="hidden" animate="show" className="hero-content">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="hero-content"
+          style={{ x: parallaxX, y: parallaxY }}
+        >
           <motion.p variants={line} className="hero-eyebrow">
             <span className="hero-dot" />
             {profile.availability}

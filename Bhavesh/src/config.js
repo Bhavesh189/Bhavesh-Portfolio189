@@ -21,6 +21,7 @@ export function applyAccent(id) {
     localStorage.setItem('accent', a.id);
   } catch (e) {
   }
+  window.dispatchEvent(new CustomEvent('theme-accent-changed', { detail: a.id }));
   return a.id;
 }
 

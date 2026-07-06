@@ -23,6 +23,14 @@ const CERT_MAP = {
 export default function Certifications() {
   const [selected, setSelected] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener('resize', check, { passive: true });
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   const handleOpen = (cert) => {
     setSelected(cert);
@@ -109,10 +117,10 @@ export default function Certifications() {
 
               <motion.div
                 className="cert-modal-card glass"
-                initial={{ opacity: 0, scale: 0.75, y: 50, rotateX: 10 }}
-                animate={{ opacity: 1, scale: 1, y: 0, rotateX: 0 }}
-                exit={{ opacity: 0, scale: 0.75, y: 30, rotateX: -5 }}
-                transition={{ type: 'spring', damping: 25, stiffness: 220 }}
+                initial={isMobile ? { y: '100%' } : { opacity: 0, scale: 0.75, y: 50, rotateX: 10 }}
+                animate={isMobile ? { y: 0 } : { opacity: 1, scale: 1, y: 0, rotateX: 0 }}
+                exit={isMobile ? { y: '100%' } : { opacity: 0, scale: 0.75, y: 30, rotateX: -5 }}
+                transition={isMobile ? { type: 'spring', damping: 30, stiffness: 240 } : { type: 'spring', damping: 25, stiffness: 220 }}
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="cert-modal-header">

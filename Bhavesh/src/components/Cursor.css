@@ -26,8 +26,8 @@
   width: 34px;
   height: 34px;
   margin: -17px 0 0 -17px;
-  border: 1.5px solid rgba(124, 92, 255, 0.75);
-  background: rgba(124, 92, 255, 0.04);
+  border: 1.5px solid color-mix(in srgb, var(--violet) 75%, transparent);
+  background: color-mix(in srgb, var(--violet) 4%, transparent);
   transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
               height 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
               margin 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
@@ -39,7 +39,30 @@
   height: 56px;
   margin: -28px 0 0 -28px;
   border-color: var(--cyan);
-  background-color: rgba(41, 211, 238, 0.08);
+  background-color: color-mix(in srgb, var(--cyan) 8%, transparent);
+}
+
+.cursor-ring.has-text {
+  width: 58px;
+  height: 58px;
+  margin: -29px 0 0 -29px;
+  background: var(--panel-glass) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-color: var(--cyan) !important;
+}
+.cursor-text {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  font-weight: 800;
+  color: var(--cyan);
+  text-transform: uppercase;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: fade-in 0.2s ease-out;
 }
 
 

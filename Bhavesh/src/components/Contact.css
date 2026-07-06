@@ -50,9 +50,9 @@
 .cfield input:focus,
 .cfield textarea:focus {
   outline: none;
-  border-color: rgba(124, 92, 255, 0.6);
-  background: rgba(124, 92, 255, 0.05);
-  box-shadow: 0 0 0 4px rgba(124, 92, 255, 0.12);
+  border-color: color-mix(in srgb, var(--violet) 60%, transparent);
+  background: color-mix(in srgb, var(--violet) 5%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--violet) 12%, transparent);
 }
 
 .cfield input[type='date']::-webkit-calendar-picker-indicator {
@@ -161,7 +161,7 @@
 }
 .contact-social:hover {
   color: var(--text);
-  border-color: rgba(124, 92, 255, 0.5);
+  border-color: color-mix(in srgb, var(--violet) 50%, transparent);
   transform: translateX(4px);
 }
 .contact-social svg {
@@ -222,32 +222,7 @@
   box-shadow: 0 0 10px var(--cyan);
   animation: pulse 2s ease-in-out infinite;
 }
-.accent-switch {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.accent-switch-label {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--faint);
-}
-.accent-dot {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 2px solid transparent;
-  transition: transform 0.25s var(--ease), border-color 0.25s var(--ease);
-}
-.accent-dot:hover {
-  transform: scale(1.18);
-}
-.accent-dot.is-active {
-  border-color: var(--text);
-  transform: scale(1.12);
-}
+
 
 .port-scanner {
   padding: 1.2rem;
@@ -348,4 +323,8 @@
   .footer-inner {
     justify-content: flex-start;
   }
+}
+
+.footer .accent-switch {
+  margin-left: 0;
 }

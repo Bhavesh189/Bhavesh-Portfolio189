@@ -319,3 +319,9 @@
     align-items: center;
   }
 }
+
+@media (max-width: 860px) {
+  .arcade-launch-btn {
+    display: none !important;
+  }
+}

@@ -12,6 +12,8 @@ const vertexShader = `
 
 const fragmentShader = `
   uniform vec3 points[40];
+  uniform vec3 colorA;
+  uniform vec3 colorB;
   varying vec2 vUv;
 
   void main() {
@@ -30,9 +32,7 @@ const fragmentShader = `
     }
     
 
-    vec3 colA = vec3(0.48, 0.36, 1.0);
-    vec3 colB = vec3(0.16, 0.82, 0.93);
-    vec3 trailColor = mix(colA, colB, uv.x) * clamp(intensity, 0.0, 1.0);
+    vec3 trailColor = mix(colorA, colorB, uv.x) * clamp(intensity, 0.0, 1.0);
     
     gl_FragColor = vec4(trailColor, clamp(intensity * 0.7, 0.0, 0.95));
   }
@@ -82,15 +82,37 @@ export default function LiquidCursor() {
     mount.appendChild(renderer.domElement);
 
 
+    const getThemeColors = () => {
+      const style = getComputedStyle(document.documentElement);
+      const parseColor = (varName, defaultHex) => {
+        const raw = style.getPropertyValue(varName).trim();
+        return new THREE.Color(raw || defaultHex);
+      };
+      return {
+        colorA: parseColor('--violet', '#dfa95c'),
+        colorB: parseColor('--cyan', '#c5a880'),
+      };
+    };
+
     const pointsArray = [];
     for (let i = 0; i < 40; i++) {
       pointsArray.push(new THREE.Vector3(0, 0, 0));
     }
 
     const geometry = new THREE.PlaneGeometry(2, 2);
+    const colors = getThemeColors();
     const uniforms = {
       points: { value: pointsArray },
+      colorA: { value: colors.colorA },
+      colorB: { value: colors.colorB },
     };
+
+    const observer = new MutationObserver(() => {
+      const updated = getThemeColors();
+      uniforms.colorA.value.copy(updated.colorA);
+      uniforms.colorB.value.copy(updated.colorB);
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['style'] });
     
     const material = new THREE.ShaderMaterial({
       vertexShader,
@@ -140,6 +162,7 @@ export default function LiquidCursor() {
 
     return () => {
       cancelAnimationFrame(raf);
+      observer.disconnect();
       window.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('resize', onResize);
       geometry.dispose();

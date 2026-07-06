@@ -22,6 +22,7 @@ export default function Cursor() {
 
   const [isTrailActive, setIsTrailActive] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [cursorText, setCursorText] = useState('');
 
   useEffect(() => {
 
@@ -72,6 +73,13 @@ export default function Cursor() {
         target.getAttribute('role') === 'button'
       );
       setIsHovered(!!isClickable);
+
+      const isProjCard = target && (target.closest('.proj-card') || target.closest('.cert-row'));
+      if (isProjCard) {
+        setCursorText('VIEW');
+      } else {
+        setCursorText('');
+      }
     };
 
     const onClick = (e) => {
@@ -229,7 +237,9 @@ export default function Cursor() {
         }}
       />
       <div ref={dotRef} className={`cursor-dot ${isHovered ? 'hover' : ''}`} />
-      <div ref={ringRef} className={`cursor-ring ${isHovered ? 'hover' : ''}`} />
+      <div ref={ringRef} className={`cursor-ring ${isHovered ? 'hover' : ''} ${cursorText ? 'has-text' : ''}`}>
+        {cursorText && <span className="cursor-text">{cursorText}</span>}
+      </div>
     </>
   );
 }

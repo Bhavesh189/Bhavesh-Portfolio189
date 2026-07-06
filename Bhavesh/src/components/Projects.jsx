@@ -10,8 +10,8 @@ function ProjectCard({ project, index }) {
   const ref = useRef(null);
   const mx = useMotionValue(0.5);
   const my = useMotionValue(0.5);
-  const rotateX = useSpring(useTransform(my, [0, 1], [7, -7]), { stiffness: 150, damping: 15 });
-  const rotateY = useSpring(useTransform(mx, [0, 1], [-7, 7]), { stiffness: 150, damping: 15 });
+  const rotateX = useSpring(useTransform(my, [0, 1], [8, -8]), { stiffness: 120, damping: 20 });
+  const rotateY = useSpring(useTransform(mx, [0, 1], [-8, 8]), { stiffness: 120, damping: 20 });
   const glowX = useTransform(mx, [0, 1], ['0%', '100%']);
   const glowY = useTransform(my, [0, 1], ['0%', '100%']);
 

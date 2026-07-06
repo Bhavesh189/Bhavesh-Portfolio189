@@ -297,3 +297,9 @@
     bottom: 92px;
   }
 }
+
+@media (max-width: 860px) {
+  .ai-launch-btn {
+    display: none !important;
+  }
+}

@@ -10,6 +10,7 @@ import Magnetic from './Magnetic';
 import Reveal from './Reveal';
 import LocalClock from './LocalClock';
 import CodeCipher from './CodeCipher';
+import AccentSwitcher from './AccentSwitcher';
 import './Contact.css';
 
 const ICONS = { github: FiGithub, linkedin: FiLinkedin, code: FiCode, globe: FiGlobe };
@@ -286,6 +287,7 @@ export default function Contact() {
             <span className="footer-mark">∞</span>
             <span>{profile.name}</span>
           </button>
+          <AccentSwitcher />
           <LocalClock />
           <span className="footer-copy">
             © {new Date().getFullYear()} {profile.name} · Engineering scalable web systems &amp; seamless pixel experiences.
