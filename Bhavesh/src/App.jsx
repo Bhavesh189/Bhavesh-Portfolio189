@@ -112,7 +112,7 @@ export default function App() {
         <LazySection id="work">
           <Projects />
         </LazySection>
-        <LazySection id="certifications">
+        <LazySection id="certs">
           <Certifications />
         </LazySection>
         <LazySection id="booking">

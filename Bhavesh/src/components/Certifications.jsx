@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiAward, FiX, FiExternalLink, FiDownload, FiLoader } from 'react-icons/fi';
 import { certifications } from '../data/content';
@@ -32,6 +32,17 @@ export default function Certifications() {
   const handleClose = () => {
     setSelected(null);
   };
+
+  useEffect(() => {
+    if (selected) {
+      // PDF onload event is notoriously unreliable in iframes across browsers.
+      // We use a simulated 1.2s blockchain verification loader as a fallback/primary trigger.
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 1200);
+      return () => clearTimeout(timer);
+    }
+  }, [selected]);
 
   return (
     <section id="certs" className="section certs">

@@ -178,7 +178,7 @@ function PortScanner() {
     <div className="port-scanner glass">
       <div className="scanner-head">
         <span className="scanner-dot"></span>
-        <span className="scanner-title">Security Console (Simulation)</span>
+        <span className="scanner-title">Security Console</span>
       </div>
       <div className="scanner-display">
         {logs.length === 0 ? (

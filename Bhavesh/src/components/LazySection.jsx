@@ -20,7 +20,7 @@ export default function LazySection({ id, children, minHeight = '70vh' }) {
           observer.disconnect();
         }
       },
-      { rootMargin: '0px 0px -70% 0px' }
+      { rootMargin: '0px 0px 300px 0px' }
     );
 
     observer.observe(el);

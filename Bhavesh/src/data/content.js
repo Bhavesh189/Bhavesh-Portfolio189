@@ -148,6 +148,7 @@ export const nav = [
   { id: 'skills', label: 'Skills' },
   { id: 'journey', label: 'Journey' },
   { id: 'work', label: 'Work' },
+  { id: 'certs', label: 'Certificates' },
   { id: 'booking', label: 'Connect' },
   { id: 'resume', label: 'Résumé' },
   { id: 'contact', label: 'Contact' },

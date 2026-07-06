@@ -14,12 +14,18 @@ export function scrollToSection(id) {
   const selector = id.startsWith('#') ? id : `#${id}`;
   const el = document.querySelector(selector);
   if (!el) return;
+
+  const headerOffset = 80; // height of fixed header (74px) + breathing room (6px)
+
   if (lenisInstance) {
-    const isMobile = window.innerWidth <= 860;
-    const offsetValue = isMobile ? -12 : 45;
-    lenisInstance.scrollTo(el, { offset: offsetValue, duration: 1.25 });
+    lenisInstance.scrollTo(el, { offset: headerOffset, duration: 1.25 });
   } else {
-    el.scrollIntoView({ behavior: 'smooth' });
+    const elementPosition = el.getBoundingClientRect().top + window.scrollY;
+    const offsetPosition = elementPosition - headerOffset;
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth',
+    });
   }
 }
 
