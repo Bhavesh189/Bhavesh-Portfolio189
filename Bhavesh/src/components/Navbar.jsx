@@ -12,7 +12,7 @@ const MOBILE_NAV = [
   { id: 'about', label: 'About', icon: <FiUser /> },
   { id: 'work', label: 'Work', icon: <FiFolder /> },
   { id: 'certs', label: 'Certs', icon: <FiAward /> },
-  { id: 'connect', label: 'Contact', icon: <FiMessageSquare /> },
+  { id: 'contact', label: 'Contact', icon: <FiMessageSquare /> },
 ];
 
 const SPY_IDS = nav.map((n) => n.id);
