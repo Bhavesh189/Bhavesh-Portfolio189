@@ -119,7 +119,7 @@ export const projects = [
     detail:
       'Prioritised rapid state synchronisation and a minimalist UI, cutting task-management time by 20% across 100+ users.',
     tags: ['JavaScript', 'Cross-platform', 'UI/UX'],
-    live: 'https://bhavesh189.github.io/CollageNotes',
+    live: 'https://collage-notes-chi.vercel.app/',
     year: '2024',
     accent: 'violet',
   },

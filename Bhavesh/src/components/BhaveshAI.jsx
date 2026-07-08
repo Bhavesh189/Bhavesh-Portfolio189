@@ -43,7 +43,7 @@ const RESUME_DATA = {
   },
   project_notes: {
     title: " Project: Notes Web + App",
-    content: "Notes Web & App (2024) is a cross-platform note-taking workspace. It utilizes a minimalist UI and optimized state sync, cutting task management time by 20% for 100+ active users. Live: https://bhavesh189.github.io/CollageNotes"
+    content: "Notes Web & App (2024) is a cross-platform note-taking workspace. It utilizes a minimalist UI and optimized state sync, cutting task management time by 20% for 100+ active users. Live: https://collage-notes-chi.vercel.app/"
   },
   project_metrix: {
     title: " Project: LeetCode Metrix",
