@@ -42,73 +42,88 @@ function StatCounter({ value, suffix, label }) {
   );
 }
 
+// Fallback used only when the backend API is unreachable / errors.
+// (Values supplied as the offline snapshot.)
+const LC_FALLBACK = {
+  totalSolved: 356,
+  easySolved: 139,
+  mediumSolved: 188,
+  hardSolved: 29,
+  ranking: '369,725',
+  contributionPoint: 1459,
+  reputation: 419,
+  // Not provided by the API - kept as static display values:
+  totalQuestions: 3985,
+  totalEasy: 953,
+  totalMedium: 2081,
+  totalHard: 951,
+  streak: 222,
+  rating: 1612,
+  badge: '100 Days Badge 2026',
+  solutions: 74,
+  views: '4.2K',
+};
+
+const LC_API = 'https://portfolio-backend-22i2.onrender.com/';
+
 export default function About() {
-  const [lcData, setLcData] = useState({
-    ranking: '387,014',
-    totalSolved: 346,
-    totalQuestions: 3985,
-    easySolved: 137,
-    totalEasy: 953,
-    mediumSolved: 180,
-    totalMedium: 2081,
-    hardSolved: 29,
-    totalHard: 951,
-    streak: 222,
-    rating: 1612,
-    badge: '100 Days Badge 2026',
-    solutions: 74,
-    reputation: 408,
-    views: '4.2K'
-  });
+  const [lcData, setLcData] = useState(LC_FALLBACK);
+  const [isLive, setIsLive] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     let active = true;
     const fetchLeetCode = async () => {
       try {
-        const [profileRes, contestRes] = await Promise.all([
-          fetch('https://leetcode-api-pied.vercel.app/user/bhavesh1899287'),
-          fetch('https://leetcode-api-pied.vercel.app/user/bhavesh1899287/contests')
-        ]);
+        const res = await fetch(LC_API);
+        if (!res.ok) throw new Error(`API responded ${res.status}`);
+        const data = await res.json();
+        if (!active || !data) return;
+        setIsLive(true);
 
-        if (profileRes.ok) {
-          const profileData = await profileRes.json();
-          if (active && profileData && profileData.submitStats) {
-            const ac = profileData.submitStats.acSubmissionNum || [];
-            const easy = ac.find(x => x.difficulty === 'Easy')?.count || 137;
-            const medium = ac.find(x => x.difficulty === 'Medium')?.count || 180;
-            const hard = ac.find(x => x.difficulty === 'Hard')?.count || 29;
-            const all = ac.find(x => x.difficulty === 'All')?.count || 346;
-
-            setLcData(prev => ({
-              ...prev,
-              ranking: profileData.profile?.ranking?.toLocaleString() || prev.ranking,
-              totalSolved: all,
-              easySolved: easy,
-              mediumSolved: medium,
-              hardSolved: hard,
-              reputation: profileData.profile?.reputation || prev.reputation,
-              solutions: profileData.profile?.solutionCount || prev.solutions,
-              views: profileData.profile?.postViewCount ? `${(profileData.profile.postViewCount / 1000).toFixed(1)}K` : prev.views,
-            }));
-          }
-        }
-
-        if (contestRes.ok) {
-          const contestData = await contestRes.json();
-          if (active && contestData && contestData.userContestRanking) {
-            setLcData(prev => ({
-              ...prev,
-              rating: Math.round(contestData.userContestRanking.rating) || prev.rating,
-            }));
-          }
-        }
+        // Real data from the API - only override fields the API actually sends,
+        // keeping the static fallbacks for everything it doesn't.
+        setLcData(prev => ({
+          ...prev,
+          totalSolved: data.totalSolved ?? prev.totalSolved,
+          easySolved: data.easySolved ?? prev.easySolved,
+          mediumSolved: data.mediumSolved ?? prev.mediumSolved,
+          hardSolved: data.hardSolved ?? prev.hardSolved,
+          ranking: data.ranking != null ? data.ranking.toLocaleString() : prev.ranking,
+          contributionPoint: data.contributionPoint ?? prev.contributionPoint,
+          reputation: data.reputation ?? prev.reputation,
+        }));
       } catch (err) {
-
+        // API errored - keep the fallback snapshot already in state.
       }
     };
     fetchLeetCode();
     return () => { active = false; };
   }, []);
+
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
+
+  // Feed the live total into the "DSA problems solved" stat counter too.
+  const liveStats = stats.map(s =>
+    s.label.toLowerCase().includes('dsa')
+      ? { ...s, value: String(lcData.totalSolved) }
+      : s
+  );
+
+  // Donut ring: proportion of each difficulty within total solved.
+  const solved = lcData.easySolved + lcData.mediumSolved + lcData.hardSolved || 1;
+  const easyPct = (lcData.easySolved / solved) * 100;
+  const medPct = (lcData.mediumSolved / solved) * 100;
+  const ringGradient = `conic-gradient(#10b981 0 ${easyPct}%, #f59e0b ${easyPct}% ${easyPct + medPct}%, #ef4444 ${easyPct + medPct}% 100%)`;
+
+  const bars = [
+    { key: 'easy', label: 'Easy', solved: lcData.easySolved, total: lcData.totalEasy },
+    { key: 'medium', label: 'Medium', solved: lcData.mediumSolved, total: lcData.totalMedium },
+    { key: 'hard', label: 'Hard', solved: lcData.hardSolved, total: lcData.totalHard },
+  ];
 
   return (
     <section id="about" className="section about">
@@ -140,7 +155,7 @@ export default function About() {
               </div>
             </div>
             <div className="about-stats">
-              {stats.map((s) => (
+              {liveStats.map((s) => (
                 <StatCounter key={s.label} value={s.value} suffix={s.suffix} label={s.label} />
               ))}
             </div>
@@ -148,42 +163,53 @@ export default function About() {
             <div className="about-leetcode">
               <div className="leetcode-title">
                 <span>DSA Console (LeetCode)</span>
-                <span className="leetcode-rating">Knight {lcData.rating}</span>
+                <span
+                  className={`leetcode-status ${isLive ? 'is-live' : 'is-cached'}`}
+                  title={isLive ? 'Live from API' : 'Cached snapshot (API unreachable)'}
+                >
+                  <span className="leetcode-status-dot" />
+                  {isLive ? 'LIVE' : 'CACHED'}
+                </span>
               </div>
-              <div className="leetcode-bars">
-                <div className="leetcode-bar-item">
-                  <div className="leetcode-bar-info">
-                    <span>Easy</span>
-                    <span>{lcData.easySolved} / {lcData.totalEasy}</span>
-                  </div>
-                  <div className="leetcode-progress-track">
-                    <div className="leetcode-progress-bar easy" style={{ width: `${(lcData.easySolved / lcData.totalEasy * 100).toFixed(1)}%` }}></div>
-                  </div>
-                </div>
-                <div className="leetcode-bar-item">
-                  <div className="leetcode-bar-info">
-                    <span>Medium</span>
-                    <span>{lcData.mediumSolved} / {lcData.totalMedium}</span>
-                  </div>
-                  <div className="leetcode-progress-track">
-                    <div className="leetcode-progress-bar medium" style={{ width: `${(lcData.mediumSolved / lcData.totalMedium * 100).toFixed(1)}%` }}></div>
+
+              <div className="leetcode-overview">
+                <div
+                  className="leetcode-ring"
+                  style={{ background: ringGradient }}
+                  role="img"
+                  aria-label={`${lcData.totalSolved} problems solved: ${lcData.easySolved} easy, ${lcData.mediumSolved} medium, ${lcData.hardSolved} hard`}
+                >
+                  <div className="leetcode-ring-core">
+                    <span className="leetcode-ring-num">{lcData.totalSolved}</span>
+                    <span className="leetcode-ring-cap">solved</span>
                   </div>
                 </div>
-                <div className="leetcode-bar-item">
-                  <div className="leetcode-bar-info">
-                    <span>Hard</span>
-                    <span>{lcData.hardSolved} / {lcData.totalHard}</span>
-                  </div>
-                  <div className="leetcode-progress-track">
-                    <div className="leetcode-progress-bar hard" style={{ width: `${(lcData.hardSolved / lcData.totalHard * 100).toFixed(1)}%` }}></div>
-                  </div>
+                <div className="leetcode-bars">
+                  {bars.map((b, i) => {
+                    const pct = Math.min(100, (b.solved / b.total) * 100);
+                    return (
+                      <div className="leetcode-bar-item" key={b.key}>
+                        <div className="leetcode-bar-info">
+                          <span><i className={`leetcode-dot ${b.key}`} />{b.label}</span>
+                          <span>{b.solved} <em>/ {b.total}</em></span>
+                        </div>
+                        <div className="leetcode-progress-track">
+                          <div
+                            className={`leetcode-progress-bar ${b.key}`}
+                            style={{ width: mounted ? `${pct.toFixed(1)}%` : '0%', transitionDelay: `${0.15 + i * 0.12}s` }}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
+
               <div className="leetcode-meta-stats">
-                <div className="leetcode-meta-chip">{lcData.streak} Days Streak</div>
-                <div className="leetcode-meta-chip">Rank: #{lcData.ranking}</div>
-                <div className="leetcode-meta-chip">Solutions: {lcData.solutions}</div>
-                <div className="leetcode-meta-chip">Post Views: {lcData.views}</div>
+                <div className="leetcode-meta-chip"><b>#{lcData.ranking}</b> Global Rank</div>
+                <div className="leetcode-meta-chip"><b>{lcData.contributionPoint}</b> Contribution</div>
+                <div className="leetcode-meta-chip"><b>{lcData.reputation}</b> Reputation</div>
+                <div className="leetcode-meta-chip"><b>{lcData.streak}</b> Day Streak</div>
               </div>
             </div>
           </Reveal>
