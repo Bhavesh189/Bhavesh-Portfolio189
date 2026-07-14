@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADD NOTES | Bhavesh</title>
+    <link rel="stylesheet" href="add.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="chk">
+        <i class="fa-solid fa-circle-check"></i>
+        <h2>Added Notes Successfully</h2>
+    </div>
+    <div class="nav">
+        <h1>Add Notes</h1>
+    </div>
+    <form class="infoGather" onsubmit="event.preventDefault(); done()">
+        <input type="text" placeholder="Enter Your Name" required>
+        <h3>Select Subject</h3>
+        <select name="Subject" id="subject" required>
+            <option value = "" selected disabled>----Select Subject ----</option>
+            <option value="CFP">CFP</option>
+            <option value="mefa">MEFA</option>
+            <option value="chem">CHEMISTRY</option>
+            <option value="bee">BEE</option>
+            <option value="maths">Maths</option>
+            <option value="any">ANY OTHER</option>
+        </select>
+        <div class="s">
+            Admin <input type="radio" name="user" value="admin" onclick="password(this)" required>
+            User <input type="radio" name="user" value="user" onclick="password(this)" required>
+        </div>
+        <input type="password" class="pass" placeholder="Enter Admin Password">
+        <h3>Uplod Note</h3>
+        <input type="file" id="file" class="file" required>
+        <input type="submit" value="submit" class="submit" id = "submit">
+    </form>
+    <script src="add.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Bhavesh Sharma</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #111;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            background: #1e1e1e;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+
+        .contact-info {
+            background: #00d2ff;
+            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            padding: 40px;
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .contact-info h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+
+        .info-item i {
+            font-size: 24px;
+            margin-right: 15px;
+            width: 30px;
+        }
+
+        .social-links {
+            margin-top: 30px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border-radius: 50%;
+            margin-right: 10px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .social-links a:hover {
+            background: #fff;
+            color: #3a7bd5;
+            transform: translateY(-3px);
+        }
+
+        .contact-form {
+            width: 60%;
+            padding: 40px;
+            background: #1e1e1e;
+        }
+
+        .contact-form h2 {
+            font-size: 28px;
+            color: #00d2ff;
+            margin-bottom: 10px;
+        }
+
+        .contact-form p {
+            color: #aaa;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .input-box {
+            position: relative;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .input-box input,
+        .input-box textarea {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #fff;
+            border: none;
+            border-bottom: 2px solid #555;
+            outline: none;
+            background: transparent;
+            resize: none;
+            transition: 0.3s;
+        }
+
+        .input-box span {
+            position: absolute;
+            left: 0;
+            top: 10px;
+            padding: 0;
+            font-size: 16px;
+            color: #777;
+            pointer-events: none;
+            transition: 0.3s;
+        }
+
+        .input-box input:focus~span,
+        .input-box textarea:focus~span,
+        .input-box input:valid~span,
+        .input-box textarea:valid~span {
+            color: #00d2ff;
+            font-size: 12px;
+            transform: translateY(-20px);
+        }
+
+        .input-box input:focus,
+        .input-box textarea:focus {
+            border-bottom: 2px solid #00d2ff;
+        }
+
+        button {
+            background: #00d2ff;
+            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.3);
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 210, 255, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .contact-info,
+            .contact-form {
+                width: 100%;
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="contact-info">
+            <div>
+                <h2>Contact Info</h2>
+
+                <div class="info-item">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Bhavesh Sharma</span>
+                </div>
+
+                <div class="info-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>Alwar, Rajasthan </span>
+                </div>
+
+                <div class="info-item">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>bhaveshyt.infinity@gmail.com </span>
+                </div>
+
+                <div class="info-item">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>+91-6376411796 </span>
+                </div>
+            </div>
+
+            <div class="social-links">
+                <a href="https://linkedin.com/in/bhaveshsharmainfinity" target="_blank" title="LinkedIn">
+                    <i class="fa-brands fa-linkedin-in"></i>
+                </a>
+                <a href="https://github.com/bhavesh189" target="_blank" title="GitHub">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="https://bhavesh189.github.io/Bhavesh-Portfolio" target="_blank" title="Portfolio">
+                    <i class="fa-solid fa-globe"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="contact-form">
+            <h2>Send Message</h2>
+            <p>Aspiring Software Engineer & Bug Bounty Enthusiast. <br>Feel free to reach out for collaborations!</p>
+
+            <form id="c">
+
+                <div class="input-box">
+                    <input type="text" name="Name" id="name" required>
+                    <span>Full Name</span>
+                </div>
+
+                <div class="input-box">
+                    <input type="email" name="Email" id="email" required>
+                    <span>Your Email</span>
+                </div>
+
+                <div class="input-box">
+                    <textarea name="Message" id="message" required></textarea>
+                    <span>Type your Message...</span>
+                </div>
+
+                <button type="submit" id="submitBtn">Send Message</button>
+            </form>
+            <script src="contact.js"></script>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+class Solution {
+public:
+
+    long long dp[17][11][2][2];
+    int K;
+
+    long long memo(int idx, int last, bool is_tight, bool is_started, string &s) {
+        if (idx == s.length()) {
+            return is_started ? 1 : 0;
+        }
+
+        if (dp[idx][last][is_tight][is_started] != -1) {
+            return dp[idx][last][is_tight][is_started];
+        }
+
+        long long ans = 0;
+        int limit = is_tight ? (s[idx] - '0') : 9;
+
+        for (int d = 0; d <= limit; d++) {
+            bool next_tight = is_tight && (d == limit);
+            
+            if (!is_started) {
+                if (d == 0) {
+                    ans += memo(idx + 1, 0, next_tight, false, s);
+                } else {
+                    ans += memo(idx + 1, d, next_tight, true, s);
+                }
+            } else {
+                if (abs(d - last) <= K) {
+                    ans += memo(idx + 1, d, next_tight, true, s);
+                }
+            }
+        }
+
+        return dp[idx][last][is_tight][is_started] = ans;
+    }
+
+    long long countGood(long long n) {
+        if (n < 0) return 0;
+        string s = to_string(n);
+        memset(dp, -1, sizeof(dp));
+        return memo(0, 0, true, false, s);
+    }
+    
+    long long goodIntegers(long long l, long long r, int k) {
+        K = k;
+        return countGood(r) - countGood(l-1);
+    }
+};

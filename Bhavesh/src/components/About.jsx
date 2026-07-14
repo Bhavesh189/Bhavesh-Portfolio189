@@ -64,7 +64,9 @@ const LC_FALLBACK = {
   views: '4.2K',
 };
 
-const LC_API = 'https://portfolio-backend-22i2.onrender.com/';
+const LC_API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:8045/'
+  : 'https://portfolio-backend-22i2.onrender.com/';
 
 export default function About() {
   const [lcData, setLcData] = useState(LC_FALLBACK);

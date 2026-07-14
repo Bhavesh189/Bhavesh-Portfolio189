@@ -1,8 +1,9 @@
-import { useEffect, useState, lazy, Suspense } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import useReducedMotion from './hooks/useReducedMotion';
 import useSmoothScroll from './hooks/useSmoothScroll';
 import useKeyboardShortcuts from './hooks/useKeyboardShortcuts';
+import useRouting from './hooks/useRouting';
 import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -11,24 +12,30 @@ import LazySection from './components/LazySection';
 import FloatingTools from './components/FloatingTools';
 import { accents, applyAccent } from './config';
 
-const About = lazy(() => import('./components/About'));
-const Skills = lazy(() => import('./components/Skills'));
-const Journey = lazy(() => import('./components/Journey'));
-const Projects = lazy(() => import('./components/Projects'));
-const Certifications = lazy(() => import('./components/Certifications'));
-const Resume = lazy(() => import('./components/Resume'));
-const Contact = lazy(() => import('./components/Contact'));
-const LiquidCursor = lazy(() => import('./components/LiquidCursor'));
-const BookingSystem = lazy(() => import('./components/BookingSystem'));
-const Cursor = lazy(() => import('./components/Cursor'));
+import About from './components/About';
+import Skills from './components/Skills';
+import Journey from './components/Journey';
+import Projects from './components/Projects';
+import Certifications from './components/Certifications';
+import Resume from './components/Resume';
+import Contact from './components/Contact';
+import LiquidCursor from './components/LiquidCursor';
+import BookingSystem from './components/BookingSystem';
+import Cursor from './components/Cursor';
+import ProjectViewer from './components/ProjectViewer';
 
 export default function App() {
+  const currentPath = useRouting();
+  const isProjectRoute = currentPath.startsWith('/project/');
+  const projectMatch = currentPath.match(/^\/project\/([^/]+)/);
+  const projectId = projectMatch ? projectMatch[1] : null;
+
   const reducedMotion = useReducedMotion();
   const [loading, setLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(true);
   const [interactiveVisuals, setInteractiveVisuals] = useState(false);
 
-  useSmoothScroll(!loading && !reducedMotion && !isMobile);
+  useSmoothScroll(!loading && !reducedMotion && !isMobile && !isProjectRoute);
   useKeyboardShortcuts();
 
   useEffect(() => {
@@ -131,35 +138,43 @@ export default function App() {
           </Suspense>
         </>
       )}
-      <Navbar />
 
-      <main>
-        <Hero reducedMotion={reducedMotion} isMobile={isMobile} />
-        <LazySection id="about">
-          <About />
-        </LazySection>
-        <LazySection id="skills">
-          <Skills isMobile={isMobile} />
-        </LazySection>
-        <LazySection id="journey">
-          <Journey />
-        </LazySection>
-        <LazySection id="work">
-          <Projects />
-        </LazySection>
-        <LazySection id="certs">
-          <Certifications />
-        </LazySection>
-        <LazySection id="booking">
-          <BookingSystem isMobile={isMobile} />
-        </LazySection>
-        <LazySection id="resume">
-          <Resume />
-        </LazySection>
-        <LazySection id="contact">
-          <Contact />
-        </LazySection>
-      </main>
+      {isProjectRoute && projectId ? (
+        <Suspense fallback={<div className="loading-state">Loading project viewer...</div>}>
+          <ProjectViewer projectId={projectId} />
+        </Suspense>
+      ) : (
+        <>
+          <Navbar />
+          <main>
+            <Hero reducedMotion={reducedMotion} isMobile={isMobile} />
+            <LazySection id="about">
+              <About />
+            </LazySection>
+            <LazySection id="skills">
+              <Skills isMobile={isMobile} />
+            </LazySection>
+            <LazySection id="journey">
+              <Journey />
+            </LazySection>
+            <LazySection id="work">
+              <Projects />
+            </LazySection>
+            <LazySection id="certs">
+              <Certifications />
+            </LazySection>
+            <LazySection id="booking">
+              <BookingSystem isMobile={isMobile} />
+            </LazySection>
+            <LazySection id="resume">
+              <Resume />
+            </LazySection>
+            <LazySection id="contact">
+              <Contact />
+            </LazySection>
+          </main>
+        </>
+      )}
     </ToastProvider>
   );
 }

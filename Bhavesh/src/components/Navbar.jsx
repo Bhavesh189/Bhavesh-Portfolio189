@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
-import { FiHome, FiUser, FiFolder, FiAward, FiMessageSquare, FiCpu, FiMessageCircle } from 'react-icons/fi';
+import { FiHome, FiUser, FiFolder, FiAward, FiMessageSquare, FiTv, FiMessageCircle } from 'react-icons/fi';
 import { nav, profile } from '../data/content';
 import { scrollToSection } from '../hooks/useSmoothScroll';
 import useScrollSpy from '../hooks/useScrollSpy';
@@ -75,7 +75,7 @@ export default function Navbar() {
                 onClick={() => window.dispatchEvent(new CustomEvent('open-bhavesh-arcade'))}
                 aria-label="Play Arcade Game"
               >
-                <FiCpu />
+                <FiTv />
               </button>
               <button
                 className="nav-mobile-tool-btn"

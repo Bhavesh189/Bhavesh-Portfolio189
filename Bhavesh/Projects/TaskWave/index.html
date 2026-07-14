@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskWave</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="moti">
+        <h2>Motivation !!!</h2>
+        <span> </span> 
+    </div>
+    <div class="addTask" id="b">
+        <h3>Add Task</h3>
+        <hr>
+        <input type="text" placeholder="1. Enter Task Name : " id="name" class="details">
+        <input type="text" placeholder="2. Enter Timing : " id="timing" onfocus="(this.type='time')" onblur="if(!this.value) this.type='text'"  class="details">
+        <input type="text" placeholder="3. Enter Date : " id="date" onfocus="(this.type = 'date')"  onblur="if(!this.value) this.type='text'" class="details">
+        <button id="btn">Add New Task</button>
+    </div>
+    <div class="nav">
+        <h2>TaskWave</h2>
+        <i class="fa-regular fa-lightbulb" title="Dark Mode" id="bulb"></i>
+    </div>
+    <div class="task">
+        <div class="notification">
+            <h2 class="likh"></h2>
+        </div>
+        </div>
+    </div>  
+    <div class="add" title="Add Task" id="a"><i class="fa-solid fa-plus" class="x"></i></div>
+    <script src="script.js"></script>
+</body>
+
+</html>

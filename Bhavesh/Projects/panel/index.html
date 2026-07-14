@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Owner Management Panel (No Admin Login)</title>
+  <style>
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+      background: #f4f6f9;
+      color: #222
+    }
+
+    header {
+      background: #1a73e8;
+      color: #fff;
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center
+    }
+
+    .container {
+      padding: 18px;
+      max-width: 1100px;
+      margin: 18px auto
+    }
+
+    .card {
+      background: #fff;
+      padding: 14px;
+      border-radius: 10px;
+      box-shadow: 0 8px 30px rgba(2, 6, 23, 0.06);
+      margin-bottom: 16px
+    }
+
+    .grid {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start
+    }
+
+    .col {
+      flex: 1
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-size: 13px;
+      color: #333
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-top: 6px
+    }
+
+    button {
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer
+    }
+
+    .btn-primary {
+      background: #1a73e8;
+      color: #fff
+    }
+
+    .btn-danger {
+      background: #ff5c5c;
+      color: #fff
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px
+    }
+
+    th,
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      text-align: left
+    }
+
+    .small {
+      font-size: 13px;
+      color: #666
+    }
+
+    .search {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px
+    }
+
+    @media(max-width:880px) {
+      .grid {
+        flex-direction: column
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div><strong>Owner Management Panel</strong></div>
+    <div class="small">MVP mode — no admin login. Use locally or protect via hosting rules.</div>
+  </header>
+
+  <div class="container">
+    <div class="card grid">
+      <div class="col">
+        <h3>Add Owner</h3>
+        <div class="small">Create owner credentials (email + temporary password). Password stored hashed in Firestore.
+        </div>
+
+        <label>Owner Email</label>
+        <input id="ownerEmail" type="email" placeholder="owner@shop.com" />
+
+        <label>Temporary Password</label>
+        <input id="ownerPass" type="password" placeholder="min 6 characters" />
+
+        <label>Note / Shop Name (optional)</label>
+        <input id="ownerNote" type="text" placeholder="Shop name or note" />
+
+        <div style="margin-top:12px;display:flex;gap:8px">
+          <button id="addBtn" class="btn-primary">Add Owner</button>
+          <button id="bulkDemo" style="background:#0f9d58;color:#fff">Add Demo Owners</button>
+          <button id="clearBtn" class="btn-danger">Clear All Owners</button>
+        </div>
+
+        <div id="addMsg" class="small" style="margin-top:10px;color:#b00020"></div>
+      </div>
+
+      <div class="col">
+        <h3>Owners List</h3>
+        <div class="search">
+          <input id="qSearch" placeholder="Search by email or note..." />
+          <button id="refreshBtn">Refresh</button>
+        </div>
+        <div class="card" style="padding:0">
+          <table id="ownersTable">
+            <thead>
+              <tr>
+                <th>Email</th>
+                <th>Note</th>
+                <th>Created</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="4" class="small">No data loaded. Click Refresh.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>How to use</h3>
+      <ol>
+        <li>Replace <code>firebaseConfig</code> in the script below with your Firebase project config.</li>
+        <li>Open this file via a local server (e.g. <code>python -m http.server 8000</code>) and go to
+          <code>http://localhost:8000/panel.html</code>.</li>
+        <li>Add owners — give them email + temporary password. Share credentials with store owners.</li>
+        <li>Store owners login on <code>store-login.html</code> (it compares SHA-256 of password with stored hash).</li>
+      </ol>
+      <p class="small" style="color:#b00020"><strong>Security Warning:</strong> This panel has NO admin authentication.
+        Anyone with access can add/remove owners. For production, secure hosting + server-side admin auth required.</p>
+    </div>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    // ====== REPLACE with your Firebase config ======
+    const firebaseConfig = {
+      apiKey: "AIzaSyDhSKhvvWhabBSXGvS8EqhsVxegXEHKXjE",
+      authDomain: "chatbhav-b5d5c.firebaseapp.com",
+      projectId: "chatbhav-b5d5c",
+      appId: "1:211178731815:web:3a292108a6718eb0bc5102"
+    };
+    // ===============================================
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Helper: sha256 hex
+    async function sha256Hex(str) {
+      const enc = new TextEncoder();
+      const data = enc.encode(str);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // UI elements
+    const ownerEmailEl = document.getElementById('ownerEmail');
+    const ownerPassEl = document.getElementById('ownerPass');
+    const ownerNoteEl = document.getElementById('ownerNote');
+    const addBtn = document.getElementById('addBtn');
+    const addMsg = document.getElementById('addMsg');
+    const ownersTableBody = document.querySelector('#ownersTable tbody');
+    const refreshBtn = document.getElementById('refreshBtn');
+    const qSearch = document.getElementById('qSearch');
+    const bulkDemo = document.getElementById('bulkDemo');
+    const clearBtn = document.getElementById('clearBtn');
+
+    addBtn.addEventListener('click', async () => {
+      addMsg.style.color = '#b00020'; addMsg.innerText = '';
+      const email = (ownerEmailEl.value || '').trim().toLowerCase();
+      const pass = (ownerPassEl.value || '').trim();
+      const note = (ownerNoteEl.value || '').trim();
+      if (!email || !pass) { addMsg.innerText = 'Email and password required.'; return; }
+      if (pass.length < 6) { addMsg.innerText = 'Password must be 6+ characters.'; return; }
+      try {
+        addBtn.disabled = true;
+        const passHash = await sha256Hex(pass);
+        await db.collection('owners').add({
+          email, passHash, note, createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        addMsg.style.color = 'green';
+        addMsg.innerText = 'Owner added: ' + email;
+        ownerEmailEl.value = ''; ownerPassEl.value = ''; ownerNoteEl.value = '';
+        loadOwners();
+      } catch (e) {
+        console.error(e);
+        addMsg.innerText = 'Add failed: ' + (e.message || e);
+      } finally { addBtn.disabled = false; }
+    });
+
+    async function loadOwners() {
+      ownersTableBody.innerHTML = '<tr><td colspan="4" class="small">Loading...</td></tr>';
+      try {
+        const snap = await db.collection('owners').orderBy('createdAt', 'desc').get();
+        ownersTableBody.innerHTML = '';
+        if (snap.empty) { ownersTableBody.innerHTML = '<tr><td colspan="4" class="small">No owners found.</td></tr>'; return; }
+        snap.forEach(doc => {
+          const d = doc.data();
+          const created = d.createdAt && d.createdAt.toDate ? d.createdAt.toDate().toLocaleString() : '';
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td>${d.email}</td>
+                        <td>${d.note || ''}</td>
+                        <td>${created}</td>
+                        <td>
+                          <button onclick="showReset('${doc.id}','${d.email}')" style="margin-right:8px">Reset Pass</button>
+                          <button onclick="deleteOwner('${doc.id}')" style="background:#ff5c5c;color:#fff;padding:6px;border-radius:6px;border:none">Delete</button>
+                        </td>`;
+          ownersTableBody.appendChild(tr);
+        });
+      } catch (e) {
+        console.error(e);
+        ownersTableBody.innerHTML = '<tr><td colspan="4" class="small">Error loading owners</td></tr>';
+      }
+    }
+
+    async function deleteOwner(docId) {
+      if (!confirm('Delete owner?')) return;
+      try {
+        await db.collection('owners').doc(docId).delete();
+        loadOwners();
+      } catch (e) {
+        alert('Delete failed');
+        console.error(e);
+      }
+    }
+
+    // Reset password flow: set new temp password (hash stored)
+    async function showReset(docId, email) {
+      const np = prompt('Enter new temporary password for ' + email + ' (min 6 chars):');
+      if (!np) return;
+      if (np.length < 6) { alert('Password too short'); return; }
+      try {
+        const h = await sha256Hex(np);
+        await db.collection('owners').doc(docId).update({ passHash: h });
+        alert('Password updated for ' + email);
+        loadOwners();
+      } catch (e) {
+        alert('Reset failed');
+        console.error(e);
+      }
+    }
+
+    refreshBtn.addEventListener('click', () => loadOwners());
+    qSearch.addEventListener('input', async () => {
+      const q = (qSearch.value || '').trim().toLowerCase();
+      if (!q) { loadOwners(); return; }
+      ownersTableBody.innerHTML = '<tr><td colspan="4" class="small">Searching...</td></tr>';
+      try {
+        // simple client-side filter: fetch all and filter locally
+        const snap = await db.collection('owners').orderBy('createdAt', 'desc').get();
+        const rows = [];
+        snap.forEach(doc => {
+          const d = doc.data();
+          if ((d.email || '').toLowerCase().includes(q) || (d.note || '').toLowerCase().includes(q)) {
+            rows.push({ id: doc.id, data: d });
+          }
+        });
+        ownersTableBody.innerHTML = '';
+        if (rows.length === 0) { ownersTableBody.innerHTML = '<tr><td colspan="4" class="small">No matches</td></tr>'; return; }
+        rows.forEach(r => {
+          const d = r.data;
+          const created = d.createdAt && d.createdAt.toDate ? d.createdAt.toDate().toLocaleString() : '';
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td>${d.email}</td><td>${d.note || ''}</td><td>${created}</td>
+          <td>
+            <button onclick="showReset('${r.id}','${d.email}')" style="margin-right:8px">Reset Pass</button>
+            <button onclick="deleteOwner('${r.id}')" style="background:#ff5c5c;color:#fff;padding:6px;border-radius:6px;border:none">Delete</button>
+          </td>`;
+          ownersTableBody.appendChild(tr);
+        });
+      } catch (e) {
+        console.error(e);
+        ownersTableBody.innerHTML = '<tr><td colspan="4" class="small">Search failed</td></tr>';
+      }
+    });
+
+    // Bulk demo owners for testing
+    bulkDemo.addEventListener('click', async () => {
+      if (!confirm('Add 3 demo owners?')) return;
+      try {
+        const demo = [
+          { email: 'owner1@example.com', pass: 'password1', note: 'Demo Shop 1' },
+          { email: 'owner2@example.com', pass: 'password2', note: 'Demo Shop 2' },
+          { email: 'owner3@example.com', pass: 'password3', note: 'Demo Shop 3' }
+        ];
+        for (const d of demo) {
+          const ph = await sha256Hex(d.pass);
+          await db.collection('owners').add({ email: d.email, passHash: ph, note: d.note, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+        }
+        loadOwners();
+        alert('Demo owners added. Use store-login.html to test.');
+      } catch (e) {
+        console.error(e);
+        alert('Demo add failed');
+      }
+    });
+
+    // Clear all owners (dangerous)
+    clearBtn.addEventListener('click', async () => {
+      if (!confirm('Delete ALL owners? This action cannot be undone.')) return;
+      try {
+        const snap = await db.collection('owners').get();
+        const batch = db.batch();
+        snap.forEach(doc => batch.delete(doc.ref));
+        await batch.commit();
+        loadOwners();
+        alert('All owners deleted');
+      } catch (e) {
+        console.error(e);
+        alert('Clear failed: ' + e.message);
+      }
+    });
+
+    // initial load
+    loadOwners();
+  </script>
+</body>
+
+</html>

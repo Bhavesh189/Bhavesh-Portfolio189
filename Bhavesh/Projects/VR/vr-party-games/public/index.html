@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>VR Party Games</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="home-page">
+  <!-- Animated background -->
+  <div class="bg-animation">
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+  </div>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="home-header">
+      <div class="logo">
+        <div class="logo-icon">🎮</div>
+        <h1>VR Party<span class="accent">Games</span></h1>
+      </div>
+      <p class="subtitle">Connect two devices. Play together. Enter VR.</p>
+    </header>
+
+    <!-- Main Actions -->
+    <div class="home-actions">
+      <a href="/host.html" class="action-card host-card">
+        <div class="card-icon">🖥️</div>
+        <div class="card-content">
+          <h2>Play Game</h2>
+          <p>Select a game and host a session. Place this device in a VR headset for immersive play.</p>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
+      <a href="/controller.html" class="action-card controller-card">
+        <div class="card-icon">📱</div>
+        <div class="card-content">
+          <h2>Connect Device</h2>
+          <p>Enter a session code to connect as a controller. Use touch controls to play.</p>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+    </div>
+
+    <!-- How it works -->
+    <section class="how-it-works">
+      <h3>How It Works</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <p><strong>Device A</strong> selects a game and gets a session code</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <p><strong>Device B</strong> enters the code to connect as controller</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <p>Place Device A in a <strong>VR headset</strong> and play!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Server Status -->
+    <div class="server-status" id="serverStatus">
+      <span class="status-dot"></span>
+      <span id="statusText">Connecting...</span>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/home.js"></script>
+</body>
+</html>

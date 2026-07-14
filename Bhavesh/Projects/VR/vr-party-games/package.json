@@ -1,0 +1,16 @@
+{
+  "name": "vr-party-games",
+  "version": "1.0.0",
+  "description": "Two-device VR party games platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "qrcode": "^1.5.3",
+    "socket.io": "^4.8.3",
+    "uuid": "^9.0.0"
+  }
+}

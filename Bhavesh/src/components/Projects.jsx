@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion';
 import { FiArrowUpRight } from 'react-icons/fi';
 import { projects } from '../data/content';
+import { navigate } from '../hooks/useRouting';
 import Reveal from './Reveal';
 import GlitchText from './GlitchText';
 import './Projects.css';
@@ -34,14 +35,19 @@ function ProjectCard({ project, index }) {
     my.set(0.5);
   };
 
+  const handleClick = (e) => {
+    if (e.metaKey || e.ctrlKey) return;
+    e.preventDefault();
+    navigate(`/project/${project.id}`);
+  };
+
   return (
     <Reveal className="proj-reveal" delay={index * 0.06}>
       <motion.a
         ref={ref}
         className={`proj-card glass accent-${project.accent}`}
-        href={project.live}
-        target="_blank"
-        rel="noopener noreferrer"
+        href={`/project/${project.id}`}
+        onClick={handleClick}
         onMouseMove={handleMove}
         onMouseLeave={reset}
         style={{ rotateX, rotateY, transformPerspective: 1000 }}

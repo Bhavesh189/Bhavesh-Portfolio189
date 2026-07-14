@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(119, 1, 255);
+    font-family: 'poppins', sans-serif;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    color: white;
+}
+
+.nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid yellow;
+}
+
+.nav h2,
+i {
+    color: white;
+    font-size: 2rem;
+}
+
+.nav i {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.nav i:hover {
+    color: yellow;
+    transform: scale(1.1);
+}
+
+.add i {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    background-color: yellow;
+    border-radius: 50%;
+    font-size: 3rem;
+    color: red;
+    transition: 0.3s ease-in-out;
+}
+
+.task {
+    display: flex;
+    margin-top: 7%;
+}
+
+.task .taskk {
+    background-color: greenyellow;
+    height: 50px;
+    width: 60%;
+    margin: 0 auto 0 auto;
+    border: 2px solid red;
+    border-radius: 15px;
+    font-size: 1.7rem;
+}
+
+.taskk {
+    color: black;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.taskk i {
+    color: black;
+}
+
+.taskk i:hover {
+    color: blue;
+    transform: scale(1.1);
+}
+
+.taskk .done {
+    display: flex;
+    position: absolute;
+    right: 10px;
+    gap: 30px;
+}
+
+.add {
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+    /* transform: rotate(135deg); */
+}
+
+.addTask {
+    display: none;
+    height: 70%;
+    width: 80%;
+    background: yellow;
+    position: fixed;
+    top: 10%;
+    z-index: 99999;
+    left: 10%;
+    border: 2px solid red;
+    border-radius: 15px;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    transition: 0.3s ease-in-out;
+}
+
+.rotate {
+    transform: rotate(135deg);
+}
+
+.addTask h3 {
+    color: black;
+    position: absolute;
+    left: 40%;
+    font-size: 2rem;
+    -webkit-text-stroke: 1px blue;
+}
+
+hr {
+    color: green;
+    margin-top: 40px;
+}
+
+.addTask .details {
+    width: 80%;
+    height: 10%;
+    margin-top: 10px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addTask .details::placeholder {
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.3rem;
+    padding: 0 0 0 2%;
+}
+
+.addTask button {
+    background-color: green;
+    color: white;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 30px;
+    font-size: 3rem;
+    width: 40%;
+    cursor: pointer;
+}
+
+.notification {
+    display: flex;
+    margin: 12% auto 0 auto;
+}
+
+.moti {
+    height: auto;
+    width: 80vw;
+    position: fixed;
+    background-color: rgb(255, 57, 12);
+    top: 10%;
+    left: 10%;
+    border-radius: 15px;
+    padding : 20px;
+    box-shadow: 0 0 10px yellow;
+}
+
+.moti h2 {
+    padding-left: 44%;
+    padding-top: 10px;
+}
+
+.moti span {
+    color: rgb(255, 255, 255);
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.notification h2 {
+    color: white;
+    font-size: 5rem;
+    -webkit-text-stroke: 1px red;
+}
+
+@media screen and (max-width : 780px) {
+    .task {
+        margin-top: 25%;
+    }
+
+    .addTask h3 {
+        font-size: 1.5rem;
+        left: 30%;
+    }
+
+    .task .taskk {
+        font-size: 1rem;
+    }
+
+    .task .taskk i {
+        font-size: 1rem;
+        margin: 0;
+    }
+
+    .task .taskk h4 {
+        position: absolute;
+        left: 10px;
+    }
+
+    .taskk .done {
+        gap: 10px;
+    } 
+
+    .addTask button {
+        font-size: 1.3rem;
+        width: 80%;
+    }
+
+
+    .notification {
+        margin-top: 45%;
+    }
+
+    .notification h2 {
+        font-size: 1.6rem;
+    }
+
+    .moti {
+        height : auto;
+    }
+
+    .moti h2 {
+        padding-left : 25%;
+        padding-top : 4px;
+        left : 30%;
+    }
+}

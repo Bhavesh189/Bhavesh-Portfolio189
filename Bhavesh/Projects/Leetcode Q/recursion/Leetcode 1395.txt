@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int solve(vector<int>& nums, int n, int count, int x, int l) {
+        if (count == 3)
+            return 1;
+
+        if (dp[count][x][l + 1] != -1)
+            return dp[count][x][l + 1];
+
+        if (x >= n)
+            return 0;
+
+        int ans = 0;
+
+        ans += solve(nums, n, count, x + 1, l);
+
+        if (l == -1 || nums[l] < nums[x])
+            ans += solve(nums, n, count + 1, x + 1, x);
+
+        return dp[count][x][l + 1] = ans;
+    }
+
+    int dp[4][1001][1002];
+
+    int numTeams(vector<int>& rating) {
+        int n = rating.size();
+
+        memset(dp, -1, sizeof(dp));
+        int ans = solve(rating, n, 0, 0, -1);
+
+        memset(dp, -1, sizeof(dp));
+        reverse(rating.begin(), rating.end());
+        ans += solve(rating, n, 0, 0, -1);
+        return ans;
+    }
+};

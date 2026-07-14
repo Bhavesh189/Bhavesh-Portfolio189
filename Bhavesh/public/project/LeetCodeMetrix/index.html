@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeetCode Metrix Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-brand">
+            <i class="fa-solid fa-code" style="color: var(--accent);"></i>
+            <span>LeetCode Metrix <sub>v2.0</sub></span>
+        </div>
+        <div class="nav-user">
+            <i class="fa-solid fa-circle-user"></i>
+            <span>bhavesh1899287</span>
+        </div>
+    </nav>
+
+    <div class="dashboard">
+        <!-- Stats Row -->
+        <div class="stats-row">
+            <div class="stat-card glass">
+                <div class="stat-icon"><i class="fa-solid fa-trophy"></i></div>
+                <div class="stat-info">
+                    <h3>Global Rank</h3>
+                    <p class="stat-value">Top 4.8%</p>
+                    <span class="stat-sub">Rank: 84,213</span>
+                </div>
+            </div>
+            <div class="stat-card glass">
+                <div class="stat-icon pink"><i class="fa-solid fa-fire"></i></div>
+                <div class="stat-info">
+                    <h3>Max Streak</h3>
+                    <p class="stat-value">45 Days</p>
+                    <span class="stat-sub">Active solving streak</span>
+                </div>
+            </div>
+            <div class="stat-card glass">
+                <div class="stat-icon blue"><i class="fa-solid fa-chart-line"></i></div>
+                <div class="stat-info">
+                    <h3>Contest Rating</h3>
+                    <p class="stat-value">1,685</p>
+                    <span class="stat-sub">Top 8% Contester</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Panel Grid -->
+        <div class="panel-grid">
+            <!-- Left Panel: Problem Solving Progress -->
+            <div class="panel-card progress-card glass">
+                <h2>Solving Breakdown</h2>
+                <div class="circles-container">
+                    <!-- Total Circle -->
+                    <div class="progress-ring-wrapper">
+                        <svg class="progress-ring" width="120" height="120">
+                            <circle class="ring-bg" cx="60" cy="60" r="50"></circle>
+                            <circle class="ring-fill total" cx="60" cy="60" r="50" style="stroke-dasharray: 314; stroke-dashoffset: 78;"></circle>
+                        </svg>
+                        <div class="ring-text">
+                            <span class="number">350+</span>
+                            <span class="label">Solved</span>
+                        </div>
+                    </div>
+
+                    <!-- Breakdown details -->
+                    <div class="breakdown-details">
+                        <div class="detail-item">
+                            <span class="dot easy"></span>
+                            <span class="diff">Easy</span>
+                            <span class="count">120 <font class="total-diff">/ 800</font></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="dot medium"></span>
+                            <span class="diff">Medium</span>
+                            <span class="count">190 <font class="total-diff">/ 1600</font></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="dot hard"></span>
+                            <span class="diff">Hard</span>
+                            <span class="count">40 <font class="total-diff">/ 700</font></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Languages & Skills -->
+            <div class="panel-card glass">
+                <h2>Top Languages</h2>
+                <div class="languages">
+                    <div class="lang-item">
+                        <div class="lang-header">
+                            <span>C++</span>
+                            <span>245 Solved</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-fill cpp" style="width: 70%;"></div>
+                        </div>
+                    </div>
+                    <div class="lang-item">
+                        <div class="lang-header">
+                            <span>JavaScript</span>
+                            <span>75 Solved</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-fill js" style="width: 21%;"></div>
+                        </div>
+                    </div>
+                    <div class="lang-item">
+                        <div class="lang-header">
+                            <span>Go / Python</span>
+                            <span>30 Solved</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-fill go" style="width: 9%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submission Calendar Activity -->
+        <div class="panel-card calendar-card glass">
+            <h2>Submission Activity</h2>
+            <div class="calendar-container">
+                <div class="calendar-grid" id="calendarGrid">
+                    <!-- Javascript will fill 365 cells -->
+                </div>
+                <div class="calendar-legend">
+                    <span>Less</span>
+                    <span class="legend-cell level-0"></span>
+                    <span class="legend-cell level-1"></span>
+                    <span class="legend-cell level-2"></span>
+                    <span class="legend-cell level-3"></span>
+                    <span class="legend-cell level-4"></span>
+                    <span>More</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Submissions -->
+        <div class="panel-card submissions-card glass">
+            <h2>Recent Solved Problems</h2>
+            <div class="submission-list">
+                <div class="sub-item">
+                    <div class="sub-left">
+                        <span class="badge medium">Med</span>
+                        <span class="title">4Sum</span>
+                    </div>
+                    <span class="time">2 hours ago</span>
+                </div>
+                <div class="sub-item">
+                    <div class="sub-left">
+                        <span class="badge easy">Easy</span>
+                        <span class="title">Merge Sorted Array</span>
+                    </div>
+                    <span class="time">1 day ago</span>
+                </div>
+                <div class="sub-item">
+                    <div class="sub-left">
+                        <span class="badge hard">Hard</span>
+                        <span class="title">Edit Distance</span>
+                    </div>
+                    <span class="time">3 days ago</span>
+                </div>
+                <div class="sub-item">
+                    <div class="sub-left">
+                        <span class="badge medium">Med</span>
+                        <span class="title">Maximum Product Subarray</span>
+                    </div>
+                    <span class="time">4 days ago</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Generate submission calendar grids
+        const grid = document.getElementById("calendarGrid");
+        const levels = [0, 0, 1, 0, 2, 0, 0, 1, 3, 0, 0, 2, 0, 4, 1, 0, 2, 0, 0, 3, 0, 1, 0, 2];
+        for (let i = 0; i < 280; i++) {
+            const cell = document.createElement("div");
+            cell.className = "calendar-cell";
+            // Random level with higher probability of 0
+            const randomLevel = levels[Math.floor(Math.random() * levels.length)];
+            cell.classList.add(`level-${randomLevel}`);
+            grid.appendChild(cell);
+        }
+    </script>
+</body>
+</html>

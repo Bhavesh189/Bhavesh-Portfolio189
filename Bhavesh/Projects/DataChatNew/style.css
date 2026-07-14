@@ -1,0 +1,333 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@media (max-width:600px) {
+    .box {
+        display: flex;
+    }
+
+    .box1 {
+        width: 40%;
+    }
+
+    .micAndSendBtn {
+        display: flex;
+        gap: 5px;
+        width:auto;
+        height:auto;
+    }
+    .mic , .send{
+        height:min(15vw , 60px);
+        width:min(15vw , 60px);
+        font-size:30px;
+    }
+
+    .sidebar.active {
+        width: 80%;
+    }
+
+    .sidebar .next a:hover,
+    .sidebar .next a.active {
+        background: lightgreen;
+        color: white;
+        font-family: poppins, sans-serif;
+        transform: scale(1.1);
+        overflow-y: auto;
+    }
+    body
+    {
+        font-size:20px;
+    }
+    .heading
+    {
+        font-size:5vw;
+        height:6vw;
+    }
+}
+.navbar {
+    background-color: black;
+}
+
+.sidebar {
+    z-index: 5;
+    color: white;
+    position: fixed;
+    font-size: 20px;
+    cursor: pointer;
+    height: 100vh;
+    width: 250px;
+    left: -250px;
+    background: black;
+    transition: all 0.3s ease;
+}
+
+.sidebar .toggle-btn {
+    position: absolute;
+    right: -55px;
+    top: 15px;
+    height: 50px;
+    width: 50px;
+    transition: all 0.3s ease;
+}
+
+.sidebar .toggle-btn span {
+    position: absolute;
+    height: 5px;
+    width: 100%;
+    background: white;
+    transform: translateY(-50%);
+}
+
+.sidebar .toggle-btn span:nth-child(1) {
+    top: 10%;
+}
+
+.sidebar .toggle-btn span:nth-child(2) {
+    top: 50%;
+}
+
+.sidebar .toggle-btn span:nth-child(3) {
+    top: 90%;
+}
+
+.sidebar .next a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    font-family: poppins, sans-serif;
+    color: white;
+    border-bottom: 2px solid green;
+}
+
+.sidebar .next a:hover,
+.sidebar .next a.active {
+    background: lightgreen;
+    color: white;
+    font-family: poppins, sans-serif;
+    transform: scale(1.1);
+    
+}
+
+.sidebar.active {
+    position: fixed;
+    left: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+}
+
+.chats {
+    position: relative;
+    top: 15vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height:70vh;
+    max-height: 70vh;
+    width: 100%;
+    background: rgb(0, 255, 200);
+    margin: auto;
+    overflow-y: auto;
+}   
+
+.hello {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dataChat-defualt {
+    font-size: 20px;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    background-color: white;
+    border-radius: 15px;
+    border: none;
+}
+
+.dataChat-defualt::placeholder {
+    background-color: white;
+    text-align: center;
+}
+
+.file {
+    display: none;
+}
+
+.box {
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10vh;
+    width: 100%;
+    background: grey;
+    left: 0;
+    right: 0;
+}
+
+.box1 {
+    width: 80%;
+    height: 8vh;
+    align: center;
+}
+
+.mic {
+    width: 4vw;
+    height: 8vh;
+}
+
+.micAndSendBtn {
+    display: flex;
+    gap: 2px;
+    padding: 2px 10px;
+}
+
+.heading {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    color: white;
+    background-color: black;
+    text-align: center;
+    font-size: 5vw;
+    height: 15vh;
+    line-height: normal;
+    width: 100%;
+}
+
+.account {
+    z-index: 5;
+    color: white;
+    position: absolute;
+    font-size: 70px;
+    top: 2vh;
+    right: 2vw;
+    cursor: pointer;
+}
+
+.account:hover {
+    position: absolute;
+    top: 10px;
+    transition: 0.3s ease;
+    transform: scale(1.2);
+}
+
+.fa-file {
+    color: white;
+    font-size: 30px;
+    padding: 1px 30px 1px 1px;
+    position:relative;
+    left:15px;
+}
+
+.fileUplod::before {
+    content: "Insert File";
+    opacity: 0;
+}
+
+.fileUplod:hover::before {
+    content: "Insert File";
+    opacity: 1;
+    color: black;
+    background-color: white;
+}
+
+.send {
+    width: 4vw;
+    height: 8vh;
+}
+
+.message {
+    background-color: white;
+    border-radius: 15px;
+    font-size: 15px;
+    color: black;
+}
+
+.message.user {
+    background-color: white;
+    border-radius: 5px;
+    width: fit-content;
+    font-size: 23px;
+    color: black;
+    display: flex;
+    align-self: flex-end;
+    justify-content: flex-end;
+    text-align: right;
+    max-width: 50%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    font-family: poppins , sans-serif;
+    margin: 20px;
+}
+
+.message.dataChat {
+    background-color: white;
+    border-radius: 5px;
+    width: fit-content;
+    font-size: 23px;
+    color: black;
+    display: inline;
+    align-self: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+    max-width: 50%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    font-family: poppins , sans-serif;
+    margin: 20px;
+}
+
+.firstfile {
+    margin: 5px;
+    word-wrap: break-word;
+    background-color: #ffffff;
+    color: white;
+}
+
+h3 {
+    position: relative;
+    top: 7px;
+    left: 20px;
+}
+
+.googleLogin {
+    display: none;
+    font-size: 14px;
+    cursor: pointer;
+    background: white;
+    color: black;
+    font-family: poppins, sans-serif;
+    width: 12vw;
+    border-radius: 7px;
+    text-align: center;
+}
+
+.googleLogin i {
+    margin-right: 20px;
+}
+
+.googleLogin.active {
+    display: block;
+    transition: 1s ease;
+    transition-duration: 1s;
+}
+
+.logout p {
+    border-bottom: 2px solid lightpink;
+    padding: 9px 12px 2px 29px;
+    display: none;
+}
+
+.logout.active p {
+    display: block;
+}

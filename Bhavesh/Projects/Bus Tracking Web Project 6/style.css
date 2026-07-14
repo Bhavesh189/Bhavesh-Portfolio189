@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+html, body {
+    overflow: hidden;
+}
+
+nav {
+    background-color: #333;
+    color: #fff;
+    padding: 15px 20px;
+    font-size: 24px;
+    font-weight: 600;
+    display : flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left : 0px;
+    height : 60px;
+    z-index: 999;
+}
+
+nav img {
+    height: 40px;
+    color : white;
+    background-color: white;
+    width : auto;
+}
+
+nav sub {
+    font-size: 14px;
+    color: #bbb;
+    margin-left: 10px;
+}
+
+.selectBus {
+    position : absolute;
+    top : 60px;
+    display: flex;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    height : auto;
+    width : 25%;
+    background-color: rgb(255, 255, 255);
+    height : 100%;
+}
+
+.selectBus .in input {
+    margin-top : 10px;
+    margin-left : 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 15px;
+    border : 2px solid #333;
+}
+
+.in button {
+    margin-top : 10px;
+    margin-left : 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 15px;
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+}
+
+.map {
+    position : absolute;
+    top : 60px;
+    left : 25%;
+    width : 75%;
+    height : 100%;
+}
+
+.area {
+    height : 80vh;
+}
+
+.details {
+    width : 100%;
+    background-color: rgba(252, 255, 251, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: -1px 0 2px black;
+}
+
+.details h3, h5, h4 {
+    margin-bottom: 10px;
+}
+
+.search {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-direction: column;
+}
+
+.search input {
+    padding: 10px;
+    border: none;
+    border-radius: 15px;
+    border : 2px solid #333;
+}
+
+.search button {
+    padding: 10px;
+    border: none;
+    border-radius: 15px;
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+}
+@media (max-width: 600px) {
+    nav {
+        align-items: flex-start;
+        border-color : yellow;
+    }
+    nav img {
+        display: none;
+    }
+    nav sub {
+        margin-right: 0;
+        margin-top: 5px;
+    }
+    .selectBus {
+        width: 90%;
+        left: 5%;
+    }
+    .in input {
+        width: 90%;
+    }
+    .in button {
+        width: 90%;
+    }
+    .map {
+        left: 0;
+        width: 100%;
+        opacity: 0;
+    }
+}

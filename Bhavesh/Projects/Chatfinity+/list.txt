@@ -1,0 +1,147 @@
+🔹 1. Owner / Admin Side Features
+
+Authentication / Security
+
+Login with ID & password
+
+Role-based access (owner vs staff if future me add karna ho)
+
+Order Management
+
+View all incoming orders
+
+Update order status (pending / confirmed / delivered / canceled)
+
+Search / filter orders by date, status, or user
+
+Stock / Inventory Management
+
+Add / remove / update product items
+
+Set stock quantity & low-stock alerts
+
+Manage categories & variants (size/color)
+
+Customer Management
+
+View customer list
+
+Customer query/message history
+
+Contact info for follow-up
+
+Analytics / Reports
+
+Total orders, daily/weekly/monthly revenue
+
+Most popular products
+
+Customer engagement (messages sent, FAQs asked)
+
+AI-powered suggestions for stock / trending items
+
+Content / Product Updates
+
+Add product details, images, prices
+
+Update FAQ list for chatbot
+
+Set “buy limits” per product if needed
+
+Promotions / Broadcast Messages
+
+Send notifications to all users
+
+Announce discounts / offers
+
+AI Integration (Optional)
+
+Suggest new products based on order trends
+
+Auto-reply to complex queries
+
+🔹 2. User / Customer Side Features
+
+Chatbot / Conversational Features
+
+Greeting & Welcome Message
+
+FAQ Handling (owner-defined + AI-powered dynamic replies)
+
+Responsive & mobile-friendly UI
+
+Menu / Products
+
+Dynamic menu / product list fetched from owner dashboard
+
+Product details: price, description, availability
+
+Buy limits & stock availability alerts
+
+Order / Booking / Payment
+
+Add to cart / book / order
+
+Payment link integration (UPI / Razorpay / Paytm)
+
+View order history / status updates
+
+Customer Support
+
+Contact options: WhatsApp, call, email
+
+Send messages / queries directly from chatbot
+
+Optional AI Features
+
+Smart recommendations (“You may also like…”)
+
+Answer complex questions about products / services
+
+🔹 3. Extra Features (Edge Over Competitors)
+
+Push Notifications / Alerts
+
+Notify users about order status / offers / low stock products
+
+Multi-Language Support
+
+Regional languages: Hindi, Marathi, Tamil etc.
+
+User Feedback / Ratings
+
+Users can rate products / service → owner sees analytics
+
+Data Export / Backup
+
+Owner can export order history, customer list, stock list
+
+Customization / Branding
+
+Owner can choose theme color, logo, chatbot avatar
+
+Scalable Architecture
+
+Ready for WhatsApp / Instagram integration in future
+
+💡 Summary / Priority for MVP (Minimum Viable Product)
+
+Phase 1 (1–2 days MVP):
+
+Owner: Login, add/remove products, view orders, simple analytics
+
+User: Greeting, FAQ, responsive menu, order placement, payment link
+
+Phase 2 (Next 2–3 days):
+
+AI integration for dynamic responses & suggestions
+
+Advanced analytics, buy limits, stock alerts
+
+Broadcast / notifications, multi-language support
+
+Phase 3 (Optional / Later):
+
+WhatsApp / Instagram chatbot integration
+
+Push notifications, ratings / feedback, custom branding

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Store Dashboard — Advanced</title>
+<style>
+  /* Basic reset & fonts */
+  *{box-sizing:border-box} body{font-family:Inter,Arial,Helvetica,sans-serif;margin:0;background:#f4f6f9;color:#222}
+  a{color:inherit;text-decoration:none}
+  .topbar{background:#1a73e8;color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:50}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand .logo{width:40px;height:40px;border-radius:8px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-weight:700}
+  .brand h1{font-size:18px;margin:0}
+  .top-actions{display:flex;gap:8px;align-items:center}
+  .btn{padding:8px 12px;border-radius:8px;border:none;cursor:pointer;background:#fff;color:#1a73e8}
+  .container{display:flex;gap:18px;padding:18px;max-width:1200px;margin:12px auto}
+  /* Sidebar */
+  .sidebar{width:240px;background:#fff;border-radius:10px;padding:12px;box-shadow:0 6px 18px rgba(2,6,23,0.06);height:calc(100vh - 96px);overflow:auto;position:sticky;top:84px}
+  .menu a{display:block;padding:10px;border-radius:8px;margin-bottom:6px;color:#333}
+  .menu a.active{background:#e8f0ff;color:#0f4db3}
+  /* Main */
+  .main{flex:1;display:flex;flex-direction:column;gap:12px}
+  .card{background:#fff;padding:14px;border-radius:10px;box-shadow:0 6px 18px rgba(2,6,23,0.04)}
+  /* Grid */
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:8px;border-bottom:1px solid #eee;text-align:left;font-size:14px}
+  input,select{padding:8px;border-radius:8px;border:1px solid #ddd;width:100%}
+  .muted{color:#666;font-size:13px}
+  .small{font-size:13px}
+  .pill{display:inline-block;padding:6px 8px;border-radius:999px;background:#eef2ff;color:#0f4db3;font-weight:600;font-size:13px}
+  /* Responsive */
+  @media(max-width:900px){
+    .container{flex-direction:column;padding:12px}
+    .sidebar{width:100%;height:auto;position:static;top:unset;display:flex;overflow:auto;flex-direction:row;gap:8px;padding:8px}
+    .menu a{display:inline-block;margin:0 8px 0 0}
+    .grid-3{grid-template-columns:1fr}
+    .grid-2{grid-template-columns:1fr}
+  }
+  /* status colors */
+  .status-pending{color:#d97706;font-weight:700}
+  .status-completed{color:#059669;font-weight:700}
+  .status-cancel{color:#ef4444;font-weight:700}
+</style>
+</head>
+<body>
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="brand">
+    <div class="logo">S</div>
+    <div>
+      <h1 id="storeName">Store Dashboard</h1>
+      <div class="muted" id="storeEmail">...</div>
+    </div>
+  </div>
+
+  <div class="top-actions">
+    <div class="muted small" id="summaryMini">Orders: 0 • Revenue: ₹0</div>
+    <button class="btn" onclick="refreshAll()">Refresh</button>
+    <button class="btn" onclick="logout()">Logout</button>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <nav class="menu">
+      <a href="#" id="m-overview" class="active" onclick="openSection('overview')">Overview</a>
+      <a href="#" id="m-orders" onclick="openSection('orders')">Orders</a>
+      <a href="#" id="m-products" onclick="openSection('products')">Products</a>
+      <a href="#" id="m-customers" onclick="openSection('customers')">Customers</a>
+      <a href="#" id="m-analytics" onclick="openSection('analytics')">Analytics</a>
+      <a href="#" id="m-settings" onclick="openSection('settings')">Settings</a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- Overview -->
+    <section id="overview" class="card section">
+      <div class="grid-3">
+        <div class="card">
+          <h3>Total Orders</h3>
+          <div style="font-size:28px;font-weight:700" id="totOrders">0</div>
+          <div class="muted small">All-time orders for this store</div>
+        </div>
+        <div class="card">
+          <h3>Total Revenue</h3>
+          <div style="font-size:28px;font-weight:700" id="totRevenue">₹0</div>
+          <div class="muted small">All-time revenue</div>
+        </div>
+        <div class="card">
+          <h3>Active Products</h3>
+          <div style="font-size:28px;font-weight:700" id="totProducts">0</div>
+          <div class="muted small">Products in stock</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Orders Section -->
+    <section id="orders" class="card section" style="display:none">
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:12px">
+        <div style="flex:1;min-width:200px">
+          <input type="text" id="orderSearch" placeholder="Search order id or customer..." oninput="renderOrders()" />
+        </div>
+        <div style="width:180px">
+          <select id="statusFilter" onchange="renderOrders()">
+            <option value="">All status</option>
+            <option value="Pending">Incoming/Pending</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
+        <div style="width:140px;">
+          <input type="date" id="dateFrom" onchange="renderOrders()" />
+        </div>
+        <div style="width:140px;">
+          <input type="date" id="dateTo" onchange="renderOrders()" />
+        </div>
+        <div>
+          <button class="btn" onclick="fetchOrders()">Load</button>
+        </div>
+      </div>
+
+      <div>
+        <table id="ordersTable">
+          <thead><tr><th>OrderID</th><th>Customer</th><th>Date</th><th>Status</th><th>Amount</th><th>Action</th></tr></thead>
+          <tbody><tr><td colspan="6" class="muted">No orders loaded. Click Load.</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="card section" style="display:none">
+      <div class="grid-2">
+        <div class="card">
+          <h3>Add / Edit Product</h3>
+          <div class="small muted">Add product with category, stock, and price.</div>
+          <label>Product Name</label>
+          <input id="p-name" placeholder="e.g., Veg Pizza" />
+          <label>Category</label>
+          <input id="p-category" placeholder="e.g., Pizza / Snacks" />
+          <label>Stock</label>
+          <input id="p-stock" type="number" min="0" value="1" />
+          <label>Price (₹)</label>
+          <input id="p-price" type="number" min="0" value="100" />
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <button class="btn" onclick="saveProduct()">Save Product</button>
+            <button class="btn" onclick="clearProductForm()">Clear</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Products List</h3>
+          <div style="display:flex;gap:8px;margin-bottom:8px">
+            <input id="prodSearch" placeholder="Search product or category" oninput="renderProducts()" />
+            <select id="categoryFilter" onchange="renderProducts()"><option value="">All categories</option></select>
+            <button class="btn" onclick="fetchProducts()">Load</button>
+          </div>
+          <table id="productsTable"><thead><tr><th>Name</th><th>Category</th><th>Stock</th><th>Price</th><th>Action</th></tr></thead><tbody><tr><td colspan="5" class="muted">No products loaded.</td></tr></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Customers / Messages -->
+    <section id="customers" class="card section" style="display:none">
+      <div style="display:flex;gap:8px;margin-bottom:8px">
+        <input id="custSearch" placeholder="Search customer name / phone / message" oninput="renderCustomers()" style="flex:1" />
+        <button class="btn" onclick="fetchCustomers()">Load</button>
+      </div>
+      <table id="customersTable"><thead><tr><th>Name</th><th>Contact</th><th>Message</th><th>Time</th></tr></thead><tbody><tr><td colspan="4" class="muted">No messages loaded.</td></tr></tbody></table>
+    </section>
+
+    <!-- Analytics -->
+    <section id="analytics" class="card section" style="display:none">
+      <h3>Analytics</h3>
+      <div class="grid-3">
+        <div class="card">
+          <h4>Today</h4>
+          <div style="font-weight:700;font-size:20px" id="todayOrders">0 orders</div>
+          <div class="muted" id="todayRevenue">₹0</div>
+        </div>
+        <div class="card">
+          <h4>This Week</h4>
+          <div style="font-weight:700;font-size:20px" id="weekOrders">0 orders</div>
+          <div class="muted" id="weekRevenue">₹0</div>
+        </div>
+        <div class="card">
+          <h4>This Month</h4>
+          <div style="font-weight:700;font-size:20px" id="monthOrders">0 orders</div>
+          <div class="muted" id="monthRevenue">₹0</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Settings -->
+    <section id="settings" class="card section" style="display:none">
+      <h3>Settings</h3>
+      <p class="muted">Store name shown (from admin panel note): <strong id="settingsStoreName">-</strong></p>
+      <p class="muted">You can log out from top-right button.</p>
+    </section>
+
+  </main>
+</div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+// /* ========== REPLACE with your Firebase config ========== */ ye mene abhi hata di h 
+
+
+/* ===================================================== */
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+/* ---------- session validation (same pattern) ---------- */
+async function sha256Hex(str){
+  if(window.crypto && crypto.subtle){
+    const enc = new TextEncoder();
+    const data = enc.encode(str);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b=>b.toString(16).padStart(2,'0')).join('');
+  } else {
+    return sha256Fallback(str);
+  }
+}
+function sha256Fallback(ascii){ /* fallback impl copied (omitted here for brevity) */
+  function rightRotate(value, amount) { return (value>>>amount) | (value<<(32 - amount)); }
+  var mathPow = Math.pow; var maxWord = mathPow(2, 32);
+  var lengthProperty = 'length', i, j; var result = ''; var words = [];
+  var asciiBitLength = ascii[lengthProperty]*8;
+  var hash = sha256Fallback.h = sha256Fallback.h || [];
+  var k = sha256Fallback.k = sha256Fallback.k || [];
+  var primeCounter = k[lengthProperty];
+  var isComposite = {};
+  for (var candidate = 2; primeCounter < 64; candidate++) {
+    if (!isComposite[candidate]) {
+      for (i = 0; i < 313; i += candidate) isComposite[i] = candidate;
+      hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
+      k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
+    }
+  }
+  ascii += '\x80'
+  while (ascii[lengthProperty]%64 - 56) ascii += '\x00'
+  for (i = 0; i < ascii[lengthProperty]; i++) {
+    j = ascii.charCodeAt(i);
+    if (j>>8) return;
+    words[i>>2] |= j << ((3 - i)%4)*8;
+  }
+  words[words[lengthProperty]] = ((asciiBitLength/maxWord)|0);
+  words[words[lengthProperty]] = (asciiBitLength)
+  for (j = 0; j < words[lengthProperty];) {
+    var w = words.slice(j, j += 16);
+    var oldHash = hash;
+    hash = hash.slice(0, 8);
+    for (i = 0; i < 64; i++) {
+      var w15 = w[i - 15], w2 = w[i - 2];
+      var a = hash[0], e = hash[4];
+      var temp1 = hash[7]
+        + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
+        + ((e&hash[5])^((~e)&hash[6]))
+        + k[i]
+        + (w[i] = (i < 16) ? w[i] : (
+            w[i - 16]
+            + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15>>>3))
+            + w[i - 7]
+            + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2>>>10))
+          )|0
+        );
+      var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
+        + ((a&hash[1])^(a&hash[2])^(hash[1]&hash[2]));
+      hash = [(temp1+temp2)|0].concat(hash);
+      hash[4] = (hash[4]+temp1)|0;
+    }
+    for (i = 0; i < 8; i++) hash[i] = (hash[i]+oldHash[i])|0;
+  }
+  for (i = 0; i < 8; i++)
+    for (j = 3; j + 1; j--) {
+      var b = (hash[i]>>(j*8))&255;
+      result += ((b < 16) ? 0 : '') + b.toString(16);
+    }
+  return result;
+}
+
+/* ---------- session & owner info ---------- */
+let OWNER = null; // store owner doc object {id,email,note,passHash,...}
+async function validateSession(){
+  const raw = sessionStorage.getItem('ownerSession');
+  if(!raw) return redirectLogin('No session');
+  let session;
+  try { session = JSON.parse(raw); } catch(e){ return redirectLogin('Invalid session'); }
+  if(!session.ownerId || !session.email || !session.ts || !session.authToken) return redirectLogin('Incomplete');
+
+  // expiry (24h)
+  if(Date.now() - session.ts > 24*60*60*1000) return redirectLogin('Session expired');
+
+  try{
+    const doc = await db.collection('owners').doc(session.ownerId).get();
+    if(!doc.exists) return redirectLogin('Owner not found');
+    const data = doc.data();
+    // recompute token
+    const recomputed = await sha256Hex(session.ownerId + '|' + (data.passHash||'') + '|' + session.ts);
+    if(recomputed !== session.authToken) return redirectLogin('Auth mismatch');
+    OWNER = { id: doc.id, ...data };
+    // set UI
+    document.getElementById('storeName').innerText = OWNER.note || OWNER.email;
+    document.getElementById('storeEmail').innerText = OWNER.email;
+    document.getElementById('settingsStoreName').innerText = OWNER.note || OWNER.email;
+    return true;
+  } catch(e){
+    console.error(e); return redirectLogin('Validation error');
+  }
+}
+function redirectLogin(msg){
+  try{ localStorage.setItem('authError', msg); }catch(e){}
+  window.location.href = 'store-login.html';
+}
+
+/* ---------- UI helpers ---------- */
+function openSection(id){
+  document.querySelectorAll('.section').forEach(s=> s.style.display='none');
+  document.getElementById(id).style.display = 'block';
+  document.querySelectorAll('.menu a').forEach(a=>a.classList.remove('active'));
+  document.getElementById('m-'+id).classList.add('active');
+}
+
+/* ---------- Data fetch & render ---------- */
+let ORDERS = [], PRODUCTS = [], MESSAGES = [];
+
+async function fetchOrders(){
+  if(!OWNER) return;
+  const tbody = document.querySelector('#ordersTable tbody');
+  tbody.innerHTML = '<tr><td colspan="6">Loading...</td></tr>';
+  try{
+    const snap = await db.collection('orders')
+      .where('ownerEmail','==', OWNER.email)
+      .orderBy('createdAt','desc')
+      .get();
+    ORDERS = snap.docs.map(d=> ({ id:d.id, ...d.data() }) );
+    renderOrders();
+    computeSummary();
+  } catch(e){
+    console.error(e);
+    tbody.innerHTML = '<tr><td colspan="6">Error loading orders</td></tr>';
+  }
+}
+
+function renderOrders(){
+  const tbody = document.querySelector('#ordersTable tbody');
+  const q = (document.getElementById('orderSearch').value||'').trim().toLowerCase();
+  const status = document.getElementById('statusFilter').value;
+  const from = document.getElementById('dateFrom').value;
+  const to = document.getElementById('dateTo').value;
+  let rows = ORDERS.slice();
+
+  if(status) rows = rows.filter(r => (r.status||'').toLowerCase() === status.toLowerCase());
+  if(q) rows = rows.filter(r => (r.id||'').toLowerCase().includes(q) || ( (r.customerName||'') + (r.customer||'') ).toLowerCase().includes(q));
+  if(from) {
+    const f = new Date(from); rows = rows.filter(r => r.createdAt && r.createdAt.toDate ? r.createdAt.toDate() >= f : true);
+  }
+  if(to) {
+    const t = new Date(to); t.setHours(23,59,59,999); rows = rows.filter(r => r.createdAt && r.createdAt.toDate ? r.createdAt.toDate() <= t : true);
+  }
+
+  if(rows.length===0){ tbody.innerHTML = '<tr><td colspan="6" class="muted">No orders</td></tr>'; return; }
+  tbody.innerHTML = '';
+  rows.forEach(o=>{
+    const dateStr = o.createdAt && o.createdAt.toDate ? o.createdAt.toDate().toLocaleString() : '';
+    const statusClass = o.status === 'Delivered' ? 'status-completed' : (o.status==='Cancelled' ? 'status-cancel' : 'status-pending');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${o.id}</td>
+      <td>${o.customerName||o.customer||'--'}</td>
+      <td>${dateStr}</td>
+      <td class="${statusClass}">${o.status||'Pending'}</td>
+      <td>₹${o.amount||0}</td>
+      <td>
+        <button onclick="viewOrder('${o.id}')" class="btn">View</button>
+        <button onclick="updateOrderStatus('${o.id}','Delivered')" class="btn">Mark Delivered</button>
+        <button onclick="updateOrderStatus('${o.id}','Cancelled')" style="background:#ff5c5c;color:#fff;border-radius:6px">Cancel</button>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+async function updateOrderStatus(orderId, newStatus){
+  if(!confirm('Set order '+orderId+' status to '+newStatus+'?')) return;
+  try{
+    await db.collection('orders').doc(orderId).update({ status: newStatus });
+    alert('Status updated');
+    await fetchOrders();
+  } catch(e){
+    console.error(e); alert('Update failed');
+  }
+}
+
+function viewOrder(orderId){
+  const o = ORDERS.find(x=>x.id===orderId);
+  if(!o) return alert('Not found');
+  const info = [
+    `Order: ${o.id}`,
+    `Customer: ${o.customerName||o.customer||'--'}`,
+    `Contact: ${o.customerContact||'--'}`,
+    `Items: ${JSON.stringify(o.items||o.cart||o.products||{})}`,
+    `Amount: ₹${o.amount||0}`,
+    `Status: ${o.status||'Pending'}`,
+    `Date: ${o.createdAt && o.createdAt.toDate ? o.createdAt.toDate().toLocaleString() : ''}`
+  ].join('\n\n');
+  alert(info);
+}
+
+/* ---------- Products ---------- */
+async function fetchProducts(){
+  if(!OWNER) return;
+  const tbody = document.querySelector('#productsTable tbody');
+  tbody.innerHTML = '<tr><td colspan="5">Loading...</td></tr>';
+  try{
+    const snap = await db.collection('products')
+      .where('ownerEmail','==', OWNER.email)
+      .orderBy('name')
+      .get();
+    PRODUCTS = snap.docs.map(d=> ({ id:d.id, ...d.data() }) );
+    populateCategoryFilter();
+    renderProducts();
+    computeSummary();
+  } catch(e){
+    console.error(e); tbody.innerHTML = '<tr><td colspan="5">Error loading products</td></tr>';
+  }
+}
+
+function renderProducts(){
+  const tbody = document.querySelector('#productsTable tbody');
+  const q = (document.getElementById('prodSearch').value||'').trim().toLowerCase();
+  const cat = document.getElementById('categoryFilter').value;
+  let rows = PRODUCTS.slice();
+  if(cat) rows = rows.filter(r=> (r.category||'').toLowerCase() === cat.toLowerCase());
+  if(q) rows = rows.filter(r=> (r.name||'').toLowerCase().includes(q) || (r.category||'').toLowerCase().includes(q));
+  if(rows.length===0){ tbody.innerHTML = '<tr><td colspan="5" class="muted">No products</td></tr>'; return; }
+  tbody.innerHTML = '';
+  rows.forEach(p=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${p.name}</td><td>${p.category||''}</td><td>${p.stock||0}</td><td>₹${p.price||0}</td>
+      <td>
+        <button onclick="editProduct('${p.id}')" class="btn">Edit</button>
+        <button onclick="deleteProduct('${p.id}')" style="background:#ff5c5c;color:#fff;border-radius:6px">Delete</button>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function populateCategoryFilter(){
+  const sel = document.getElementById('categoryFilter');
+  const cats = Array.from(new Set(PRODUCTS.map(p=>p.category||'').filter(Boolean)));
+  sel.innerHTML = '<option value="">All categories</option>';
+  cats.forEach(c=> sel.innerHTML += `<option value="${c}">${c}</option>`);
+}
+
+async function saveProduct(){
+  const name = (document.getElementById('p-name').value||'').trim();
+  const category = (document.getElementById('p-category').value||'').trim();
+  const stock = Number(document.getElementById('p-stock').value||0);
+  const price = Number(document.getElementById('p-price').value||0);
+  if(!name){ return alert('Name required'); }
+  try{
+    await db.collection('products').add({
+      ownerEmail: OWNER.email, name, category, stock, price, createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    alert('Product saved');
+    clearProductForm(); fetchProducts();
+  } catch(e){ console.error(e); alert('Save failed'); }
+}
+
+function clearProductForm(){
+  document.getElementById('p-name').value=''; document.getElementById('p-category').value=''; document.getElementById('p-stock').value=1; document.getElementById('p-price').value=100;
+}
+
+async function editProduct(docId){
+  const docRef = db.collection('products').doc(docId);
+  const snap = await docRef.get();
+  if(!snap.exists) return alert('Not found');
+  const d = snap.data();
+  if(d.ownerEmail !== OWNER.email) return alert('Permission denied');
+  const newName = prompt('Name:', d.name); if(!newName) return;
+  const newCat = prompt('Category:', d.category||'')||'';
+  const newStock = Number(prompt('Stock:', d.stock||0)); if(isNaN(newStock)) return;
+  const newPrice = Number(prompt('Price:', d.price||0)); if(isNaN(newPrice)) return;
+  await docRef.update({ name:newName, category:newCat, stock:newStock, price:newPrice });
+  fetchProducts();
+}
+
+async function deleteProduct(docId){
+  if(!confirm('Delete product?')) return;
+  const docRef = db.collection('products').doc(docId);
+  const snap = await docRef.get();
+  if(!snap.exists) return alert('Not found');
+  if(snap.data().ownerEmail !== OWNER.email) return alert('Permission denied');
+  await docRef.delete();
+  fetchProducts();
+}
+
+/* ---------- Customers / messages ---------- */
+async function fetchCustomers(){
+  if(!OWNER) return;
+  const tbody = document.querySelector('#customersTable tbody');
+  tbody.innerHTML = '<tr><td colspan="4">Loading...</td></tr>';
+  try{
+    const snap = await db.collection('messages')
+      .where('ownerEmail','==', OWNER.email)
+      .orderBy('createdAt','desc')
+      .get();
+    MESSAGES = snap.docs.map(d=> ({ id:d.id, ...d.data() }) );
+    renderCustomers();
+  } catch(e){
+    console.error(e); tbody.innerHTML = '<tr><td colspan="4">Error loading messages</td></tr>';
+  }
+}
+
+function renderCustomers(){
+  const tbody = document.querySelector('#customersTable tbody');
+  const q = (document.getElementById('custSearch').value||'').trim().toLowerCase();
+  let rows = MESSAGES.slice();
+  if(q) rows = rows.filter(m => ((m.name||'') + ' ' + (m.contact||'') + ' ' + (m.message||'')).toLowerCase().includes(q));
+  if(rows.length===0){ tbody.innerHTML = '<tr><td colspan="4" class="muted">No messages</td></tr>'; return; }
+  tbody.innerHTML = '';
+  rows.forEach(m=>{
+    const tm = m.createdAt && m.createdAt.toDate ? m.createdAt.toDate().toLocaleString() : '';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${m.name||'--'}</td><td>${m.contact||'--'}</td><td>${m.message||'--'}</td><td>${tm}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+/* ---------- Analytics ---------- */
+async function computeAnalytics(){
+  if(!OWNER) return;
+  const now = new Date();
+  // helpers
+  function startOfDay(d){ return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+  function startOfWeek(d){ const dd = new Date(d); const day = dd.getDay(); const diff = dd.getDate() - day + (day===0? -6:1); return new Date(dd.setDate(diff)); }
+  function startOfMonth(d){ return new Date(d.getFullYear(), d.getMonth(), 1); }
+
+  const startDay = startOfDay(now);
+  const startWeek = startOfWeek(new Date());
+  const startMonth = startOfMonth(new Date());
+
+  // Firestore queries by date range
+  const ordersRef = db.collection('orders').where('ownerEmail','==', OWNER.email);
+
+  // helper to compute from snapshot
+  async function computeRange(startDate, endDate){
+    let q = ordersRef;
+    q = q.where('createdAt','>=', firebase.firestore.Timestamp.fromDate(startDate));
+    if(endDate) q = q.where('createdAt','<=', firebase.firestore.Timestamp.fromDate(endDate));
+    const snap = await q.get();
+    const docs = snap.docs.map(d=>d.data());
+    const count = docs.length;
+    const revenue = docs.reduce((s,x)=> s + (Number(x.amount)||0), 0);
+    return {count,revenue};
+  }
+
+  const today = await computeRange(startDay, null);
+  const week = await computeRange(startWeek, null);
+  const month = await computeRange(startMonth, null);
+
+  document.getElementById('todayOrders').innerText = today.count+' orders';
+  document.getElementById('todayRevenue').innerText = '₹'+today.revenue;
+  document.getElementById('weekOrders').innerText = week.count+' orders';
+  document.getElementById('weekRevenue').innerText = '₹'+week.revenue;
+  document.getElementById('monthOrders').innerText = month.count+' orders';
+  document.getElementById('monthRevenue').innerText = '₹'+month.revenue;
+}
+
+/* ---------- Summary (overview numbers) ---------- */
+async function computeSummary(){
+  if(!OWNER) return;
+  try{
+    const ordersSnap = await db.collection('orders').where('ownerEmail','==', OWNER.email).get();
+    const productsSnap = await db.collection('products').where('ownerEmail','==', OWNER.email).get();
+    const totOrders = ordersSnap.size;
+    const totProducts = productsSnap.size;
+    const totRevenue = ordersSnap.docs.reduce((s,d)=> s + (Number(d.data().amount)||0), 0);
+    document.getElementById('totOrders').innerText = totOrders;
+    document.getElementById('totProducts').innerText = totProducts;
+    document.getElementById('totRevenue').innerText = '₹'+totRevenue;
+    document.getElementById('summaryMini').innerText = `Orders: ${totOrders} • Revenue: ₹${totRevenue}`;
+  } catch(e){ console.error(e); }
+}
+
+/* ---------- Auth / utils ---------- */
+function logout(){ sessionStorage.removeItem('ownerSession'); window.location.href='store-login.html'; }
+function refreshAll(){ fetchOrders(); fetchProducts(); fetchCustomers(); computeAnalytics(); computeSummary(); }
+
+/* ---------- On load ---------- */
+(async function init(){
+  const ok = await validateSession();
+  if(!ok) return;
+  // show overview
+  openSection('overview');
+  // fetch initial data
+  await Promise.all([ fetchOrders(), fetchProducts(), fetchCustomers(), computeAnalytics(), computeSummary() ]);
+})();
+</script>
+</body>
+</html>

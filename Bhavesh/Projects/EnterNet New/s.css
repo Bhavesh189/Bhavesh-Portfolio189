@@ -1,0 +1,460 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    height: auto;
+    font-family: Arial, sans-serif;
+    background-color: #000000;
+    color: #000000;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding-top: 60px;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.nav {
+    display: flex;
+    gap: 5%;
+    top: 10px;
+    position: fixed;
+    background-color: rgb(24, 28, 22);
+    width: 100%;
+    justify-content: space-between;
+    padding-right: 2%;
+    border: 2px solid white;
+    border-radius: 10px;
+    z-index: 10000000;
+}
+
+.nav span {
+    color: rgb(255, 255, 255);
+    font-size: 1.2rem;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    display: inline-block;
+    transition: 0.3s ease;
+}
+
+.nav span:hover {
+    color: rgb(255, 214, 214);
+    transform: scale(1.1);
+}
+
+.nav h1 {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-left: 20px;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.net {
+    color: transparent;
+    font-size: 1.5rem !important;
+    font-weight: bold;
+    text-shadow: 0 0 10px #00e5ff;
+    margin-left: 2px;
+    -webkit-text-stroke: 1px #00e5ff;
+    letter-spacing: 1px;
+}
+
+.nav .net:hover {
+    transform: none;
+    cursor: default;
+}
+
+.nav a {
+    text-decoration: none;
+}
+
+.h {
+    display: flex;
+    gap: 20px;
+    padding-top: 5px;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    margin-left: 20px;
+}
+
+.tops {
+    height: 60vh;
+    width: 95vw;
+    border: 2px solid rgb(239, 230, 230);
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    position: relative;
+    border-radius: 15px;
+    margin-top: 20px;
+}
+
+.tops a {
+    text-decoration: none;
+    color: white;
+    height: 100%;
+    width: 100%;
+    display: block;
+    z-index: 1000;
+}
+
+.tops:hover div {
+    transform: scale(1.02);
+    transition: 0.3s ease-in-out;
+    animation-play-state: paused;
+}
+
+.tops:hover {
+    transform: scale(1.02);
+    transition: 0.3s ease-in-out;
+}
+
+.tops .name {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 5px;
+    height: 20%;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 100;
+    margin-bottom: 0;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.name h2 {
+    color: white;
+    font-size: 1.7rem;
+}
+
+.name p {
+    color: white;
+    font-size: 1.3rem;
+}
+
+.tops>div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    animation: chaltaRhe 8s infinite ease-in-out;
+}
+
+.tops img {
+    object-fit: fill;
+    height: 100%;
+    width: 100%;
+}
+
+.tops .top1 {
+    animation-delay: 0s;
+}
+
+.tops .top2 {
+    animation-delay: 2s;
+}
+
+.tops .top3 {
+    animation-delay: 4s;
+}
+
+.tops .top4 {
+    animation-delay: 6s;
+}
+
+.k>h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    margin-left: 30px;
+    margin-top: 20px;
+    background-color: rgb(35, 65, 35);
+    width: fit-content;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+.movies1 {
+    margin-left: 30px;
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding: 20px 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.movies1::-webkit-scrollbar {
+    display: none;
+}
+
+.m1 {
+    min-width: 160px;
+    height: 240px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.m1 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: 0.3s ease-in-out;
+}
+
+.m1 .name {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 1), transparent);
+    padding: 20px 10px 10px 10px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 0.3s ease-in-out;
+}
+
+.m1 .name h2 {
+    font-size: 0.9rem;
+    color: white;
+    text-align: center;
+    margin: 0;
+    font-weight: 500;
+    text-shadow: 1px 1px 2px black;
+}
+
+.m1:hover img {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+.m1:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
+    z-index: 10;
+}
+
+.m1:hover .name {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes chaltaRhe {
+    0% {
+        opacity: 0;
+        transform: translateX(100%) scale(1);
+        visibility: hidden;
+    }
+
+    5% {
+        opacity: 1;
+        transform: translateX(0%);
+        visibility: visible;
+    }
+
+    25% {
+        opacity: 1;
+        transform: translateX(0%);
+        visibility: visible;
+    }
+
+    50% {
+        opacity: 0;
+        transform: translateX(0%) scale(1);
+        visibility: hidden;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(-100%) scale(1);
+        visibility: hidden;
+    }
+
+}
+
+/* For Mobile  */
+@media screen and (max-width : 600px) {
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    .nav {
+        display: none;
+    }
+
+    .heading {
+        color: white;
+        background-color: rgb(1, 0, 0);
+        border: 2px solid rgb(255, 255, 255);
+        width: 100%;
+        border-radius: 5px;
+        height: 40px;
+        display: flex;
+        padding-top: 3px;
+        font-size: 1.1rem;
+        z-index: 10000000;
+        position: fixed;
+        top: 2px;
+        left: 0;
+    }
+
+    .three i {
+        padding-left: 5px;
+        padding-top: 3px;
+        font-size: 1.3rem;
+    }
+
+    .heading .e {
+        position: absolute;
+        left: 40vw;
+        padding-top: 3px;
+    }
+
+    .cross i {
+        position: fixed;
+        left: 60vw;
+        padding-top: 3px;
+        font-size: 1.3rem;
+        display: none;
+        z-index: 100000;
+    }
+
+    .mnav {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 60vw;
+        gap: 20px;
+        position: fixed;
+        top: 0;
+        left: -60vw;
+        background-color: black;
+        border-radius: 5px;
+        border: 2px solid white;
+        box-shadow: 2px 2px 10px white;
+        transition: 0.3s ease-in-out;
+        z-index: 9999999999;
+    }
+
+    .mnav.active {
+        left: 0;
+    }
+
+    .mnav h1 {
+        color: white;
+        padding-left: 20px;
+        padding-top: 10px;
+        border-bottom: 5px solid white;
+        padding: 10px;
+    }
+
+    .b {
+        position: absolute;
+        left: 0;
+        top: 5px;
+        width: 100%;
+        z-index: 999999;
+    }
+
+    .mnav .b {
+        display: flex;
+        gap: 20px;
+        flex-direction: column;
+    }
+
+    .b .hm {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding-top: 20px;
+        z-index: 10000;
+    }
+
+    .hm a {
+        border-bottom: 2px solid white;
+        text-decoration: none;
+        color: white;
+        font-size: 1.1rem;
+        padding: 10px;
+        padding-left: 10px;
+    }
+
+    .hm a:hover {
+        transform: scale(1.1);
+        transition: 0.3s ease-in-out;
+        background-color: rgb(74, 4, 4);
+    }
+
+    .tops {
+        height: 200px;
+        margin-top: 50px;
+    }
+
+    .name h2 {
+        font-size: 1.2rem;
+    }
+
+    .k>h1 {
+        margin-bottom: 20px;
+        margin-left: 5px;
+        font-size: 1.5rem;
+    }
+
+    .name p {
+        font-size: 1rem;
+    }
+
+    .movies1 {
+        width: 100vw;
+    }
+
+    .movies1 div {
+        max-height: 90px;
+        max-width: 100px;
+        min-width: 70px;
+    }
+}
+
+/* For Laptop  */
+@media screen and (min-width : 600px) {
+
+    .mnav {
+        display: none;
+    }
+
+    .heading {
+        display: none;
+    }
+
+    .k>h1 {
+        font-size: 2rem;
+    }
+}

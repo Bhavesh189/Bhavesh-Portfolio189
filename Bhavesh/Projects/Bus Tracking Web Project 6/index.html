@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Tracking App</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav><img src="Liet-Logo.png" alt="LIET"> Bus Tracking <sub> v 1.0 </sub></nav>
+
+    <!-- select bus -->
+     <div class="area">
+
+    <div class="selectBus">
+        <div class="in">
+            <input type="text" id="busNumber" placeholder="Enter Bus Number">
+            <button id="trackBus">Track Bus</button>
+        </div>
+        <div class="details">
+            <h3> Bus Number 2 : </h3>
+            <h4> Route: Kathi Gathi -> Chikani</h4>
+            <h5> Current Location : </h5>
+            <div class="show">
+                <p> Latitude : 28.6139 </p>
+                <p> Longitude : 77.2090 </p>
+            </div>
+        </div>
+        <div class="search">
+                <h3> Apply for Bus Pass?</h3>
+                <input type="text" id="name" placeholder="Enter Your Name">
+                <input type="text" id="studentId" placeholder="Enter Your Student ID">
+                <input type="text" id="busLoc" placeholder="Enter Location">
+                <input type="text" id="recipt" placeholder="Fee Recipt Number">
+                <input type="file" id="feeRecipt" accept="image/*">
+                <button id="applyPass">Apply Now</button>
+        </div>
+    </div>
+
+    <!-- Map View -->
+    <div class="map" id ="map">
+
+    </div></div>
+    <script src="script.js"></script>
+</body>
+
+</html>
+<link rel="stylesheet" href="style.css">

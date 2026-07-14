@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+  <title>VR Party Games - Host</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="host-page">
+  <div class="bg-animation">
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+  </div>
+
+  <!-- SCREEN 1: Game Selection -->
+  <div id="screenSelect" class="screen active">
+    <div class="container">
+      <header class="page-header">
+        <a href="/" class="back-btn">← Back</a>
+        <h1>Select Game</h1>
+      </header>
+
+      <div class="game-grid" id="gameGrid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 2: Waiting for Controller -->
+  <div id="screenWaiting" class="screen">
+    <div class="container center-content">
+      <div class="waiting-panel">
+        <h2>Session Created!</h2>
+        <div class="session-code-display">
+          <span class="code-label">Session Code</span>
+          <div class="code-value" id="sessionCode">------</div>
+        </div>
+        <div class="qr-container" id="qrContainer">
+          <img id="qrCode" alt="QR Code" />
+          <p class="qr-hint">Scan with second device</p>
+        </div>
+        <div class="waiting-status">
+          <div class="pulse-ring"></div>
+          <p id="waitingText">Waiting for controller to connect...</p>
+        </div>
+        <div class="game-selected-info">
+          <span>Game: </span><strong id="selectedGameName">-</strong>
+        </div>
+        <button class="btn btn-secondary" id="btnStartVR" style="display:none">
+          🥽 Enter VR Mode
+        </button>
+        <button class="btn btn-ghost" id="btnStartFlat" style="display:none">
+          📱 Play Without VR
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 3: Game Canvas -->
+  <div id="screenGame" class="screen">
+    <canvas id="gameCanvas"></canvas>
+    
+    <!-- HUD overlay -->
+    <div class="game-hud" id="gameHud">
+      <div class="hud-top">
+        <div class="hud-score">Score: <span id="hudScore">0</span></div>
+        <div class="hud-timer" id="hudTimer"></div>
+        <div class="hud-status" id="hudConnectionStatus">
+          <span class="status-dot connected"></span> Controller
+        </div>
+      </div>
+      <div class="hud-bottom">
+        <button class="hud-btn" id="btnVRToggle">🥽 VR</button>
+        <button class="hud-btn" id="btnFullscreen">⛶</button>
+        <button class="hud-btn" id="btnExitGame">✕</button>
+      </div>
+    </div>
+
+    <!-- Game Over overlay -->
+    <div class="game-over-overlay" id="gameOverOverlay" style="display:none">
+      <div class="game-over-content">
+        <h2>Game Over!</h2>
+        <div class="final-score">Score: <span id="finalScore">0</span></div>
+        <button class="btn btn-primary" id="btnPlayAgain">Play Again</button>
+        <button class="btn btn-ghost" id="btnBackToMenu">Back to Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Three.js and game scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r150/three.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/games/game-base.js"></script>
+  <script src="/js/games/maze-game.js"></script>
+  <script src="/js/games/shooter-game.js"></script>
+  <script src="/js/host.js"></script>
+</body>
+</html>

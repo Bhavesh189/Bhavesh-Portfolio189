@@ -2,7 +2,7 @@ import { Suspense, useEffect, useRef, useState } from 'react';
 
 export default function LazySection({ id, children, minHeight = '70vh' }) {
   const ref = useRef(null);
-  const [shouldLoad, setShouldLoad] = useState(false);
+  const [shouldLoad, setShouldLoad] = useState(true);
 
   useEffect(() => {
     const el = ref.current;

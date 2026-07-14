@@ -59,6 +59,17 @@ export const techMarquee = [
 export const journey = [
   {
     kind: 'work',
+    role: 'Backend Engineer (Go)',
+    org: 'Obfinity',
+    meta: 'Remote · Jul 2026 – Present',
+    points: [
+      "Building scalable backend systems for Obfinity's AI-powered cybersecurity platform using Go.",
+      'Working on REST APIs, PostgreSQL, distributed systems, security automation, reconnaissance orchestration, and cloud-native backend architecture.',
+    ],
+    tags: ['Go', 'PostgreSQL', 'REST APIs', 'Distributed Systems', 'Docker', 'Linux', 'Cybersecurity', 'API Development'],
+  },
+  {
+    kind: 'work',
     role: 'Web Developer Intern',
     org: 'Squarecell Resource India Pvt. Ltd.',
     meta: 'Remote · Jan 2026 – Feb 2026',
@@ -84,6 +95,7 @@ export const journey = [
 
 export const projects = [
   {
+    id: 'StudyTop',
     name: 'StudyTop',
     blurb: 'A full-stack MERN e-learning platform with REST APIs and progress-tracking modules.',
     detail:
@@ -94,6 +106,7 @@ export const projects = [
     accent: 'violet',
   },
   {
+    id: 'DocAna',
     name: 'DocAna AI',
     blurb: 'An AI healthcare document assistant that reads clinical documents for you.',
     detail:
@@ -104,16 +117,18 @@ export const projects = [
     accent: 'cyan',
   },
   {
+    id: 'EnterNet',
     name: 'EnterNet',
     blurb: 'A Netflix-style streaming experience with a modular React architecture.',
     detail:
       'Optimised media delivery to reduce video buffering by 30% and containerised the app with Docker for consistent environments.',
     tags: ['React', 'Docker', 'Streaming'],
-    live: 'https://bhavesh189.github.io/EnterNet/home.html',
+    live: '/Projects/EnterNet/index.html',
     year: '2024',
     accent: 'pink',
   },
   {
+    id: 'Notes',
     name: 'Notes Web + App',
     blurb: 'A cross-platform productivity workspace for fast, frictionless note-taking.',
     detail:
@@ -124,14 +139,59 @@ export const projects = [
     accent: 'violet',
   },
   {
+    id: 'LeetCodeMetrix',
     name: 'LeetCode Metrix',
     blurb: 'A competitive-programming analytics dashboard for tracking real progress.',
     detail:
       'Visualises 50+ problem-solving metrics via REST APIs to map strengths, gaps and momentum over time.',
-    tags: ['React', 'REST APIs', 'Data Viz'],
-    live: 'https://bhavesh189.github.io/LeetCodeProfile/',
+    tags: ['HTML5', 'CSS3', 'Dashboard'],
+    live: '/project/LeetCodeMetrix/index.html',
     year: '2025',
     accent: 'cyan',
+  },
+  {
+    id: 'BusTracking',
+    name: 'Bus Tracking System',
+    blurb: 'A real-time transit tracker panel for bus schedule and route planning.',
+    detail:
+      'Provides passengers and dispatchers with live bus coordinates, schedule tables, and status highlights.',
+    tags: ['HTML5', 'CSS3', 'JavaScript'],
+    live: '/project/BusTracking/index.html',
+    year: '2026',
+    accent: 'violet',
+  },
+  {
+    id: 'DataChatNew',
+    name: 'DataChat AI',
+    blurb: 'An AI-powered voice-to-text chat application with speech recognition.',
+    detail:
+      'Features full vocal messaging using Web Speech APIs, automated typing, and seamless interaction logs.',
+    tags: ['JavaScript', 'REST APIs', 'AI'],
+    live: '/project/DataChatNew/index.html',
+    year: '2026',
+    accent: 'cyan',
+  },
+  {
+    id: 'REsult',
+    name: 'BTU Result Analytics',
+    blurb: 'A BTU student semester result tracker with 3D WebGL visuals.',
+    detail:
+      'Enables students to view SGPA/CGPA breakdowns. Integrates a custom canvas background and roll number caching.',
+    tags: ['JavaScript', 'REST APIs', 'Three.js'],
+    live: '/project/REsult/index.html',
+    year: '2026',
+    accent: 'violet',
+  },
+  {
+    id: 'TaskWave',
+    name: 'TaskWave',
+    blurb: 'A modern, interactive layout for progress and task management.',
+    detail:
+      'Sleek list organization to optimize workflows, trace milestones, and manage task items inside local state.',
+    tags: ['HTML5', 'CSS3', 'JavaScript'],
+    live: '/project/TaskWave/index.html',
+    year: '2026',
+    accent: 'pink',
   },
 ];
 

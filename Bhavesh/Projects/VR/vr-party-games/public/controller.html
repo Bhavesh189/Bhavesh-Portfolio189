@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+  <title>VR Party Games - Controller</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="controller-page">
+  <div class="bg-animation">
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+  </div>
+
+  <!-- SCREEN 1: Enter Code -->
+  <div id="screenJoin" class="screen active">
+    <div class="container center-content">
+      <header class="page-header">
+        <a href="/" class="back-btn">← Back</a>
+        <h1>Connect Controller</h1>
+      </header>
+
+      <div class="join-panel">
+        <p>Enter the 6-character code shown on the host device</p>
+        <div class="code-input-group">
+          <input type="text" id="codeInput" class="code-input" maxlength="6" 
+                 placeholder="XXXXXX" autocomplete="off" autocapitalize="characters">
+        </div>
+        <button class="btn btn-primary btn-large" id="btnJoin">Connect</button>
+        <div class="error-msg" id="joinError" style="display:none"></div>
+        <div class="connecting-indicator" id="connectingIndicator" style="display:none">
+          <div class="spinner"></div>
+          <span>Connecting...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 2: Controller Interface -->
+  <div id="screenController" class="screen">
+    <div class="controller-layout" id="controllerLayout">
+      
+      <!-- Controller Header -->
+      <div class="ctrl-header">
+        <div class="ctrl-game-name" id="ctrlGameName">Game</div>
+        <div class="ctrl-connection">
+          <span class="status-dot connected"></span>
+          <span id="ctrlLatency">--ms</span>
+        </div>
+      </div>
+
+      <!-- Game State Feedback -->
+      <div class="ctrl-feedback" id="ctrlFeedback">
+        <div class="feedback-score">Score: <span id="ctrlScore">0</span></div>
+        <div class="feedback-health" id="ctrlHealthBar">
+          <div class="health-fill" id="ctrlHealthFill" style="width:100%"></div>
+        </div>
+      </div>
+
+      <!-- Joystick Area (Left Side) -->
+      <div class="ctrl-joystick-area" id="joystickArea">
+        <div class="joystick-container" id="joystickContainer">
+          <div class="joystick-base" id="joystickBase">
+            <div class="joystick-handle" id="joystickHandle"></div>
+          </div>
+        </div>
+        <span class="ctrl-label">MOVE</span>
+      </div>
+
+      <!-- Buttons Area (Right Side) -->
+      <div class="ctrl-buttons-area" id="buttonsArea">
+        <!-- Populated by JS based on game type -->
+      </div>
+
+      <!-- Gyro indicator -->
+      <div class="ctrl-gyro" id="gyroIndicator" style="display:none">
+        <div class="gyro-dot" id="gyroDot"></div>
+        <span class="ctrl-label">TILT TO AIM</span>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="ctrl-bottom">
+        <button class="ctrl-menu-btn" id="btnCtrlMenu">☰</button>
+        <button class="ctrl-menu-btn" id="btnCtrlVibrate">📳</button>
+        <button class="ctrl-menu-btn" id="btnCtrlFullscreen">⛶</button>
+      </div>
+    </div>
+
+    <!-- Disconnected overlay -->
+    <div class="disconnected-overlay" id="disconnectedOverlay" style="display:none">
+      <div class="disconnected-content">
+        <div class="disconnected-icon">⚡</div>
+        <h3>Connection Lost</h3>
+        <p>Trying to reconnect...</p>
+        <div class="spinner"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/input-manager.js"></script>
+  <script src="/js/controller.js"></script>
+</body>
+</html>

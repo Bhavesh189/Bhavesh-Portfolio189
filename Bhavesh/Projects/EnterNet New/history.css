@@ -1,0 +1,324 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.heading,
+.mnav {
+    display: none;
+}
+
+body {
+    height: auto;
+    font-family: Arial, sans-serif;
+    background-color: #000000;
+    color: #000000;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding-top: 60px;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.nav {
+    display: flex;
+    gap: 5%;
+    top: 10px;
+    position: fixed;
+    background-color: rgb(24, 28, 22);
+    width: 100%;
+    justify-content: space-between;
+    padding-right: 2%;
+    border: 2px solid white;
+    border-radius: 10px;
+    z-index: 10000000;
+}
+
+.nav span {
+    color: rgb(255, 255, 255);
+    font-size: 1.2rem;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    display: inline-block;
+    transition: 0.3s ease;
+}
+
+.nav span:hover {
+    color: rgb(255, 214, 214);
+    transform: scale(1.1);
+}
+
+.nav h1 {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-left: 20px;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.net {
+    color: transparent;
+    font-size: 1.5rem !important;
+    font-weight: bold;
+    text-shadow: 0 0 10px #00e5ff;
+    margin-left: 2px;
+    -webkit-text-stroke: 1px #00e5ff;
+    letter-spacing: 1px;
+}
+
+.nav .net:hover {
+    transform: none;
+    cursor: default;
+}
+
+.nav a {
+    text-decoration: none;
+}
+
+.h {
+    display: flex;
+    gap: 20px;
+    padding-top: 5px;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    margin-left: 20px;
+}
+
+.historyHead {
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-left: 20px;
+    margin-top: 20px;
+    position : absolute;
+    left : 5%;
+    top : 10%;
+}
+.historyHead h2 {
+    color: white;
+    font-size: 3rem;
+    -webkit-text-stroke: 1px rgb(76, 165, 255);
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+hr {
+    margin-top: 7%;
+    border: 1px solid rgb(255, 255, 255);
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.historyBox {
+    height : 150px;
+    width : 80%;
+    margin-left : 10%;
+    border : 2px solid red;
+    margin-top : 20px;
+    border-radius : 15px;
+    background-color : rgb(20, 20, 20);
+    display : flex;
+    flex-direction: row;
+    position : relative;
+}
+.historyBox:hover {
+    box-shadow: 0 0 20px greenyellow;
+    transition : 0.3s ease-in-out;
+    border : 2px solid greenyellow;
+}
+.historyBox img {
+    height : 90%;
+    position : relative;
+    width : 20%;
+    top : 5%;
+    margin-left : 20px;
+    border-radius : 10px;
+}   
+
+.historyBox h3 {
+    color : white;
+    margin-left : 30px;
+    margin-top : 20px;
+    width : 60%;
+    display : flex;
+    flex-direction : column;
+    gap : 10px;
+    text-wrap: none;
+}
+
+.historyBox p {
+    color : rgb(200, 200, 200);
+    margin-top : 10px;
+    margin-right: 5%;
+}
+/* For Mobile  */
+@media screen and (max-width : 600px) {
+    body {
+        padding-top: 50px;
+        margin: 0;
+    }
+
+    .heading,
+    .mnav {
+        display: block;
+    }
+
+    .nav {
+        display: none;
+    }
+
+    .heading {
+        color: white;
+        background-color: rgb(1, 0, 0);
+        border: 2px solid rgb(255, 255, 255);
+        width: 100%;
+        border-radius: 5px;
+        height: 40px;
+        display: flex;
+        padding-top: 3px;
+        font-size: 1.1rem;
+        z-index: 10000000;
+        top: 2px;
+        position: fixed;
+        left: 0;
+    }
+
+    .three i {
+        padding-left: 5px;
+        padding-top: 3px;
+        font-size: 1.3rem;
+    }
+
+    .heading .three {
+        position: absolute;
+        left: 10px;
+        padding-top: 3px;
+    }
+
+
+    .heading .e {
+        position: absolute;
+        left: 40vw;
+        padding-top: 3px;
+    }
+
+    .cross i {
+        position: fixed;
+        left: 60vw;
+        padding-top: 3px;
+        font-size: 1.3rem;
+        display: none;
+        z-index: 100000;
+    }
+
+    .mnav {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 60vw;
+        gap: 20px;
+        position: fixed;
+        top: 0;
+        left: -60vw;
+        background-color: black;
+        border-radius: 5px;
+        border: 2px solid white;
+        box-shadow: 2px 2px 10px white;
+        transition: 0.3s ease-in-out;
+        z-index: 9999999999;
+    }
+
+    .mnav.active {
+        left: 0;
+    }
+
+    .mnav h1 {
+        color: white;
+        padding-left: 20px;
+        padding-top: 10px;
+        border-bottom: 5px solid white;
+        padding: 10px;
+    }
+
+    .b {
+        position: absolute;
+        left: 0;
+        top: 5px;
+        width: 100%;
+        z-index: 999999;
+    }
+
+    .mnav .b {
+        display: flex;
+        gap: 20px;
+        flex-direction: column;
+    }
+
+    .b .hm {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding-top: 20px;
+        z-index: 10000;
+    }
+
+    .hm a {
+        border-bottom: 2px solid white;
+        text-decoration: none;
+        color: white;
+        font-size: 1.1rem;
+        padding: 10px;
+        padding-left: 10px;
+    }
+
+    .hm a:hover {
+        transform: scale(1.1);
+        transition: 0.3s ease-in-out;
+        background-color: rgb(74, 4, 4);
+    }
+
+    .historyHead {
+        left : 0;
+    }
+
+    .historyHead h2 {
+        font-size : 1.9rem;
+    }
+    hr {
+        margin-top : 25%;
+        width : 88%;
+        margin-left : auto;
+        margin-right : auto;
+    }
+    
+    .historyBox {
+        height : 80px;
+    }
+    .historyBox img {
+        height : 70px;
+        width : 25%;
+        top : 5%;
+    }
+    .historyBox h3 {
+        font-size : 0.9rem;
+        margin-top : 10px;
+        margin-left : 15px;
+        width : 55%;
+    }
+    .historyBox p {
+        font-size : 0.8rem;
+        margin-right : 5%;
+    }
+}
