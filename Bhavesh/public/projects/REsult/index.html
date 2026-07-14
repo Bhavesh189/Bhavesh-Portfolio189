@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dekh Le Bhai</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+        <link rel="stylesheet" href="Result.css" />
+</head>
+
+<body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <canvas id="bgCanvas"></canvas>
+
+    <div class="bg">
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
+    </div>
+
+    <nav class="topbar">
+        <div class="topbar-logo"></div>
+        <div class="topbar-right">
+            <div id="clock"></div>
+            <button class="top-btn" onclick="window.print()">🖨 Print</button>
+        </div>
+    </nav>
+
+    <div id="toast"></div>
+
+    <button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <div class="container">
+
+        <div class="hero">
+            <div class="hero-badge">
+                <span class="pulse-dot"></span>
+                Live Result Portal — BTU Bikaner
+            </div>
+            <h1>Unofficial BTU Student Result Dashboard</h1>
+            <p>Check your semester results, CGPA, SGPA, subject-wise marks and semester history — all in one place.</p>
+            <p class="hero-sub">
+                Built with ❤️ by <a href="https://bhavesh189.github.io/Bhavesh-Portfolio/" target="_blank">Bhavesh
+                    Sharma</a>
+                &nbsp;·&nbsp; Currently showing: <strong style="color:#a78bfa">Semester 1 Results</strong>
+            </p>
+        </div>
+
+        <div class="search-section">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="roll" placeholder="Enter your Roll Number (e.g. 22BTCS001)" autocomplete="off" />
+                <button onclick="getResult()" id="searchBtn">Search Result</button>
+            </div>
+
+            <div class="history-section" id="historySection" style="display:none">
+                <span class="history-label">Recent:</span>
+                <div id="historyChips"></div>
+                <span class="clear-history" onclick="clearHistory()">✕ Clear</span>
+            </div>
+        </div>
+
+        <div class="action-row" id="actionRow">
+            <button class="action-btn" onclick="window.print()">🖨 &nbsp;Print / Save PDF</button>
+            <button class="action-btn" onclick="copyRollNumber()">📋 &nbsp;Copy Roll Number</button>
+            <button class="action-btn" onclick="shareResult()">🔗 &nbsp;Share Result</button>
+            <button class="action-btn" onclick="scrollToSubjects()">📊 &nbsp;View Subjects</button>
+        </div>
+
+        <div id="output"></div>
+    </div>
+
+    <script src="Result.js"></script>
+
+</body>
+</html>

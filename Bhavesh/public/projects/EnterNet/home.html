@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnterNet | Browse</title>
+    <link rel="stylesheet" href="s.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <!-- Premium Header / Navigation -->
+    <nav class="netflix-nav" id="mainNav">
+        <div class="nav-left">
+            <div class="brand-logo" onclick="window.location.reload()">Enter<span class="hl">Net</span></div>
+            <ul class="nav-links">
+                <li class="nav-link-item active" data-filter="all">Home</li>
+                <li class="nav-link-item" data-filter="series">TV Shows</li>
+                <li class="nav-link-item" data-filter="movies">Movies</li>
+                <li class="nav-link-item" data-filter="mylist">My List</li>
+            </ul>
+        </div>
+        <div class="nav-right">
+            <!-- Animated Search Bar -->
+            <div class="search-box" id="searchBox">
+                <button class="search-btn" id="searchBtn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <input type="text" class="search-input" id="searchInput" placeholder="Titles, genres, people...">
+                <button class="search-clear-btn" id="searchClearBtn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <!-- Notifications Dropdown -->
+            <div class="nav-dropdown-wrapper">
+                <button class="icon-btn notif-btn">
+                    <i class="fa-solid fa-bell"></i>
+                    <span class="badge-dot"></span>
+                </button>
+                <div class="dropdown-menu notif-menu">
+                    <div class="dropdown-header">Recent Notifications</div>
+                    <div class="dropdown-item">
+                        <img src="b.jpg" alt="new show">
+                        <div class="notif-details">
+                            <p><strong>New Arrival:</strong> KGF Chapter 5 is now streaming.</p>
+                            <span>2 hours ago</span>
+                        </div>
+                    </div>
+                    <div class="dropdown-item">
+                        <img src="l.jpg" alt="new show">
+                        <div class="notif-details">
+                            <p><strong>Trending No.1:</strong> Cyber Genesis cut is online.</p>
+                            <span>1 day ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Menu -->
+            <div class="nav-dropdown-wrapper profile-wrapper">
+                <div class="profile-avatar" id="currentAvatar">
+                    <img src="p.jpg" alt="Profile Icon">
+                </div>
+                <div class="dropdown-menu profile-menu">
+                    <div class="profile-list">
+                        <div class="profile-option active-profile" data-profile="Bhavesh">
+                            <img src="p.jpg" alt="Bhavesh">
+                            <span>Bhavesh</span>
+                        </div>
+                        <div class="profile-option" data-profile="Kids">
+                            <img src="l.jpg" alt="Kids">
+                            <span>Kids</span>
+                        </div>
+                        <div class="profile-option" data-profile="Guest">
+                            <img src="t.jpg" alt="Guest">
+                            <span>Guest</span>
+                        </div>
+                    </div>
+                    <div class="menu-actions">
+                        <a href="#" id="manageProfilesLink"><i class="fa-solid fa-pencil"></i> Manage Profiles</a>
+                        <a href="#" id="accountSettingsLink"><i class="fa-solid fa-user"></i> Account Settings</a>
+                        <a href="index.html" id="signOutLink"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Watch Party Switcher -->
+            <button class="social-party-toggle" id="partySidebarToggle" title="Watch Party">
+                <i class="fa-solid fa-users"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Social Sidebar: Watch Party -->
+    <aside class="social-sidebar" id="partySidebar">
+        <div class="sidebar-header">
+            <h3><i class="fa-solid fa-users"></i> Watch Party</h3>
+            <button class="close-sidebar-btn" id="closeSidebarBtn">&times;</button>
+        </div>
+        <div class="party-status-card">
+            <div class="status-indicator">
+                <span class="status-dot offline" id="partyStatusDot"></span>
+                <span class="status-text" id="partyStatusText">Offline</span>
+            </div>
+            <button class="btn-glow" id="startPartyBtn">Start Watch Party</button>
+        </div>
+        <div class="party-chat" id="partyChat">
+            <div class="chat-placeholder">
+                <i class="fa-solid fa-comments"></i>
+                <p>Start a party to chat with friends in real-time while watching movies.</p>
+            </div>
+            <div class="chat-messages" id="chatMessages" style="display:none;"></div>
+            <div class="chat-input-wrapper" id="chatInputWrapper" style="display:none;">
+                <input type="text" id="chatInput" placeholder="Send a message...">
+                <button id="sendChatBtn"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Container -->
+    <main class="browse-container" id="browseContainer">
+        <!-- Hero Section / Billboard -->
+        <section class="billboard" id="featuredBillboard">
+            <div class="billboard-video-container">
+                <div class="billboard-gradient-left"></div>
+                <div class="billboard-gradient-bottom"></div>
+                <!-- Featured video background. Muted and looping -->
+                <video class="billboard-video" id="billboardVideo" src="sample-30s.mp4" autoplay loop muted playsinline></video>
+                <div class="billboard-fallback-img" id="billboardFallbackImg" style="background-image: url('https://images.unsplash.com/photo-1535498730771-e735b998cd64?q=80&w=2560&auto=format&fit=crop');"></div>
+            </div>
+            
+            <div class="billboard-content">
+                <div class="featured-badge"><i class="fa-solid fa-fire"></i> Featured Cyberpunk</div>
+                <h1 class="billboard-title" id="billboardTitle">NEON GENESIS</h1>
+                <p class="billboard-desc" id="billboardDesc">In 2077, the line between humanity and technology blurs. Choose your path in this interactive thriller where every decision changes the ending.</p>
+                <div class="billboard-actions">
+                    <button class="btn-billboard play-btn" id="billboardPlayBtn">
+                        <i class="fa-solid fa-play"></i> Play Now
+                    </button>
+                    <button class="btn-billboard info-btn" id="billboardInfoBtn">
+                        <i class="fa-solid fa-circle-info"></i> More Info
+                    </button>
+                </div>
+            </div>
+
+            <!-- Billboard Right-Side Overlay (Sound toggle & Rating) -->
+            <div class="billboard-meta-controls">
+                <button class="billboard-sound-btn" id="billboardSoundBtn" title="Toggle Sound">
+                    <i class="fa-solid fa-volume-xmark" id="soundIcon"></i>
+                </button>
+                <div class="billboard-rating-badge">18+</div>
+            </div>
+        </section>
+
+        <!-- Search Results Grid (Hidden by default) -->
+        <section class="search-results-section" id="searchResultsSection" style="display: none;">
+            <h2 class="search-title">Search Results for: <span id="searchQueryLabel"></span></h2>
+            <div class="search-results-grid" id="searchResultsGrid"></div>
+        </section>
+
+        <!-- Dynamic Rows Section -->
+        <section class="movies-rows-section" id="moviesRowsSection">
+            <!-- Category Rows will be dynamically loaded here by home.js -->
+        </section>
+    </main>
+
+    <!-- Cinematic Detail Modal (Slide Up Overlay) -->
+    <div class="detail-modal-overlay" id="detailModal">
+        <div class="detail-modal-content">
+            <button class="modal-close-btn" id="modalCloseBtn">&times;</button>
+            
+            <!-- Modal Header / Video Banner -->
+            <div class="modal-header-banner">
+                <div class="banner-gradient"></div>
+                <img class="banner-img" id="modalBannerImg" src="" alt="backdrop">
+                <video class="banner-video" id="modalBannerVideo" src="" loop muted playsinline></video>
+                <div class="banner-controls">
+                    <h2 class="banner-title" id="modalTitle"></h2>
+                    <div class="banner-actions">
+                        <button class="btn-modal play" id="modalPlayBtn"><i class="fa-solid fa-play"></i> Play</button>
+                        <button class="btn-modal-round" id="modalAddListBtn" title="Add to My List"><i class="fa-solid fa-plus"></i></button>
+                        <button class="btn-modal-round" id="modalLikeBtn" title="Rate this"><i class="fa-solid fa-thumbs-up"></i></button>
+                        <button class="btn-modal-round sound-toggle" id="modalSoundBtn" title="Mute/Unmute"><i class="fa-solid fa-volume-xmark"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Info Body -->
+            <div class="modal-body-info">
+                <div class="modal-info-left">
+                    <div class="meta-row">
+                        <span class="match-score" id="modalMatch">98% Match</span>
+                        <span class="meta-tag" id="modalYear">2026</span>
+                        <span class="maturity-tag">18+</span>
+                        <span class="duration" id="modalDuration">2h 40m</span>
+                        <span class="video-quality">Ultra HD 4K</span>
+                    </div>
+                    <p class="movie-description" id="modalDesc"></p>
+                </div>
+                <div class="modal-info-right">
+                    <div class="meta-field">
+                        <span class="field-label">Cast:</span>
+                        <span class="field-value" id="modalCast"></span>
+                    </div>
+                    <div class="meta-field">
+                        <span class="field-label">Genres:</span>
+                        <span class="field-value" id="modalGenres"></span>
+                    </div>
+                    <div class="meta-field">
+                        <span class="field-label">This video is:</span>
+                        <span class="field-value" id="modalTags">Exciting, Mind-bending, Cyberpunk</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Similar Recommendations Grid -->
+            <div class="modal-similar-section">
+                <h3>More Like This</h3>
+                <div class="similar-grid" id="modalSimilarGrid">
+                    <!-- Loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="home.js"></script>
+</body>
+
+</html>

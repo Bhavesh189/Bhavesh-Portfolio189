@@ -1,7 +1,7 @@
 {
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "/((?!projects/).*)",
       "headers": [
         {
           "key": "Content-Security-Policy",
@@ -30,6 +30,23 @@
       ]
     },
     {
+      "source": "/projects/(.*)",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:; frame-ancestors 'self';"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    },
+    {
       "source": "/assets/(.*)",
       "headers": [
         {
@@ -41,7 +58,7 @@
   ],
   "rewrites": [
     {
-      "source": "/((?!api/|assets/|favicon.ico|site.webmanifest|og-image.png|sitemap.xml|robots.txt).*)",
+      "source": "/((?!api/|assets/|projects/|favicon.ico|site.webmanifest|og-image.png|sitemap.xml|robots.txt).*)",
       "destination": "/index.html"
     }
   ]

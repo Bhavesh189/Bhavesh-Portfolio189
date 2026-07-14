@@ -123,7 +123,7 @@ export const projects = [
     detail:
       'Optimised media delivery to reduce video buffering by 30% and containerised the app with Docker for consistent environments.',
     tags: ['React', 'Docker', 'Streaming'],
-    live: '/Projects/EnterNet/index.html',
+    live: '/projects/EnterNet/index.html',
     year: '2024',
     accent: 'pink',
   },
@@ -145,7 +145,7 @@ export const projects = [
     detail:
       'Visualises 50+ problem-solving metrics via REST APIs to map strengths, gaps and momentum over time.',
     tags: ['HTML5', 'CSS3', 'Dashboard'],
-    live: '/project/LeetCodeMetrix/index.html',
+    live: '/projects/LeetCodeMetrix/index.html',
     year: '2025',
     accent: 'cyan',
   },
@@ -156,7 +156,7 @@ export const projects = [
     detail:
       'Provides passengers and dispatchers with live bus coordinates, schedule tables, and status highlights.',
     tags: ['HTML5', 'CSS3', 'JavaScript'],
-    live: '/project/BusTracking/index.html',
+    live: '/projects/BusTracking/index.html',
     year: '2026',
     accent: 'violet',
   },
@@ -167,7 +167,7 @@ export const projects = [
     detail:
       'Features full vocal messaging using Web Speech APIs, automated typing, and seamless interaction logs.',
     tags: ['JavaScript', 'REST APIs', 'AI'],
-    live: '/project/DataChatNew/index.html',
+    live: '/projects/DataChatNew/index.html',
     year: '2026',
     accent: 'cyan',
   },
@@ -178,7 +178,7 @@ export const projects = [
     detail:
       'Enables students to view SGPA/CGPA breakdowns. Integrates a custom canvas background and roll number caching.',
     tags: ['JavaScript', 'REST APIs', 'Three.js'],
-    live: '/project/REsult/index.html',
+    live: '/projects/REsult/index.html',
     year: '2026',
     accent: 'violet',
   },
@@ -189,7 +189,7 @@ export const projects = [
     detail:
       'Sleek list organization to optimize workflows, trace milestones, and manage task items inside local state.',
     tags: ['HTML5', 'CSS3', 'JavaScript'],
-    live: '/project/TaskWave/index.html',
+    live: '/projects/TaskWave/index.html',
     year: '2026',
     accent: 'pink',
   },

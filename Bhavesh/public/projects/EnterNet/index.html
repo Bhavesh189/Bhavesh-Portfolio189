@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EnterNet | Login</title>
+    <link rel="stylesheet" href="st.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+
+<body>
+    <!-- Background interactive grid -->
+    <div class="grid" id="bgGrid"></div>
+
+    <!-- Login Card Box -->
+    <div class="box">
+        <h1>Sign In</h1>
+
+        <div class="e">
+            <div class="input-group">
+                <input type="text" placeholder=" " id="user" required autocomplete="off" />
+                <label class="input-label" for="user">Username</label>
+            </div>
+
+            <div class="input-group">
+                <input type="password" placeholder=" " id="pass" required />
+                <label class="input-label" for="pass">Password</label>
+            </div>
+
+            <div class="x">
+                <label class="remember-wrapper">
+                    <input type="checkbox" id="r" class="Bhavesh" />
+                    <span>Remember me</span>
+                </label>
+                <a href="#" class="help-link">Need help?</a>
+            </div>
+
+            <div class="btn-container">
+                <button id="loginBtn">
+                    <span class="btn-text">Sign In</span>
+                    <div class="btn-loader" id="loginLoader"></div>
+                </button>
+            </div>
+
+            <div class="demo-tips">
+                Demo: <strong>bhavesh</strong> / <strong>demonking</strong>
+            </div>
+
+            <h2>New to EnterNet? <span id="signUpBtn">Sign up now.</span></h2>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="s.js"></script>
+</body>
+
+</html>
