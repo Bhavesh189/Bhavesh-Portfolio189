@@ -10,8 +10,8 @@ const RESUME_DATA = {
     content: "I am pursuing my B.Tech in Computer Science & Engineering at Bikaner Technical University (BTU), Bikaner (Rajasthan). Batch: 2025 – 2029. Current CGPA: 9.20 / 10. Core coursework includes: Data Structures & Algorithms (DSA), Operating Systems (OS), DBMS, Computer Networks, and Object-Oriented Programming (OOP)."
   },
   experience: {
-    title: " Experience / Internship",
-    content: "I worked as a Web Developer Intern at Squarecell Resource India Pvt. Ltd. (Remote, Jan 2026 – Feb 2026). During this internship, I:\n• Built a coding-practice platform on a React.js, Node.js, and Express.js stack, cutting page load time by 35%.\n• Optimized MongoDB pipelines and state sync, reducing data retrieval latency by 40%.\n• Worked in Agile sprints using Git/GitHub and CI/CD workflows."
+    title: " Experience / Internships",
+    content: "I have gathered hands-on industry experience across software engineering roles:\n1. **Full Stack Web Development Intern at Kinetrexa Software Private Limited** (Remote, 20 Jul 2026 – 19 Aug 2026):\n• Built full-stack web applications with React.js and Node.js REST APIs.\n• Completed real-world projects and client-server workflows (Certificate ID: KTS00920265917).\n2. **Web Developer Intern at Squarecell Resource India Pvt. Ltd.** (Remote, 10 Jan 2026 – 13 Feb 2026):\n• Built coding-practice platform modules cutting load times by 35% and database latency by 40%.\n• Earned corporate Letter of Recommendation (LOR).\n3. **Backend Engineer (Go) at Obfinity** (Remote, Jul 2026 – Present):\n• Engineering AI cybersecurity backend pipelines with Go & PostgreSQL."
   },
   skills: {
     title: "️ Technical Skills",
@@ -19,15 +19,15 @@ const RESUME_DATA = {
   },
   leetcode: {
     title: " LeetCode & Competitive Programming",
-    content: "I have solved over 350+ data structures and algorithms (DSA) problems on LeetCode. I actively participate in competitive programming to keep my problem-solving skills sharp."
+    content: "I have solved 419+ data structures and algorithms (DSA) problems on LeetCode (Contest Rating 1,611, Max Streak 277 Days, 200 Days Badge 2026). I actively participate in competitive programming to keep my algorithmic efficiency sharp."
   },
   contact: {
     title: " Contact Details",
     content: "Here are my contact details from my resume:\n• Email: bhaveshyt.infinity@gmail.com\n• Phone: +91 63764 11796\n• Location: Jaipur, Rajasthan, India\n• Socials: GitHub (github.com/Bhavesh189), LinkedIn (in/bhaveshsharmainfinity)"
   },
   certifications: {
-    title: " Certifications",
-    content: "I hold 3 active certifications:\n1. Scala Full Stack Development: Key Skills for 2026 (GUVI Geek Networks × HCL)\n2. ReactJS Foundations (ScholarHat / Dot Net Tricks, 2026)\n3. Node.js Certification (Scaler, 2026)"
+    title: " Certifications & Credentials",
+    content: "I hold 6 verified credentials:\n1. Full Stack Web Development Internship (Kinetrexa Software Private Limited, 2026)\n2. Web Developer Internship Certificate (Squarecell, 2026)\n3. Letter of Recommendation - LOR (Squarecell, 2026)\n4. ReactJS Foundations (ScholarHat / Dot Net Tricks, 2026)\n5. Node.js Certification (Scaler, 2026)\n6. Full Stack Development: Key Skills for 2026 (GUVI Geek Networks × HCL)"
   },
   project_studytop: {
     title: " Project: StudyTop",
@@ -106,9 +106,9 @@ function queryResume(query) {
 • **Work Experience** (Squarecell Internship)
 • **Technical Skills** (MERN, Go, Python, SQL, Docker)
 • **Projects** (StudyTop, DocAna AI, EnterNet, Notes, Metrix)
-• **LeetCode Stats** (350+ solved problems)
+• **LeetCode Stats** (419+ solved problems)
 • **Contact Info** (Email, phone, location)
-• **Certifications** (Scaler, GUVI, ScholarHat)`;
+• **Certifications** (Scaler, GUVI, ScholarHat, Squarecell)`;
 }
 
 export default function BhaveshAI({ autoOpen = false }) {

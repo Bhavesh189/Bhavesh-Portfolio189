@@ -45,23 +45,23 @@ function StatCounter({ value, suffix, label }) {
 // Fallback used only when the backend API is unreachable / errors.
 // (Values supplied as the offline snapshot.)
 const LC_FALLBACK = {
-  totalSolved: 356,
-  easySolved: 139,
-  mediumSolved: 188,
-  hardSolved: 29,
-  ranking: '369,725',
-  contributionPoint: 1459,
-  reputation: 419,
+  totalSolved: 419,
+  easySolved: 163,
+  mediumSolved: 225,
+  hardSolved: 31,
+  ranking: '290,526',
+  contributionPoint: 1680,
+  reputation: 682,
   // Not provided by the API - kept as static display values:
-  totalQuestions: 3985,
-  totalEasy: 953,
-  totalMedium: 2081,
-  totalHard: 951,
-  streak: 222,
-  rating: 1612,
-  badge: '100 Days Badge 2026',
-  solutions: 74,
-  views: '4.2K',
+  totalQuestions: 4033,
+  totalEasy: 961,
+  totalMedium: 2105,
+  totalHard: 967,
+  streak: 277,
+  rating: 1611,
+  badge: '200 Days Badge 2026',
+  solutions: 85,
+  views: '4.9K',
 };
 
 const LC_API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'

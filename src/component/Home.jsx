@@ -5,100 +5,155 @@ import Bhavesh from '../assets/Bhavesh.png'
 import Card from './Card'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLinkedin, faGithub, faInstagram } from '@fortawesome/free-brands-svg-icons'
-import { faCode } from '@fortawesome/free-solid-svg-icons'
+import { faCode, faTrophy, faFire } from '@fortawesome/free-solid-svg-icons'
 import { useState, useEffect } from 'react'
-import Typewriter from 'typewriter-effect';
+import Typewriter from 'typewriter-effect'
 import Preloader from './Preloader'
 
 const Home = () => {
     const [load, setLoad] = useState(true);
 
     const ImgStyle = {
-      height : "200px",
-      width : "200px",
+      height : "220px",
+      width : "220px",
+      objectFit : "cover",
+      borderRadius : "50%"
     };
 
     useEffect(()=> {
-
       const stop = setTimeout(()=> {
-      setLoad(false);
-    }, 1100);
+        setLoad(false);
+      }, 1000);
 
-    return ()=> {
-      clearInterval(stop);
-    }
-
+      return ()=> {
+        clearInterval(stop);
+      }
     }, [])
 
-
   return (
-
     <div>
-      {
-        load  &&
-      <Preloader />
-      }
-        <Background>
-      <Navbar />
-      <div className="links">
-        <a href="https://www.linkedin.com/in/bhaveshsharmainfinity" aria-label="LinkedIn"><FontAwesomeIcon icon={faLinkedin} /></a>
-        <a href="https://github.com/Bhavesh189" aria-label="GitHub"><FontAwesomeIcon icon={faGithub} /></a>
-        <a href="https://leetcode.com/u/bhavesh1899287/" aria-label="LeetCode"><FontAwesomeIcon icon={faCode} /></a>
-        <a href="https://www.instagram.com/" aria-label="Instagram"><FontAwesomeIcon icon={faInstagram} /></a>
-      </div>
-      <div className="whole">
-        <div className="g" style={{'--hover-scale' : "scale(1)"}}>
-        <Card skillImg={Bhavesh} name="Bhavesh Sharma" stylee={ImgStyle} />
+      {load && <Preloader />}
+      <Background>
+        <Navbar />
+        <div className="links">
+          <a href="https://www.linkedin.com/in/bhaveshsharmainfinity" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FontAwesomeIcon icon={faLinkedin} /></a>
+          <a href="https://github.com/Bhavesh189" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><FontAwesomeIcon icon={faGithub} /></a>
+          <a href="https://leetcode.com/u/bhavesh1899287/" target="_blank" rel="noopener noreferrer" aria-label="LeetCode"><FontAwesomeIcon icon={faCode} /></a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><FontAwesomeIcon icon={faInstagram} /></a>
         </div>
-        <div className="f">
-        <h1>Hi, I am
 
-          <span style={{color : 'red'}}>
-          
-          <Typewriter 
-          
-          options={{
-            strings: [' Bhavesh Sharma', ' a Full Stack Developer', ' a MERN Programmer'],
-                autoStart: true,
-                loop: true,
-                delay: 75,
-                deleteSpeed: 50
-          }}
-          />
-          </span>
-          </h1><br /> <br />
-        <p>
-  I am an ambitious, highly analytical, and detail-oriented Computer Science Engineering student and full-stack developer based in Alwar, Rajasthan. Currently pursuing my Bachelor of Technology (B.Tech) in Computer Science Engineering (2025–2029 cohort) at the Laxmi Devi Institute of Technology and Engineering, I have systematically built a strong foundation in modern software development methodologies, real-time data architecture, and algorithmic problem-solving. Prior to my engineering journey, I completed my senior secondary education with a core focus on Physics, Chemistry, and Mathematics (PCM) at Star Public Sr. Sec. School (2024–2025), which originally sparked my foundational passion for analytical reasoning, logical structures, and computational thinking.
-  <br /><br />
-  Driven by a relentless curiosity about how scalable systems function, I focus my technical expertise on the MERN (MongoDB, Express.js, React.js, Node.js) stack, positioning myself as a versatile frontend and backend engineer. I consistently balance my practical web development pursuits with rigorous, active practice in Data Structures and Algorithms (DSA), using languages like C++ and Java to optimize code efficiency, runtime complexity, and memory management. Beyond standard web paradigms, my technological agility extends to programming languages such as C, JavaScript, and Python, alongside a foundational grasp of machine learning utilities and data manipulation frameworks like NumPy and Pandas.
-  <br /><br />
-  Despite being early in my professional career, I have already gathered crucial industry-level software engineering experience. During my tenure as a Web Developer Intern at Squarecell Private Limited (January 2026 – February 2026), I engineered a fully responsive, high-performance coding platform meticulously designed to enable global developers and students to practice programming problems seamlessly. This professional engagement allowed me to master state synchronization, advanced fluid layout styling, responsive breakpoints, and client-server communication channels in a production environment.
-  <br /><br />
-  I firmly believe that true engineering capability is proven through building functional products that address modern digital demands. My independent project portfolio showcases my mastery over complex UI layouts, state handling, asynchronous programming, and real-time networking protocols:
-  <br /><br />
-  • <strong>DocAna AI:</strong> A disruptive, artificial intelligence-driven healthcare and text analysis companion. Built using HTML, CSS, JavaScript, Node.js, and Express.js, I integrated deep AI orchestration pipelines into this platform to instantly parse, summarize, and extract highly critical insights from dense clinical files and complex documents without losing vital contextual details.
-  <br /><br />
-  • <strong>EnterNet (Netflix Clone):</strong> A premium entertainment streaming architecture I built to emulate global modern industry standards. This high-fidelity frontend application utilizes React's modular ecosystem to manage lazy loading, rapid dynamic data fetching, media content grids, and fluid user interactions across diverse desktop and mobile viewports.
-  <br /><br />
-  • <strong>Real-Time Chat Application:</strong> A low-latency, cross-platform communications platform I developed using a robust backend architecture comprising Node.js, Express.js, and MongoDB. By utilizing Socket.io for persistent, real-time bi-directional networking, I successfully reduced operational latency to facilitate instant messaging capabilities among multiple concurrent users.
-  <br /><br />
-  To power these complex architectures, I rely on a modern development stack and professional workflow practices:
-  <br /><br />
-  • <strong>Frontend Technologies:</strong> React.js, HTML5, CSS3, JavaScript (ES6+), Advanced Responsive UI Design Architecture.
-  <br />
-  • <strong>Backend & Frameworks:</strong> Node.js, Express.js, Socket.io, RESTful API Design.
-  <br />
-  • <strong>Database Management:</strong> MongoDB, Database Aggregation, and CRUD Operations.
-  <br />
-  • <strong>Languages & Core Fundamentals:</strong> C++, JavaScript, Python, C, Data Structures & Algorithms (DSA), System Design Foundations.
-  <br />
-  • <strong>Data Science Utilities:</strong> NumPy, Pandas.
-  <br />
-  • <strong>Tools & Version Control:</strong> Git, GitHub, Component-Driven Development, and Deployment Automation.
-  <br /><br />
-  As a bilingual engineer fluent in both English and Hindi, I combine my robust code-writing capabilities with strong cross-functional communication skills. I am deeply committed to writing clean, maintainable, and DRY (Don't Repeat Yourself) code structures. Whether optimizing backend network pipelines with Socket.io, mapping responsive layouts with modern CSS, or engineering technical algorithm distributions for complex interview frameworks, I approach every digital challenge with a focus on high-performance execution and user-centric software design. I continue to actively seek opportunities to collaborate on large-scale web ecosystems and innovative engineering solutions.
-</p>
-      </div></div>
+        <div className="whole">
+          <div className="profile-sidebar">
+            <div className="g" style={{'--hover-scale' : "scale(1.02)"}}>
+              <Card skillImg={Bhavesh} name="Bhavesh Sharma" stylee={ImgStyle} />
+            </div>
+
+            {/* Live LeetCode Analytics Widget */}
+            <div className="leetcode-home-card">
+              <div className="lc-card-header">
+                <div className="lc-title-group">
+                  <FontAwesomeIcon icon={faCode} className="lc-icon" />
+                  <span className="lc-title">LeetCode Metrics</span>
+                </div>
+                <a href="https://leetcode.com/u/bhavesh1899287/" target="_blank" rel="noopener noreferrer" className="lc-badge-link">
+                  Profile ↗
+                </a>
+              </div>
+
+              <div className="lc-main-stat">
+                <div className="lc-total-solved">
+                  <span className="lc-num">419</span>
+                  <span className="lc-sub">/ 4,033 Solved</span>
+                </div>
+                <div className="lc-rating-pill">
+                  <FontAwesomeIcon icon={faTrophy} /> Rating 1,611
+                </div>
+              </div>
+
+              <div className="lc-breakdown">
+                <div className="lc-diff-bar">
+                  <div className="lc-diff-info">
+                    <span className="diff-tag easy">Easy</span>
+                    <span className="diff-count">163 / 961</span>
+                  </div>
+                  <div className="diff-progress-track">
+                    <div className="diff-progress-fill easy" style={{ width: `${(163/961)*100}%` }}></div>
+                  </div>
+                </div>
+
+                <div className="lc-diff-bar">
+                  <div className="lc-diff-info">
+                    <span className="diff-tag medium">Medium</span>
+                    <span className="diff-count">225 / 2,105</span>
+                  </div>
+                  <div className="diff-progress-track">
+                    <div className="diff-progress-fill medium" style={{ width: `${(225/2105)*100}%` }}></div>
+                  </div>
+                </div>
+
+                <div className="lc-diff-bar">
+                  <div className="lc-diff-info">
+                    <span className="diff-tag hard">Hard</span>
+                    <span className="diff-count">31 / 967</span>
+                  </div>
+                  <div className="diff-progress-track">
+                    <div className="diff-progress-fill hard" style={{ width: `${(31/967)*100}%` }}></div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="lc-chips-grid">
+                <div className="lc-chip">
+                  <span className="chip-label">Global Rank</span>
+                  <span className="chip-val">#290,526</span>
+                </div>
+                <div className="lc-chip">
+                  <span className="chip-label">Max Streak</span>
+                  <span className="chip-val"><FontAwesomeIcon icon={faFire} style={{color: '#f97316'}} /> 277 Days</span>
+                </div>
+                <div className="lc-chip">
+                  <span className="chip-label">Annual Solves</span>
+                  <span className="chip-val">914 subs</span>
+                </div>
+                <div className="lc-chip">
+                  <span className="chip-label">Top Skill</span>
+                  <span className="chip-val">C++ (415)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="f">
+            <h1>Hi, I am{' '}
+              <span className="typewriter-span">
+                <Typewriter 
+                  options={{
+                    strings: ['Bhavesh Sharma', 'a Full Stack Developer', 'a MERN Architect', 'a Problem Solver (419+ Solved)'],
+                    autoStart: true,
+                    loop: true,
+                    delay: 65,
+                    deleteSpeed: 45
+                  }}
+                />
+              </span>
+            </h1>
+            <p>
+              I am an ambitious, highly analytical, and detail-oriented Computer Science Engineering student and full-stack developer based in Jaipur / Alwar, Rajasthan. Currently pursuing my Bachelor of Technology (B.Tech) in Computer Science Engineering (2025–2029 cohort) with a current CGPA of 9.20, I have systematically built a strong foundation in modern software engineering, scalable cloud architectures, and competitive programming.
+              <br /><br />
+              Driven by curiosity about how high-throughput systems scale, my core technical expertise is centered around the MERN (MongoDB, Express.js, React.js, Node.js) and Go backend architectures. I balance product development with disciplined daily practice in Data Structures and Algorithms (DSA), holding <strong>419+ solved problems on LeetCode</strong> (Contest Rating 1,611, Max Streak 277 Days, 200 Days Badge 2026) and strong foundations in C++, C, JavaScript, and Python.
+              <br /><br />
+              I have gathered practical industry experience through professional software engineering internships, including my tenure as a Web Developer Intern at Squarecell Resource India Pvt. Ltd., where I engineered responsive coding platform modules that improved data latency by 40% and reduced page load times by 35%.
+              <br /><br />
+              • <strong>DocAna AI:</strong> An artificial intelligence-driven clinical and document analysis assistant integrating Google's Gemini API for instantaneous, context-preserving clinical report summarization.
+              <br /><br />
+              • <strong>EnterNet (Streaming Platform):</strong> A modular, high-fidelity media streaming platform emulating modern Netflix-style video carousels, responsive rendering, and smooth state handling.
+              <br /><br />
+              • <strong>LeetCode Metrix:</strong> An analytics dashboard visualizing 50+ DSA problem-solving metrics and consistency trends via REST APIs.
+              <br /><br />
+              • <strong>Core Competencies:</strong> React.js, Node.js, Express.js, MongoDB, Go, C++, REST APIs, Docker, Git/GitHub, System Design Foundations, NumPy, Pandas.
+            </p>
+          </div>
+        </div>
       </Background>
     </div>
   )

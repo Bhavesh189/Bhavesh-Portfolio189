@@ -4,13 +4,14 @@ import logo from '../assets/logo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import Preloader from './Preloader'
 
 const Navbar = () => {
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [isOpen, setOpen] = useState(false);
   const [change, isChange] = useState(false)
@@ -25,14 +26,22 @@ const Navbar = () => {
   }
 
    useEffect(() => {
-    const res = fetch('https://studytop-backend.onrender.com/check', {
-      method: 'get',
-      credentials: 'include'
-    });
-    if (res.f == "n") {
-      navigate("/login");
+    async function checkAuth() {
+      try {
+        const response = await fetch('https://studytop-backend.onrender.com/check', {
+          method: 'GET',
+          credentials: 'include'
+        });
+        const data = await response.json();
+        if (data.f === "n" && location.pathname !== "/login") {
+          navigate("/login");
+        }
+      } catch (e) {
+        console.error("Auth check failed:", e);
+      }
     }
-  }, [navigate]);
+    checkAuth();
+  }, [navigate, location.pathname]);
 
 
 
@@ -41,7 +50,7 @@ const Navbar = () => {
     <Preloader key={location.pathname}/>
     
     <div className='nav'>
-      <img src={logo} alt="Logo" />
+      <img src={logo} alt="Logo" onClick={() => navi('/')} />
 
 
       <FontAwesomeIcon icon={isOpen ? faXmark : faBars} onClick={handleClick} className='bars'/>

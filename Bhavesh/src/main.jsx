@@ -18,7 +18,7 @@ console.log(
 =========================================================================
 ‍ Bhavesh Sharma | MERN Stack Developer & Bug Bounty Expert
  Live: thebhavesh.online
- BTU Undergrad (CGPA 9.20) | Solved 350+ LeetCode DSA Problems
+ BTU Undergrad (CGPA 9.20) | Solved 419+ LeetCode DSA Problems
 =========================================================================
 ️ KEYBOARD SHORTCUTS NAVIGATION:
 [A] -> About      [S] -> Skills      [J] -> Journey

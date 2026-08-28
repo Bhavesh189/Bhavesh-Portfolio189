@@ -38,36 +38,16 @@ export default function App() {
   useSmoothScroll(!loading && !reducedMotion && !isMobile && !isProjectRoute);
   useKeyboardShortcuts();
 
+  // Keep theme synced across windows/tabs
   useEffect(() => {
-    let timerId = null;
-
-    const startTimer = () => {
-      if (timerId) clearInterval(timerId);
-      timerId = setInterval(() => {
-        try {
-          const currentAccent = localStorage.getItem('accent') || 'infinity';
-          const availableAccents = accents.filter((a) => a.id !== currentAccent);
-          const randomAccent = availableAccents[Math.floor(Math.random() * availableAccents.length)];
-          if (randomAccent) {
-            applyAccent(randomAccent.id);
-          }
-        } catch (e) {
-          const randomAccent = accents[Math.floor(Math.random() * accents.length)];
-          applyAccent(randomAccent.id);
-        }
-      }, 30000); // 30 seconds
-    };
-
-    startTimer();
-
-    // Reset 30s timer when user manually changes theme
-    const handleManualChange = () => {
-      startTimer();
+    const handleManualChange = (e) => {
+      if (e?.detail) {
+        applyAccent(e.detail);
+      }
     };
 
     window.addEventListener('theme-accent-changed', handleManualChange);
     return () => {
-      if (timerId) clearInterval(timerId);
       window.removeEventListener('theme-accent-changed', handleManualChange);
     };
   }, []);

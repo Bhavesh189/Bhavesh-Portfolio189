@@ -1,24 +1,66 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiAward, FiX, FiExternalLink, FiDownload, FiLoader } from 'react-icons/fi';
+import { FiAward, FiX, FiExternalLink, FiDownload, FiLoader, FiEye } from 'react-icons/fi';
 import { certifications } from '../data/content';
 import Reveal from './Reveal';
 import Magnetic from './Magnetic';
 import './Certifications.css';
 
-import ReactCert from '../assets/Certificates/React_Certificate.pdf';
-import ScalerNodeCert from '../assets/Certificates/ScalerNode.png';
-import HclGuviCert from '../assets/Certificates/HCL GUVI Certification - 1470Sc8433G767D5ZA.png';
-import SquarCellCert from '../assets/Certificates/SquarCell.pdf';
-import SquarCellLorCert from '../assets/Certificates/SquarCell_LOR.pdf';
+import KineTrexaImg from '../assets/Certificates/KineTrexa.png';
+import KineTrexaPdf from '../assets/Certificates/KineTrexa_Certificate_KTS020260715917.pdf';
+
+import ReactCertImg from '../assets/Certificates/REACT.png';
+import ReactCertPdf from '../assets/Certificates/React_Certificate.pdf';
+
+import ScalerNodeImg from '../assets/Certificates/NodeC.png';
+
+import HclGuviImg from '../assets/Certificates/GUVI.png';
+import HclGuviFull from '../assets/Certificates/HCL GUVI Certification - 1470Sc8433G767D5ZA.png';
+
+import SquarCellImg from '../assets/Certificates/Squarcell.png';
+import SquarCellPdf from '../assets/Certificates/SquarCell.pdf';
+
+import SquarCellLorImg from '../assets/Certificates/SquarCell_LOR.png';
+import SquarCellLorPdf from '../assets/Certificates/SquarCell_LOR.pdf';
 
 const CERT_MAP = {
-  react: { file: ReactCert, type: 'pdf', orientation: 'landscape' },
-  node: { file: ScalerNodeCert, type: 'image', orientation: 'landscape' },
-  fullstack: { file: HclGuviCert, type: 'image', orientation: 'landscape' },
-  internship: { file: SquarCellCert, type: 'pdf', orientation: 'landscape' },
-  lor: { file: SquarCellLorCert, type: 'pdf', orientation: 'portrait' },
+  kinetrexa: {
+    image: KineTrexaImg,
+    file: KineTrexaPdf,
+    type: 'image',
+    orientation: 'landscape'
+  },
+  internship: { 
+    image: SquarCellImg, 
+    file: SquarCellPdf, 
+    type: 'image', 
+    orientation: 'landscape' 
+  },
+  lor: { 
+    image: SquarCellLorImg, 
+    file: SquarCellLorPdf, 
+    type: 'image', 
+    orientation: 'portrait' 
+  },
+  react: { 
+    image: ReactCertImg, 
+    file: ReactCertPdf, 
+    type: 'image', 
+    orientation: 'landscape' 
+  },
+  node: { 
+    image: ScalerNodeImg, 
+    file: ScalerNodeImg, 
+    type: 'image', 
+    orientation: 'landscape' 
+  },
+  fullstack: { 
+    image: HclGuviImg, 
+    file: HclGuviFull || HclGuviImg, 
+    type: 'image', 
+    orientation: 'landscape' 
+  },
 };
 
 export default function Certifications() {
@@ -66,25 +108,39 @@ export default function Certifications() {
         </div>
 
         <div className="certs-list">
-          {certifications.map((c, i) => (
-            <Reveal className="cert-reveal-wrap" key={c.name} delay={i * 0.06}>
-              <button
-                className="cert-row glass"
-                onClick={() => handleOpen(c)}
-                data-cursor
-                aria-label={`View certificate for ${c.name}`}
-              >
-                <span className="cert-icon">
-                  <FiAward />
-                </span>
-                <div className="cert-main">
-                  <h3 className="cert-name">{c.name}</h3>
-                  <span className="cert-issuer">{c.issuer}</span>
-                </div>
-                <span className="cert-year">{c.year}</span>
-              </button>
-            </Reveal>
-          ))}
+          {certifications.map((c, i) => {
+            const details = CERT_MAP[c.id];
+            return (
+              <Reveal className="cert-reveal-wrap" key={c.name} delay={i * 0.06}>
+                <button
+                  className="cert-row glass"
+                  onClick={() => handleOpen(c)}
+                  data-cursor
+                  aria-label={`View certificate for ${c.name}`}
+                >
+                  <div className="cert-thumb-wrap">
+                    {details?.image ? (
+                      <img src={details.image} alt={c.name} className="cert-thumb-img" />
+                    ) : (
+                      <span className="cert-icon">
+                        <FiAward />
+                      </span>
+                    )}
+                  </div>
+                  <div className="cert-main">
+                    <h3 className="cert-name">{c.name}</h3>
+                    <span className="cert-issuer">{c.issuer}</span>
+                  </div>
+                  <div className="cert-side-meta">
+                    <span className="cert-year">{c.year}</span>
+                    <span className="cert-view-action">
+                      <FiEye /> View
+                    </span>
+                  </div>
+                </button>
+              </Reveal>
+            );
+          })}
         </div>
       </div>
 
@@ -146,13 +202,13 @@ export default function Certifications() {
                     {isLoading && (
                       <div className="cert-preview-loader">
                         <FiLoader className="spin" />
-                        <span>Verifying with blockchain node...</span>
+                        <span>Verifying credential...</span>
                       </div>
                     )}
 
-                    {certDetails.type === 'image' ? (
+                    {certDetails.image ? (
                       <img
-                        src={certDetails.file}
+                        src={certDetails.image}
                         alt={selected.name}
                         onLoad={() => setIsLoading(false)}
                         style={{ display: isLoading ? 'none' : 'block' }}

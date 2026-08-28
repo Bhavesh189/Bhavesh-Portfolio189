@@ -26,14 +26,14 @@ export function applyAccent(id) {
 }
 
 export function initAccent() {
-  const r = Math.random();
   let id = 'infinity';
-  if (r < 0.50) {
+  try {
+    const saved = localStorage.getItem('accent');
+    if (saved && accents.some((a) => a.id === saved)) {
+      id = saved;
+    }
+  } catch (e) {
     id = 'infinity';
-  } else if (r < 0.75) {
-    id = 'emerald';
-  } else {
-    id = 'ruby';
   }
   return applyAccent(id);
 }

@@ -22,21 +22,21 @@ export const profile = {
 export const socials = [
   { label: 'GitHub', short: 'github.com/Bhavesh189', href: 'https://github.com/Bhavesh189', icon: 'github' },
   { label: 'LinkedIn', short: 'in/bhaveshsharmainfinity', href: 'https://www.linkedin.com/in/bhaveshsharmainfinity', icon: 'linkedin' },
-  { label: 'LeetCode', short: '350+ solved', href: 'https://leetcode.com/u/bhavesh1899287/', icon: 'code' },
+  { label: 'LeetCode', short: '419+ solved', href: 'https://leetcode.com/u/bhavesh1899287/', icon: 'code' },
   { label: 'Portfolio', short: 'thebhavesh.online', href: 'https://thebhavesh.online/', icon: 'globe' },
 ];
 
 export const stats = [
   { value: '9.20', label: 'CGPA / 10', suffix: '' },
-  { value: '346', label: 'DSA problems solved', suffix: '+' },
+  { value: '419', label: 'DSA problems solved', suffix: '+' },
   { value: '5', label: 'Projects shipped', suffix: '' },
-  { value: '3', label: 'Certifications', suffix: '' },
+  { value: '5', label: 'Certifications', suffix: '' },
 ];
 
 export const about = {
   paragraphs: [
     'I am a Computer Science undergraduate at Bikaner Technical University with a current CGPA of 9.20, active as a premium MERN Stack Developer, Software Developer, and Bug Bounty Expert.',
-    'My comfort zone spans the full stack — crafting responsive React interfaces on the front, engineering clean Node.js and Express REST APIs on the back, and modelling data in MongoDB. Alongside product work, I sharpen fundamentals daily through 350+ solved problems on LeetCode.',
+    'My comfort zone spans the full stack — crafting responsive React interfaces on the front, engineering clean Node.js and Express REST APIs on the back, and modelling data in MongoDB. Alongside product work, I sharpen fundamentals daily through 419+ solved problems on LeetCode.',
     'As a bug bounty expert, I apply a defensive security mindset to software design. Right now I am drawn to distributed systems and performance — the parts of engineering where an idea has to hold up under real load. I am looking for software / full-stack roles where I can keep learning at the edge.',
   ],
 };
@@ -70,9 +70,21 @@ export const journey = [
   },
   {
     kind: 'work',
+    role: 'Full Stack Web Development Intern',
+    org: 'Kinetrexa Software Private Limited',
+    meta: 'Remote · 20 Jul 2026 – 19 Aug 2026',
+    points: [
+      'Engineered dynamic, responsive full-stack web applications and robust client-server interfaces using React.js and Node.js.',
+      'Collaborated on real-world projects, RESTful API integrations, and database state handling during the 30-day intensive program.',
+      'Demonstrated high technical proficiency and professionalism (Certificate ID: KTS00920265917).',
+    ],
+    tags: ['React', 'Node.js', 'Express', 'Full Stack', 'REST APIs', 'Git'],
+  },
+  {
+    kind: 'work',
     role: 'Web Developer Intern',
     org: 'Squarecell Resource India Pvt. Ltd.',
-    meta: 'Remote · Jan 2026 – Feb 2026',
+    meta: 'Remote · 10 Jan 2026 – 13 Feb 2026',
     points: [
       'Built a scalable coding-practice platform on a React.js, Node.js and Express.js client–server architecture, cutting average page load time by 35%.',
       'Designed optimised MongoDB data pipelines with efficient state synchronisation, reducing data-retrieval latency by 40%.',
@@ -196,11 +208,12 @@ export const projects = [
 ];
 
 export const certifications = [
+  { id: 'kinetrexa', name: 'Full Stack Web Development Internship Certificate', issuer: 'Kinetrexa Software Private Limited', year: '2026' },
+  { id: 'internship', name: 'Web Developer Internship Certificate', issuer: 'Squarecell Resource India Pvt. Ltd.', year: '2026' },
+  { id: 'lor', name: 'Letter of Recommendation (LOR)', issuer: 'Squarecell Resource India Pvt. Ltd.', year: '2026' },
   { id: 'react', name: 'ReactJS Foundations', issuer: 'ScholarHat (Dot Net Tricks)', year: '2026' },
   { id: 'node', name: 'Node.js Certification', issuer: 'Scaler', year: '2026' },
   { id: 'fullstack', name: 'Full Stack Development: Key Skills for 2026', issuer: 'GUVI Geek Networks × HCL', year: '2026' },
-  { id: 'internship', name: 'Web Developer Internship Certificate', issuer: 'Squarecell Resource India Pvt. Ltd.', year: '2026' },
-  { id: 'lor', name: 'Letter of Recommendation (LOR)', issuer: 'Squarecell Resource India Pvt. Ltd.', year: '2026' },
 ];
 
 export const nav = [

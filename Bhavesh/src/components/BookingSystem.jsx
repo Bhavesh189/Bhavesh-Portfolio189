@@ -121,7 +121,7 @@ END:VCARD`;
   const handleCopyTemplate = async () => {
     const templateText = `Hi Team,
 
-I just scheduled a discussion with Bhavesh Sharma. He's a Computer Science student (CGPA 9.20) specializing in the MERN stack with 350+ LeetCode DSA solves.
+I just scheduled a discussion with Bhavesh Sharma. He's a Computer Science student (CGPA 9.20) specializing in the MERN stack with 419+ LeetCode DSA solves.
 
 Here is a link to his credentials:
 • Portfolio: https://bhavesh-portfolio189.vercel.app/
@@ -284,7 +284,7 @@ He seems like a highly qualified candidate for our software engineering / full-s
                         <strong>Full-Stack Development (MERN):</strong> Building interactive user interfaces in React.js and highly optimized REST APIs under Node.js & Express.
                       </li>
                       <li>
-                        <strong>Data Structures & Algorithms:</strong> Solid computer science fundamentals with 350+ solved challenges on LeetCode.
+                        <strong>Data Structures & Algorithms:</strong> Solid computer science fundamentals with 419+ solved challenges on LeetCode.
                       </li>
                       <li>
                         <strong>Software Engineering & DevOps:</strong> Practical experience with containerization (Docker, Kubernetes) and structured Git workflows.
@@ -342,7 +342,7 @@ He seems like a highly qualified candidate for our software engineering / full-s
                           </button>
                         </div>
                         <pre style={{ margin: 0, fontSize: '0.8rem', whiteSpace: 'pre-wrap', fontFamily: 'inherit', color: 'var(--muted)', lineHeight: '1.4' }}>
-                          {`Hi Team,\n\nI just scheduled a discussion with Bhavesh Sharma. He's a Computer Science student (CGPA 9.20) specializing in the MERN stack with 350+ LeetCode DSA solves.\n\nHere is a link to his credentials:\n• Portfolio: https://bhavesh-portfolio189.vercel.app/\n• Email: bhaveshyt.infinity@gmail.com\n\nHe seems like a highly qualified candidate for our software engineering / full-stack opening.`}
+                          {`Hi Team,\n\nI just scheduled a discussion with Bhavesh Sharma. He's a Computer Science student (CGPA 9.20) specializing in the MERN stack with 419+ LeetCode DSA solves.\n\nHere is a link to his credentials:\n• Portfolio: https://bhavesh-portfolio189.vercel.app/\n• Email: bhaveshyt.infinity@gmail.com\n\nHe seems like a highly qualified candidate for our software engineering / full-stack opening.`}
                         </pre>
                       </motion.div>
                     )}
