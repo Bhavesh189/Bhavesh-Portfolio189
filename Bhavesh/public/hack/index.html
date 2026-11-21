@@ -66,6 +66,10 @@ details .lbl{color:var(--mut);font-size:11px;text-transform:uppercase;letter-spa
 .empty{color:var(--mut);text-align:center;padding:26px 10px}
 footer{color:var(--mut);font-size:12px;margin-top:26px;text-align:center}
 .hidden{display:none!important}
+.topnav{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 2px}
+.topnav a{display:inline-block;background:#1f2937;border:1px solid #374151;border-radius:99px;padding:6px 14px;color:#e5e7eb;text-decoration:none;font-size:14px}
+.topnav a:hover{background:#374151}
+.topnav a.on{background:var(--acc2);border-color:var(--acc2);color:#fff}
 </style>
 </head>
 <body>
@@ -73,6 +77,10 @@ footer{color:var(--mut);font-size:12px;margin-top:26px;text-align:center}
   <div class="wrap" style="padding-bottom:0">
     <h1>🛡️ Hack Checklist</h1>
     <p class="sub">OWASP Top 10:2025 — vulnerability checklist for bug bounty hunts · <a href="https://thebhavesh.online">← thebhavesh.online</a></p>
+    <nav class="topnav">
+      <a href="./" class="on">🛡️ Checklist</a>
+      <a href="subdomain-takeover/">🔧 Tools — Subdomain Takeover</a>
+    </nav>
     <div class="overall"><div class="bar"><i id="overallBar" style="width:0%"></i></div><span class="pct" id="overallPct">0%</span><span class="count" id="overallCount">0/202</span></div>
     <div class="tools">
       <input type="search" id="q" placeholder="🔍 Search — vulnerability, tool, note… (e.g. SSRF, IDOR, subfinder)">

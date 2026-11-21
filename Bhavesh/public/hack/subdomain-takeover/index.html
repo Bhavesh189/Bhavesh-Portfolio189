@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Subdomain Takeover — Tools | Hack | thebhavesh.online</title>
+<style>
+:root{--bg:#0b0f14;--card:#111827;--card2:#0f172a;--line:#1f2937;--txt:#e5e7eb;--mut:#9ca3af;--acc:#22c55e;--acc2:#16a34a;--amber:#f59e0b;--red:#ef4444;--chip:#1e293b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.5}
+a{color:#60a5fa}
+header{position:sticky;top:0;z-index:10;background:rgba(11,15,20,.97);border-bottom:1px solid var(--line);padding:12px 14px}
+.wrap{max-width:920px;margin:0 auto;padding:0 14px 60px}
+h1{font-size:20px;margin:0 0 2px}
+.sub{color:var(--mut);font-size:13px;margin:0 0 10px}
+.topnav{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 2px}
+.topnav a{display:inline-block;background:#1f2937;border:1px solid #374151;border-radius:99px;padding:6px 14px;color:#e5e7eb;text-decoration:none;font-size:14px}
+.topnav a:hover{background:#374151}
+.topnav a.on{background:var(--acc2);border-color:var(--acc2);color:#fff}
+input,textarea,select,button{font:inherit;color:var(--txt)}
+textarea{background:#0f172a;border:1px solid var(--line);border-radius:8px;padding:9px 10px;width:100%;resize:vertical;min-height:120px}
+button{background:#1f2937;border:1px solid #374151;border-radius:8px;padding:8px 12px;cursor:pointer}
+button:hover{background:#374151}
+button.primary{background:var(--acc2);border-color:var(--acc2);color:#fff}
+button.danger{color:#fca5a5}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-top:14px;overflow:hidden}
+.card .body{padding:14px}
+.card h2{font-size:16px;margin:0 0 4px}
+.mut{color:var(--mut);font-size:13px}
+.step{display:inline-block;background:var(--acc2);color:#fff;border-radius:99px;padding:1px 10px;font-size:12px;font-weight:700;margin-right:6px}
+.list{margin-top:10px}
+.row{display:flex;gap:10px;align-items:center;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-top:8px;flex-wrap:wrap}
+.row .url{flex:1;min-width:200px;word-break:break-all;font-size:14px}
+a.golink{display:inline-block;background:var(--acc2);border:1px solid var(--acc2);color:#fff;border-radius:8px;padding:7px 12px;text-decoration:none;font-size:14px;white-space:nowrap}
+a.golink:hover{filter:brightness(1.1)}
+.row button{padding:6px 10px}
+.empty{color:var(--mut);text-align:center;padding:18px 10px}
+footer{color:var(--mut);font-size:12px;margin-top:26px;text-align:center}
+.placeholder{border:1px dashed #374151;border-radius:12px;margin-top:14px;padding:14px;color:var(--mut);font-size:14px}
+.placeholder b{color:#e5e7eb}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap" style="padding-bottom:0">
+    <h1>🔧 Subdomain Takeover</h1>
+    <p class="sub">Hack Tools · <a href="../">← Hack Checklist</a> · <a href="https://thebhavesh.online">thebhavesh.online</a></p>
+    <nav class="topnav">
+      <a href="../">🛡️ Checklist</a>
+      <a href="./" class="on">🔧 Tools — Subdomain Takeover</a>
+    </nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="card"><div class="body">
+    <h2><span class="step">STEP 1</span> Enumerated subdomains paste karo</h2>
+    <p class="mut" style="margin:4px 0 10px">Recon se mile subdomains yahan copy-paste karo — ek line me ek subdomain. http:// ya https:// ho ya na ho, tool khud sahi link bana dega. List is browser me save rahegi (localStorage).</p>
+    <textarea id="pasteBox" placeholder="chat.arc.io&#10;http://foo.arc.io&#10;https://bar.arc.io/path&#10;www.arc.io"></textarea>
+    <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+      <button class="primary" id="addBtn">+ Add to list</button>
+      <button id="clearBtn" class="danger">Clear all</button>
+      <span class="mut" id="countLabel" style="align-self:center"></span>
+    </div>
+  </div></div>
+  <div class="list" id="linkList"></div>
+  <p class="empty" id="emptyMsg">Abhi koi link nahi — upar subdomains paste karo.</p>
+  <div class="placeholder">
+    <b>STEP 2 — (baad me aayega)</b><br>
+    Takeover check yahan aayega — Excel file milne ke baad. Tab tak sirf Step 1 (list banao + links kholo) use karo.
+  </div>
+  <footer>
+    Links yahi browser me save hote hain (localStorage). "Go to the link" hamesha naye tab me khulta hai.
+  </footer>
+</div>
+<script>
+(function(){
+"use strict";
+var KEY = 'bb-hack-subtakeover-v1';
+function normalize(raw){
+  var s = (raw || '').trim();
+  if(!s) return '';
+  if(/^\/\//.test(s)) return 'https:' + s;
+  if(/^[a-z][a-z0-9+.-]*:\/\//i.test(s)) return s;
+  return 'https://' + s;
+}
+function isValid(url){
+  try{
+    var u = new URL(url);
+    // hostname must look like a real host (dotted domain or localhost) —
+    // stops garbage lines like "not a url" becoming clickable junk links
+    return u.hostname.indexOf('.') !== -1 || u.hostname === 'localhost';
+  }catch(e){ return false; }
+}
+function dedupeKey(url){
+  try{
+    var u = new URL(url);
+    return u.protocol + '//' + u.host.toLowerCase() + u.pathname + u.search + u.hash;
+  }catch(e){ return url; }
+}
+function load(){
+  try{ var v = JSON.parse(localStorage.getItem(KEY) || '[]'); return Array.isArray(v) ? v : []; }catch(e){ return []; }
+}
+function save(list){ try{ localStorage.setItem(KEY, JSON.stringify(list)); }catch(e){} }
+var list = load();
+var box = document.getElementById('pasteBox');
+var listEl = document.getElementById('linkList');
+var emptyEl = document.getElementById('emptyMsg');
+var countEl = document.getElementById('countLabel');
+function render(){
+  listEl.innerHTML = '';
+  emptyEl.classList.toggle('hidden', list.length > 0);
+  countEl.textContent = list.length ? list.length + ' link' + (list.length > 1 ? 's' : '') : '';
+  list.forEach(function(url, i){
+    var row = document.createElement('div');
+    row.className = 'row';
+    var u = document.createElement('div');
+    u.className = 'url';
+    u.textContent = url;
+    var go = document.createElement('a');
+    go.className = 'golink';
+    go.href = url;
+    go.target = '_blank';
+    go.rel = 'noopener';
+    go.textContent = 'Go to the link \u2197';
+    var del = document.createElement('button');
+    del.textContent = '\u2715';
+    del.title = 'Remove';
+    del.onclick = function(){ list.splice(i, 1); save(list); render(); };
+    row.appendChild(u); row.appendChild(go); row.appendChild(del);
+    listEl.appendChild(row);
+  });
+}
+document.getElementById('addBtn').onclick = function(){
+  var lines = box.value.split('\n');
+  var seen = {};
+  list.forEach(function(u){ seen[dedupeKey(u)] = true; });
+  var added = 0, skipped = 0;
+  lines.forEach(function(line){
+    var n = normalize(line);
+    if(!n || !isValid(n)){ if(line.trim()) skipped++; return; }
+    var k = dedupeKey(n);
+    if(seen[k]){ skipped++; return; }
+    seen[k] = true; list.push(n); added++;
+  });
+  box.value = '';
+  save(list); render();
+  countEl.textContent = added + ' added' + (skipped ? ' · ' + skipped + ' skipped (khali / duplicate / galat link)' : '') + ' · total ' + list.length;
+};
+document.getElementById('clearBtn').onclick = function(){
+  if(!list.length) return;
+  if(!confirm('Saari links delete ho jayengi. Pakka clear karu?')) return;
+  list = []; save(list); render();
+};
+render();
+})();
+</script>
+</body>
+</html>
