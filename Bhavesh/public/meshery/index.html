@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GSoC 2027 — Meshery Contributions | Bhavesh Sharma</title>
-<meta name="description" content="Bhavesh Sharma's open-source contributions to Meshery on the road to Google Summer of Code 2027 — merged PRs, open PRs and issues, all in one running log.">
+<meta name="description" content="Bhavesh Sharma's merged pull requests in Meshery on the road to Google Summer of Code 2027 — the running record for his GSoC 2027 proposal.">
 <meta property="og:title" content="GSoC 2027 — Meshery Contributions | Bhavesh Sharma">
-<meta property="og:description" content="Merged PRs, open PRs and issues filed by Bhavesh Sharma (Bhavesh189) in Meshery — the running record for his GSoC 2027 proposal.">
+<meta property="og:description" content="Merged pull requests by Bhavesh Sharma (Bhavesh189) in Meshery — the running record for his GSoC 2027 proposal.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://thebhavesh.online/meshery/">
 <meta name="theme-color" content="#0b0f14">
@@ -61,7 +61,7 @@ footer{color:var(--mut);font-size:12px;margin-top:28px;text-align:center;line-he
 <header>
   <div class="wrap" style="padding-bottom:0">
     <h1>GSoC 2027 — Meshery</h1>
-    <p class="sub">Bhavesh Sharma (<a href="https://github.com/Bhavesh189">Bhavesh189</a>) · open-source contributions to <a href="https://meshery.io">Meshery</a>, on the road to Google Summer of Code 2027 · <a href="https://thebhavesh.online">← thebhavesh.online</a></p>
+    <p class="sub">Bhavesh Sharma (<a href="https://github.com/Bhavesh189">Bhavesh189</a>) · merged pull requests in <a href="https://meshery.io">Meshery</a>, on the road to Google Summer of Code 2027 · <a href="https://thebhavesh.online">← thebhavesh.online</a></p>
     <nav class="topnav">
       <a href="https://thebhavesh.online">🏠 Portfolio</a>
       <a href="/meshery/" class="on">☸️ Meshery — GSoC log</a>
@@ -75,8 +75,8 @@ footer{color:var(--mut);font-size:12px;margin-top:28px;text-align:center;line-he
   <noscript><p class="err">This page needs JavaScript to render the log. The raw data is at <a href="contributions.json">contributions.json</a>.</p></noscript>
   <div id="content"><p class="empty">Loading contributions…</p></div>
   <footer>
-    Running log for the GSoC 2027 proposal (March 2027) — every Meshery contribution in one place.<br>
-    Data lives in <a href="contributions.json">contributions.json</a>: add a new entry there and this page updates automatically.<br>
+    Running log for the GSoC 2027 proposal (March 2027) — every merged Meshery PR in one place.<br>
+    Data lives in <a href="contributions.json">contributions.json</a>: add a new merged PR there and this page updates automatically.<br>
     First Meshery contribution: July 2026 · GSoC 2027 target org: Meshery (confirmed).
   </footer>
 </div>
@@ -84,20 +84,21 @@ footer{color:var(--mut);font-size:12px;margin-top:28px;text-align:center;line-he
 (function(){
   function el(tag, cls, html){ var e=document.createElement(tag); if(cls) e.className=cls; if(html!=null) e.innerHTML=html; return e; }
   function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-  function dateLabel(c){
-    if(c.type==='merged-pr') return 'Merged ' + c.date;
-    if(c.type==='open-pr') return 'Opened ' + c.date;
-    return (c.status==='closed' ? 'Filed & closed ' : 'Filed ') + c.date;
-  }
+  var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function shortDate(iso){ var p = String(iso||'').split('-'); if(p.length<2) return iso||''; return MONTHS[parseInt(p[1],10)-1] + ' ' + p[0]; }
   function render(data){
-    var s = data.summary || {};
+    var list = data.contributions || [];
+    var merged = list.filter(function(c){ return c.type==='merged-pr'; });
+    var fixed = list.filter(function(c){ return c.relatedIssue; }).length;
+    var repos = {};
+    list.forEach(function(c){ repos[c.repo]=1; });
     var stats = document.getElementById('stats');
     stats.innerHTML = '';
     var items = [
-      {n: s.mergedPRs||0, label: 'Merged PRs', cls: 'g'},
-      {n: s.openPRs||0, label: 'Open PRs', cls: 'a'},
-      {n: s.issues||0, label: 'Issues filed', cls: ''},
-      {n: (s.issuesClosed||0) + ' / ' + (s.issuesOpen||0), label: 'Issues closed / open', cls: ''}
+      {n: merged.length, label: 'Merged PRs', cls: 'g'},
+      {n: fixed, label: 'Issues fixed', cls: ''},
+      {n: Object.keys(repos).length, label: 'Repos', cls: ''},
+      {n: shortDate(data.firstContribution), label: 'First contribution', cls: ''}
     ];
     items.forEach(function(it){
       var d = el('div','stat');
@@ -111,44 +112,37 @@ footer{color:var(--mut);font-size:12px;margin-top:28px;text-align:center;line-he
       '<p>First Meshery contribution: <b>' + esc(data.firstContribution||'') + '</b> · GSoC 2027 target: <b>' + esc(j.gsocTarget||'') + '</b></p>' +
       '<p>Newcomer intro posted in Slack #newcomers: <b>' + esc(j.newcomerIntroPosted||'') + '</b> · Newcomers meeting: <b>' + esc(j.newcomersMeeting||'') + '</b> · Community meeting: <b>' + esc(j.communityMeeting||'') + '</b></p>' +
       (j.note ? '<p>' + esc(j.note) + '</p>' : '');
-    var list = data.contributions || [];
     var content = document.getElementById('content');
     content.innerHTML = '';
-    var sections = [
-      {type:'merged-pr', title:'✅ Merged PRs', sub:'Pull requests reviewed and merged by Meshery maintainers.'},
-      {type:'open-pr', title:'🔄 Open PR', sub:'Submitted, awaiting review.'},
-      {type:'issue', title:'🐛 Issues', sub:'Issues found and filed in Meshery repos.'}
-    ];
-    sections.forEach(function(sec){
-      var entries = list.filter(function(c){ return c.type===sec.type; });
-      if(!entries.length) return;
-      content.appendChild(el('h2','', esc(sec.title) + ' <span class="cnt">(' + entries.length + ')</span>'));
-      content.appendChild(el('p','secsub', esc(sec.sub)));
-      entries.forEach(function(c){
+    if(!merged.length){
+      content.appendChild(el('p','empty','No merged PRs yet — check back soon.'));
+    } else {
+      content.appendChild(el('h2','', '✅ Merged PRs <span class="cnt">(' + merged.length + ')</span>'));
+      content.appendChild(el('p','secsub','Pull requests reviewed and merged by Meshery maintainers.'));
+      merged.forEach(function(c){
         var card = el('div','card');
         card.appendChild(el('h3','', '<a href="'+esc(c.url)+'" target="_blank" rel="noopener">'+esc(c.title)+'</a>'));
         var meta = el('div','meta');
         meta.appendChild(el('span','chip repo', esc(c.repo) + ' #' + c.number));
-        var st = c.status==='merged' ? 'Merged' : (c.status==='open' ? 'Open' : 'Closed');
-        meta.appendChild(el('span','chip '+c.status, esc(st)));
-        meta.appendChild(el('span','chip', esc(dateLabel(c))));
+        meta.appendChild(el('span','chip merged', 'Merged'));
+        meta.appendChild(el('span','chip', 'Merged ' + esc(c.date)));
         if(c.mergedBy) meta.appendChild(el('span','chip', 'merged by @'+esc(c.mergedBy)));
         card.appendChild(meta);
         if(c.description) card.appendChild(el('p','desc', esc(c.description)));
         if(c.filesChanged!=null){
           card.appendChild(el('p','diff', esc(c.filesChanged) + ' file' + (c.filesChanged===1?'':'s') + ' changed · <span class="add">+' + (c.additions||0) + '</span> / <span class="del">−' + (c.deletions||0) + '</span>'));
         }
-        var links = el('p','links', '<a href="'+esc(c.url)+'" target="_blank" rel="noopener">' + (c.type==='issue' ? 'View issue ↗' : 'View PR ↗') + '</a>');
+        var links = el('p','links', '<a href="'+esc(c.url)+'" target="_blank" rel="noopener">View PR ↗</a>');
         if(c.relatedIssue){
           var a = document.createElement('a');
           a.href = c.relatedIssue; a.target = '_blank'; a.rel = 'noopener';
-          a.textContent = 'Related issue ↗';
+          a.textContent = 'Fixes issue #' + (c.relatedIssueNumber || '') + ' ↗';
           links.appendChild(a);
         }
         card.appendChild(links);
         content.appendChild(card);
       });
-    });
+    }
     var upd = document.createElement('p');
     upd.className = 'secsub';
     upd.style.marginTop = '18px';
