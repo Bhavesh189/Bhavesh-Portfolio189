@@ -72,11 +72,11 @@ footer{color:var(--mut);font-size:12px;margin-top:28px;text-align:center;line-he
 <div class="wrap">
   <div class="stats" id="stats"></div>
   <div class="note" id="journey"></div>
-  <noscript><p class="err">This page needs JavaScript to render the log. The raw data is at <a href="contributions.json">contributions.json</a>.</p></noscript>
+  <noscript><p class="err">This page needs JavaScript to render the log. The raw data is at <a href="/meshery/contributions.json">contributions.json</a>.</p></noscript>
   <div id="content"><p class="empty">Loading contributions…</p></div>
   <footer>
     Running log for the GSoC 2027 proposal (March 2027) — every merged Meshery PR in one place.<br>
-    Data lives in <a href="contributions.json">contributions.json</a>: add a new merged PR there and this page updates automatically.<br>
+    Data lives in <a href="/meshery/contributions.json">contributions.json</a>: add a new merged PR there and this page updates automatically.<br>
     First Meshery contribution: July 2026 · GSoC 2027 target org: Meshery (confirmed).
   </footer>
 </div>
@@ -149,7 +149,7 @@ footer{color:var(--mut);font-size:12px;margin-top:28px;text-align:center;line-he
     upd.textContent = 'Last updated: ' + (data.lastUpdated || '');
     content.appendChild(upd);
   }
-  fetch('contributions.json', {cache:'no-store'})
+  fetch('/meshery/contributions.json', {cache:'no-store'})
     .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
     .then(render)
     .catch(function(e){
