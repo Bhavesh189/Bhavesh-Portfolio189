@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Subdomain Takeover — Tools | Hack | thebhavesh.online</title>
 <style>
-:root{--bg:#0b0f14;--card:#111827;--card2:#0f172a;--line:#1f2937;--txt:#e5e7eb;--mut:#9ca3af;--acc:#22c55e;--acc2:#16a34a;--amber:#f59e0b;--red:#ef4444;--chip:#1e293b}
+:root{--bg:#0b0f14;--card:#111827;--card2:#0f172a;--line:#1f2937;--txt:#e5e7eb;--mut:#9ca3af;--acc:#22c55e;--acc2:#16a34a;--amber:#f59e0b;--red:#ef4444;--chip:#1e293b;--purple:#a78bfa}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.5}
 a{color:#60a5fa}
@@ -22,6 +22,7 @@ input,textarea,select,button{font:inherit;color:var(--txt)}
 textarea{background:#0f172a;border:1px solid var(--line);border-radius:8px;padding:9px 10px;width:100%;resize:vertical;min-height:120px}
 button{background:#1f2937;border:1px solid #374151;border-radius:8px;padding:8px 12px;cursor:pointer}
 button:hover{background:#374151}
+button:disabled{opacity:.5;cursor:default}
 button.primary{background:var(--acc2);border-color:var(--acc2);color:#fff}
 button.danger{color:#fca5a5}
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-top:14px;overflow:hidden}
@@ -37,9 +38,32 @@ a.golink:hover{filter:brightness(1.1)}
 .row button{padding:6px 10px}
 .empty{color:var(--mut);text-align:center;padding:18px 10px}
 footer{color:var(--mut);font-size:12px;margin-top:26px;text-align:center}
-.placeholder{border:1px dashed #374151;border-radius:12px;margin-top:14px;padding:14px;color:var(--mut);font-size:14px}
-.placeholder b{color:#e5e7eb}
 .hidden{display:none!important}
+/* --- Step 2: List Viewer --- */
+.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.controls input[type=search],.controls select{background:#0f172a;border:1px solid var(--line);border-radius:8px;padding:8px 10px;min-width:0}
+.controls input[type=search]{flex:1;min-width:160px}
+.controls select{max-width:100%}
+.vrow{display:flex;gap:10px;align-items:center;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:9px 12px;margin-top:8px;flex-wrap:wrap}
+.vlink{flex:1;min-width:200px;color:var(--purple);text-decoration:none;word-break:break-all;font-size:14px}
+.vlink:hover{text-decoration:underline}
+.vlink.visited{color:var(--acc)}
+.vlink .tick{font-weight:700}
+.pill{display:inline-block;border-radius:99px;padding:1px 9px;font-size:12px;font-weight:700;white-space:nowrap}
+.pill.live{background:#14532d;color:#86efac}
+.pill.notfound{background:#451a03;color:#fcd34d}
+.pill.other{background:#1e3a5f;color:#93c5fd}
+.pill.reachable{background:#1e3a5f;color:#93c5fd}
+.pill.unreachable{background:#450a0a;color:#fca5a5}
+.pill.unchecked{background:#1f2937;color:#9ca3af}
+.depth{color:var(--mut);font-size:12px;border:1px solid var(--line);border-radius:99px;padding:1px 8px;white-space:nowrap}
+.progress{height:8px;background:#1f2937;border-radius:99px;overflow:hidden;margin-top:10px}
+.progress > div{height:100%;background:var(--acc);width:0%;transition:width .2s}
+.stats{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;font-size:12px}
+.stat{background:#1e293b;border:1px solid var(--line);border-radius:99px;padding:2px 10px;color:var(--mut)}
+.stat b{color:var(--txt)}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.note{font-size:12px;color:var(--mut);margin:10px 0 0}
 </style>
 </head>
 <body>
@@ -57,7 +81,7 @@ footer{color:var(--mut);font-size:12px;margin-top:26px;text-align:center}
   <div class="card"><div class="body">
     <h2><span class="step">STEP 1</span> Enumerated subdomains paste karo</h2>
     <p class="mut" style="margin:4px 0 10px">Recon se mile subdomains yahan copy-paste karo — ek line me ek subdomain. http:// ya https:// ho ya na ho, tool khud sahi link bana dega. List is browser me save rahegi (localStorage).</p>
-    <textarea id="pasteBox" placeholder="chat.arc.io&#10;http://foo.arc.io&#10;https://bar.arc.io/path&#10;www.arc.io"></textarea>
+    <textarea id="pasteBox" placeholder="chat.example.com&#10;http://foo.example.com&#10;https://bar.example.com/path&#10;www.example.com"></textarea>
     <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
       <button class="primary" id="addBtn">+ Add to list</button>
       <button id="clearBtn" class="danger">Clear all</button>
@@ -66,10 +90,48 @@ footer{color:var(--mut);font-size:12px;margin-top:26px;text-align:center}
   </div></div>
   <div class="list" id="linkList"></div>
   <p class="empty" id="emptyMsg">Abhi koi link nahi — upar subdomains paste karo.</p>
-  <div class="placeholder">
-    <b>STEP 2 — (baad me aayega)</b><br>
-    Takeover check yahan aayega — Excel file milne ke baad. Tab tak sirf Step 1 (list banao + links kholo) use karo.
-  </div>
+  <div class="card"><div class="body">
+    <h2><span class="step">STEP 2</span> Subdomain List Viewer</h2>
+    <p class="mut" style="margin:4px 0 10px">Badi list paste karo (ek line me ek URL ya subdomain) — saare links ek saath dikhenge, ek-ek karke kholo. Jis link ko khol loge wo <b style="color:#22c55e">green ✓</b> ho jayega, na khola hua <b style="color:#a78bfa">purple</b> rahega. Visited state isi browser me save rahegi.</p>
+    <textarea id="viewerBox" placeholder="example.com&#10;www.example.com&#10;https://api.example.com/path&#10;a.b.example.com"></textarea>
+    <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+      <button class="primary" id="loadListBtn">Load list</button>
+      <button id="loadExampleBtn">Load example list</button>
+      <button id="clearListBtn" class="danger">Clear list</button>
+    </div>
+    <div class="controls">
+      <input type="search" id="searchBox" placeholder="Search… (jaise: api, login)" aria-label="Search links">
+      <select id="rootFilter" title="Root domain" aria-label="Root domain filter"><option value="all">All root domains</option></select>
+      <select id="depthFilter" title="Depth / level" aria-label="Depth filter">
+        <option value="all">All depths</option>
+        <option value="0">Root domain only (0)</option>
+        <option value="1">1-level subdomain</option>
+        <option value="2">2-level</option>
+        <option value="3">3-level</option>
+        <option value="4">4-level</option>
+        <option value="5+">5+ levels</option>
+      </select>
+      <select id="statusFilter" title="Status" aria-label="Status filter">
+        <option value="all">All statuses</option>
+        <option value="live">Live</option>
+        <option value="notfound">404</option>
+        <option value="unreachable">Unreachable</option>
+      </select>
+    </div>
+    <div class="btnrow">
+      <span class="mut" id="progressLabel">0 of 0 visited</span>
+      <button id="checkStatusBtn">Check status</button>
+      <button id="stopCheckBtn" class="hidden">Stop checking</button>
+      <span class="mut" id="checkProgress"></span>
+      <button id="copyUnvisitedBtn">Copy unvisited list</button>
+      <button id="clearVisitedBtn">Clear visited</button>
+    </div>
+    <div class="progress"><div id="progressBar"></div></div>
+    <div class="stats" id="statsLine"></div>
+    <p class="note">Status note: exact status (200 / 404) sirf tab dikhta hai jab site CORS headers bhejti hai. Warna host respond kare to “Reachable”, aur respond na kare to “Unreachable” dikhega. “Live” matlab host ne jawab diya (200–399, koi aur HTTP status, ya Reachable). http:// links is https page se block ho sakte hain (mixed content) — wo “Unreachable” dikh sakte hain.</p>
+    <div class="list" id="viewerList"></div>
+    <p class="empty" id="viewerEmpty">Abhi koi list nahi — upar URLs paste karo ya “Load example list” dabao.</p>
+  </div></div>
   <footer>
     Links yahi browser me save hote hain (localStorage). "Go to the link" hamesha naye tab me khulta hai.
   </footer>
@@ -77,7 +139,7 @@ footer{color:var(--mut);font-size:12px;margin-top:26px;text-align:center}
 <script>
 (function(){
 "use strict";
-var KEY = 'bb-hack-subtakeover-v1';
+/* ---------- shared helpers ---------- */
 function normalize(raw){
   var s = (raw || '').trim();
   if(!s) return '';
@@ -99,6 +161,9 @@ function dedupeKey(url){
     return u.protocol + '//' + u.host.toLowerCase() + u.pathname + u.search + u.hash;
   }catch(e){ return url; }
 }
+
+/* ---------- STEP 1 (unchanged behaviour) ---------- */
+var KEY = 'bb-hack-subtakeover-v1';
 function load(){
   try{ var v = JSON.parse(localStorage.getItem(KEY) || '[]'); return Array.isArray(v) ? v : []; }catch(e){ return []; }
 }
@@ -154,6 +219,376 @@ document.getElementById('clearBtn').onclick = function(){
   list = []; save(list); render();
 };
 render();
+
+/* ---------- STEP 2: Subdomain List Viewer ---------- */
+var VKEY_LIST = 'bb-hack-viewer-list-v1';
+var VKEY_VIS = 'bb-hack-viewer-visited-';
+/* Common multi-label public suffixes, so just-eat.co.uk counts as a root
+   domain (depth 0) and api.just-eat.co.uk as depth 1 — not a subdomain of co.uk. */
+var PSL = ['co.uk','org.uk','ac.uk','gov.uk','sch.uk','co.in','org.in','net.in','gen.in','com.au','net.au','org.au','edu.au','gov.au','asn.au','id.au','com.br','com.cn','net.cn','org.cn','co.nz','org.nz','net.nz','ac.nz','govt.nz','co.jp','or.jp','ne.jp','ac.jp','go.jp','gr.jp','ed.jp','com.mx','com.ar','com.tr','gen.tr','web.tr','com.co','net.co','nom.co','co.za','ac.za','gov.za','org.za','com.sg','net.sg','org.sg','edu.sg','gov.sg','com.hk','net.hk','org.hk','edu.hk','gov.hk','co.kr','or.kr','ne.kr','ac.kr','go.kr','re.kr','pe.kr','com.my','net.my','org.my','gov.my','edu.my','com.ph','net.ph','org.ph','gov.ph','edu.ph','co.il','org.il','net.il','ac.il','gov.il','com.pl','net.pl','org.pl','edu.pl','gov.pl','com.pe','net.pe','org.pe','gob.pe','edu.pe','com.ve','net.ve','org.ve','co.ve','com.uy','net.uy','org.uy','edu.uy','com.py','net.py','org.py','edu.py','gov.py','com.bo','net.bo','org.bo','com.ec','net.ec','edu.ec','gov.ec','com.gt','net.gt','org.gt','edu.gt','gov.gt','com.do','net.do','org.do','edu.do','gov.do','com.hn','net.hn','org.hn','edu.hn','gov.hn','com.ni','net.ni','org.ni','edu.ni','gob.ni','com.pa','net.pa','org.pa','edu.pa','gob.pa','com.sv','net.sv','org.sv','edu.sv','gob.sv','com.vn','net.vn','org.vn','edu.vn','gov.vn','com.tw','net.tw','org.tw','edu.tw','gov.tw','idv.tw','com.ru','net.ru','org.ru','pp.ru','com.ua','net.ua','org.ua','kiev.ua','co.th','or.th','go.th','ac.th','in.th'];
+
+function regDomain(host){
+  host = (host || '').toLowerCase();
+  var labels = host.split('.');
+  if(labels.length <= 2) return host;
+  var last2 = labels[labels.length - 2] + '.' + labels[labels.length - 1];
+  if(PSL.indexOf(last2) !== -1) return labels.slice(-3).join('.');
+  return labels.slice(-2).join('.');
+}
+function depthOf(host){
+  var r = regDomain(host);
+  return host.split('.').length - r.split('.').length;
+}
+function hashStr(s){
+  var h = 5381;
+  for(var i = 0; i < s.length; i++){ h = ((h << 5) + h + s.charCodeAt(i)) | 0; }
+  return (h >>> 0).toString(16);
+}
+
+var vItems = [];      /* {url, host, root, depth, status|null} */
+var vVisited = {};    /* url -> true */
+var vHash = '';
+var vFilters = { q:'', root:'all', depth:'all', status:'all' };
+var checking = false, stopFlag = false;
+var rowMap = {};      /* url -> {row, link, pill, tick} */
+
+var viewerListEl = document.getElementById('viewerList');
+var viewerEmptyEl = document.getElementById('viewerEmpty');
+var progressLabel = document.getElementById('progressLabel');
+var progressBar = document.getElementById('progressBar');
+var statsLine = document.getElementById('statsLine');
+var checkProgressEl = document.getElementById('checkProgress');
+var checkBtn = document.getElementById('checkStatusBtn');
+var stopBtn = document.getElementById('stopCheckBtn');
+var copyBtn = document.getElementById('copyUnvisitedBtn');
+
+function statusKind(st){ return st ? st.kind : 'unchecked'; }
+function statusLabel(st){
+  if(!st) return '—';
+  if(st.kind === 'live' || st.kind === 'notfound' || st.kind === 'other') return String(st.code);
+  return st.label;
+}
+function statusPillClass(st){
+  if(!st) return 'pill unchecked';
+  return 'pill ' + st.kind;
+}
+function matchesStatusFilter(it){
+  var f = vFilters.status, k = statusKind(it.status);
+  if(f === 'all') return true;
+  if(f === 'live') return k === 'live' || k === 'reachable' || k === 'other';
+  if(f === 'notfound') return k === 'notfound';
+  if(f === 'unreachable') return k === 'unreachable';
+  return true;
+}
+function visibleItems(){
+  var q = vFilters.q.toLowerCase();
+  return vItems.filter(function(it){
+    if(q && it.url.toLowerCase().indexOf(q) === -1) return false;
+    if(vFilters.root !== 'all' && it.root !== vFilters.root) return false;
+    if(vFilters.depth !== 'all'){
+      if(vFilters.depth === '5+'){ if(it.depth < 5) return false; }
+      else if(it.depth !== parseInt(vFilters.depth, 10)) return false;
+    }
+    if(!matchesStatusFilter(it)) return false;
+    return true;
+  });
+}
+function rebuildRootFilter(){
+  var sel = document.getElementById('rootFilter');
+  var cur = sel.value;
+  var counts = {};
+  vItems.forEach(function(it){ counts[it.root] = (counts[it.root] || 0) + 1; });
+  var roots = Object.keys(counts).sort();
+  sel.innerHTML = '';
+  var o0 = document.createElement('option');
+  o0.value = 'all'; o0.textContent = 'All root domains (' + vItems.length + ')';
+  sel.appendChild(o0);
+  roots.forEach(function(r){
+    var o = document.createElement('option');
+    o.value = r; o.textContent = r + ' (' + counts[r] + ')';
+    sel.appendChild(o);
+  });
+  sel.value = (cur === 'all' || roots.indexOf(cur) !== -1) ? cur : 'all';
+  vFilters.root = sel.value;
+}
+function rebuildDepthFilter(){
+  var sel = document.getElementById('depthFilter');
+  var cur = sel.value;
+  var c = {'0':0,'1':0,'2':0,'3':0,'4':0,'5+':0};
+  vItems.forEach(function(it){ var k = it.depth >= 5 ? '5+' : String(it.depth); c[k]++; });
+  var labels = {'all':'All depths','0':'Root domain only (0)','1':'1-level subdomain','2':'2-level','3':'3-level','4':'4-level','5+':'5+ levels'};
+  var order = ['all','0','1','2','3','4','5+'];
+  sel.innerHTML = '';
+  order.forEach(function(k){
+    var o = document.createElement('option');
+    o.value = k;
+    o.textContent = k === 'all' ? labels[k] + ' (' + vItems.length + ')' : labels[k] + ' (' + c[k] + ')';
+    sel.appendChild(o);
+  });
+  sel.value = labels.hasOwnProperty(cur) ? cur : 'all';
+  vFilters.depth = sel.value;
+}
+function rebuildStatusFilter(){
+  var sel = document.getElementById('statusFilter');
+  var cur = sel.value;
+  var c = { live:0, notfound:0, unreachable:0, unchecked:0 };
+  vItems.forEach(function(it){
+    var k = statusKind(it.status);
+    if(k === 'live' || k === 'reachable' || k === 'other') c.live++;
+    else if(k === 'notfound') c.notfound++;
+    else if(k === 'unreachable') c.unreachable++;
+    else c.unchecked++;
+  });
+  var labels = { all:'All statuses', live:'Live', notfound:'404', unreachable:'Unreachable' };
+  sel.innerHTML = '';
+  Object.keys(labels).forEach(function(k){
+    var o = document.createElement('option');
+    o.value = k;
+    o.textContent = k === 'all' ? labels[k] + ' (' + vItems.length + ')' : labels[k] + ' (' + c[k] + ')';
+    sel.appendChild(o);
+  });
+  sel.value = labels.hasOwnProperty(cur) ? cur : 'all';
+  vFilters.status = sel.value;
+}
+function renderProgress(){
+  var total = vItems.length, done = 0;
+  vItems.forEach(function(it){ if(vVisited[it.url]) done++; });
+  progressLabel.textContent = done + ' of ' + total + ' visited';
+  progressBar.style.width = total ? Math.round(done / total * 100) + '%' : '0%';
+}
+function renderStats(){
+  var c = { live:0, notfound:0, other:0, reachable:0, unreachable:0, unchecked:0 };
+  vItems.forEach(function(it){ c[statusKind(it.status)]++; });
+  var parts = [
+    ['Total', vItems.length],
+    ['Showing', visibleItems().length],
+    ['Live', c.live + c.reachable + c.other],
+    ['404', c.notfound],
+    ['Unreachable', c.unreachable],
+    ['Not checked', c.unchecked]
+  ];
+  statsLine.innerHTML = '';
+  parts.forEach(function(p){
+    var s = document.createElement('span');
+    s.className = 'stat';
+    var b = document.createElement('b');
+    b.textContent = p[1];
+    s.appendChild(document.createTextNode(p[0] + ': '));
+    s.appendChild(b);
+    statsLine.appendChild(s);
+  });
+}
+function renderViewer(){
+  rebuildRootFilter();
+  rebuildDepthFilter();
+  rebuildStatusFilter();
+  var vis = visibleItems();
+  viewerListEl.innerHTML = '';
+  rowMap = {};
+  viewerEmptyEl.classList.toggle('hidden', vItems.length > 0);
+  vis.forEach(function(it){
+    var row = document.createElement('div');
+    row.className = 'vrow';
+    var a = document.createElement('a');
+    a.className = 'vlink' + (vVisited[it.url] ? ' visited' : '');
+    a.href = it.url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    var tick = document.createElement('span');
+    tick.className = 'tick';
+    tick.textContent = vVisited[it.url] ? '\u2713 ' : '';
+    a.appendChild(tick);
+    a.appendChild(document.createTextNode(it.url));
+    var mark = function(){
+      if(!vVisited[it.url]){
+        vVisited[it.url] = true;
+        vSaveVisited();
+        a.classList.add('visited');
+        tick.textContent = '\u2713 ';
+        renderProgress();
+        renderStats();
+      }
+    };
+    a.addEventListener('click', mark);
+    a.addEventListener('auxclick', mark);
+    var pill = document.createElement('span');
+    pill.className = statusPillClass(it.status);
+    pill.textContent = statusLabel(it.status);
+    var dep = document.createElement('span');
+    dep.className = 'depth';
+    dep.textContent = 'L' + it.depth;
+    dep.title = 'Depth: ' + it.depth + ' level' + (it.depth === 1 ? '' : 's') + ' beyond ' + it.root;
+    row.appendChild(a);
+    row.appendChild(pill);
+    row.appendChild(dep);
+    viewerListEl.appendChild(row);
+    rowMap[it.url] = { row: row, link: a, pill: pill, tick: tick };
+  });
+  renderProgress();
+  renderStats();
+}
+function vSaveList(){
+  try{ localStorage.setItem(VKEY_LIST, JSON.stringify(vItems.map(function(i){ return { url: i.url, status: i.status }; }))); }catch(e){}
+}
+function vSaveVisited(){
+  if(!vHash) return;
+  try{ localStorage.setItem(VKEY_VIS + vHash, JSON.stringify(vVisited)); }catch(e){}
+}
+function vLoad(){
+  var saved = [];
+  try{ saved = JSON.parse(localStorage.getItem(VKEY_LIST) || '[]'); }catch(e){ saved = []; }
+  if(!Array.isArray(saved)) saved = [];
+  vItems = [];
+  saved.forEach(function(it){
+    var url = (typeof it === 'string') ? it : it.url;
+    var st = (it && typeof it === 'object') ? (it.status || null) : null;
+    var n = normalize(url);
+    if(!n || !isValid(n)) return;
+    var host = '';
+    try{ host = new URL(n).hostname; }catch(e){}
+    vItems.push({ url: n, host: host, root: regDomain(host), depth: depthOf(host), status: st });
+  });
+  vHash = hashStr(vItems.map(function(i){ return i.url; }).join('\n'));
+  vVisited = {};
+  try{ vVisited = JSON.parse(localStorage.getItem(VKEY_VIS + vHash) || '{}') || {}; }catch(e){ vVisited = {}; }
+}
+function buildItems(lines){
+  var seen = {}, out = [];
+  lines.forEach(function(line){
+    var n = normalize(line);
+    if(!n || !isValid(n)) return;
+    var k = dedupeKey(n);
+    if(seen[k]) return;
+    seen[k] = true;
+    var host = '';
+    try{ host = new URL(n).hostname; }catch(e){}
+    out.push({ url: n, host: host, root: regDomain(host), depth: depthOf(host), status: null });
+  });
+  return out;
+}
+function loadListFrom(lines){
+  vItems = buildItems(lines);
+  vHash = hashStr(vItems.map(function(i){ return i.url; }).join('\n'));
+  vVisited = {};
+  try{ vVisited = JSON.parse(localStorage.getItem(VKEY_VIS + vHash) || '{}') || {}; }catch(e){ vVisited = {}; }
+  vSaveList();
+  renderViewer();
+}
+function probe(url){
+  var ctrl = new AbortController();
+  var timer = setTimeout(function(){ ctrl.abort(); }, 8000);
+  return fetch(url, { mode:'cors', redirect:'follow', signal: ctrl.signal }).then(function(r){
+    clearTimeout(timer);
+    if(r.status >= 200 && r.status < 400) return { kind:'live', code:r.status, label:String(r.status) };
+    if(r.status === 404) return { kind:'notfound', code:404, label:'404' };
+    return { kind:'other', code:r.status, label:String(r.status) };
+  }).catch(function(){
+    clearTimeout(timer);
+    if(stopFlag) return null;
+    var c2 = new AbortController();
+    var t2 = setTimeout(function(){ c2.abort(); }, 8000);
+    return fetch(url, { mode:'no-cors', redirect:'follow', signal: c2.signal }).then(function(){
+      clearTimeout(t2);
+      return { kind:'reachable', code:null, label:'Reachable' };
+    }).catch(function(){
+      clearTimeout(t2);
+      if(stopFlag) return null;
+      return { kind:'unreachable', code:null, label:'Unreachable' };
+    });
+  });
+}
+function setCheckBtn(){
+  checkBtn.disabled = checking;
+  stopBtn.classList.toggle('hidden', !checking);
+}
+function checkStatuses(){
+  if(checking) return;
+  if(!vItems.length) return;
+  checking = true; stopFlag = false; setCheckBtn();
+  var total = vItems.length, done = 0, idx = 0;
+  checkProgressEl.textContent = 'Checking 0/' + total + '…';
+  function worker(){
+    function next(){
+      if(stopFlag || idx >= vItems.length) return Promise.resolve();
+      var it = vItems[idx++];
+      return probe(it.url).then(function(st){
+        if(st){
+          it.status = st;
+          var rm = rowMap[it.url];
+          if(rm){ rm.pill.className = statusPillClass(st); rm.pill.textContent = statusLabel(st); }
+        }
+        done++;
+        checkProgressEl.textContent = 'Checking ' + done + '/' + total + '…';
+        vSaveList();
+        return next();
+      });
+    }
+    return next();
+  }
+  var workers = [];
+  for(var w = 0; w < 4; w++) workers.push(worker());
+  Promise.all(workers).then(function(){
+    checking = false; setCheckBtn();
+    checkProgressEl.textContent = stopFlag ? ('Stopped — ' + done + '/' + total + ' checked.') : ('Done — ' + done + '/' + total + ' checked.');
+    renderStats();
+    rebuildStatusFilter();
+  });
+}
+function fallbackCopy(text, done){
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  var ok = false;
+  try{ ok = document.execCommand('copy'); }catch(e){}
+  document.body.removeChild(ta);
+  done(ok);
+}
+function copyUnvisited(){
+  var list = vItems.filter(function(it){ return !vVisited[it.url]; }).map(function(it){ return it.url; });
+  var text = list.join('\n');
+  var orig = copyBtn.textContent;
+  function done(ok){
+    copyBtn.textContent = ok ? ('Copied ' + list.length + ' unvisited') : 'Copy failed';
+    setTimeout(function(){ copyBtn.textContent = orig; }, 2000);
+  }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){ done(true); }, function(){ fallbackCopy(text, done); });
+  } else fallbackCopy(text, done);
+}
+
+document.getElementById('loadListBtn').onclick = function(){
+  loadListFrom(document.getElementById('viewerBox').value.split('\n'));
+};
+document.getElementById('loadExampleBtn').onclick = function(){
+  var ex = ['example.com','www.example.com','api.example.com','a.b.example.com','x.y.z.example.com','deep.a.b.c.example.com','https://shop.example.com/products','blog.example.com','https://example.com/about','mail.example.com'].join('\n');
+  document.getElementById('viewerBox').value = ex;
+  loadListFrom(ex.split('\n'));
+};
+document.getElementById('clearListBtn').onclick = function(){
+  if(!vItems.length) return;
+  if(!confirm('Viewer list clear ho jayegi (visited marks bhi). Pakka?')) return;
+  vItems = []; vVisited = {}; vHash = '';
+  vSaveList();
+  renderViewer();
+};
+document.getElementById('searchBox').addEventListener('input', function(){ vFilters.q = this.value; renderViewer(); });
+document.getElementById('rootFilter').addEventListener('change', function(){ vFilters.root = this.value; renderViewer(); });
+document.getElementById('depthFilter').addEventListener('change', function(){ vFilters.depth = this.value; renderViewer(); });
+document.getElementById('statusFilter').addEventListener('change', function(){ vFilters.status = this.value; renderViewer(); });
+checkBtn.onclick = checkStatuses;
+stopBtn.onclick = function(){ stopFlag = true; };
+copyBtn.onclick = copyUnvisited;
+document.getElementById('clearVisitedBtn').onclick = function(){
+  if(!Object.keys(vVisited).length) return;
+  if(!confirm('Visited marks clear ho jayenge (list nahi mitegi). Pakka?')) return;
+  vVisited = {}; vSaveVisited(); renderViewer();
+};
+
+vLoad();
+renderViewer();
 })();
 </script>
 </body>
